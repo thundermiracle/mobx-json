@@ -16,7 +16,7 @@ class JsonFormPrivateStore {
    * @param {array} mustHaveList
    */
   _checkParams = (paramObj, mustHaveList = []) => {
-    let errMsg = `Keys in are not enough: Please check following keys carefully. [${mustHaveList.join(
+    let errMsg = `Keys in Json are not enough: Please check following keys carefully. [${mustHaveList.join(
       '&',
     )}];\n`;
     if (paramObj && typeof paramObj === 'object') {
@@ -36,7 +36,7 @@ class JsonFormPrivateStore {
    * [Read JSON fields to FormMixin(append to rootFields)]
    * fields -> array; rootFields -> expand position
    *
-   * Make fields.attrs observable and copy other property in fields into this.form.fields
+   * Make fields.attrs observable and copy other property in fields into this.fields
    * Nested fields will also be expanded.
    * @param {array} fields
    */

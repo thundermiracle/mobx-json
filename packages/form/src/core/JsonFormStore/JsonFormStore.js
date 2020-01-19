@@ -9,17 +9,11 @@ class JsonFormStore {
    */
   _jsonFormPrivate = new _JsonFormStore();
 
-  // Flatten fields For Quicker Search(References of form.fields)
-  _FlattenFormFields;
+  // Flatten fields For Quicker Search(References of this.fields)
+  _FlattenFields;
 
   @observable
-  form = {
-    fields: {},
-    meta: {
-      isValid: true,
-      error: '',
-    },
-  };
+  fields = {};
 
   setValueByArray = dataArray => {
     if (dataArray == null) {
@@ -27,38 +21,37 @@ class JsonFormStore {
     }
 
     Object.keys(dataArray).forEach(key => {
-      if (this.form.fields[key] != null) {
-        this.form.fields[key].value = dataArray[key];
+      if (this.fields[key] != null) {
+        this.fields[key].value = dataArray[key];
       }
     });
   };
 
   /**
-   * Analyze json blueprint and apply settings to this.form.fields
+   * Analyze json blueprint and apply settings to this.fields
    *
    *  @param {any} fieldsProp
    *  @param {any} extraMustHaveKeys
    */
   initFieldsByJsonBlueprint = (fieldsProp, extraMustHaveKeys = []) => {
-    this.form.fields = this._jsonFormPrivate.initObservableFields(
+    this.fields = this._jsonFormPrivate.initObservableFields(
       fieldsProp.fields,
       extraMustHaveKeys,
     );
-    this._FlattenFormFields = this._jsonFormPrivate.getFlattenAllFieldsReferences();
+    this._FlattenFields = this._jsonFormPrivate.getFlattenAllFieldsReferences();
   };
 
   /**
    * [Input checker]
-   * Check all fields, if failed this.form.meta.isValid will be set to false.
+   *
    * [ONLY affect field.error which is modified now]
-   * [this.form.meta.isValid is for controlling Submit Button]
    */
   @action
   onFieldChangeCheckAll = (fieldName, value) => {
-    // const field = this._formMixinPrivate.getFieldByNameNested(fieldName, this.form.fields);
+    // const field = this._formMixinPrivate.getFieldByNameNested(fieldName, this.fields);
     const field = this._jsonFormPrivate.getFieldByName(
       fieldName,
-      this._FlattenFormFields,
+      this._FlattenFields,
     );
     if (!field) return;
 
@@ -72,7 +65,6 @@ class JsonFormStore {
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
     const errorMsg = errors.first(key);
 
-    this.form.meta.isValid = Object(errors).length > 0;
     attrs.error = errorMsg === false ? null : errorMsg;
   };
 
@@ -82,10 +74,10 @@ class JsonFormStore {
    */
   @action
   onFieldChange = (fieldName, value) => {
-    // const field = this._formMixinPrivate.getFieldByNameNested(fieldName, this.form.fields);
+    // const field = this._formMixinPrivate.getFieldByNameNested(fieldName, this.fields);
     const field = this._jsonFormPrivate.getFieldByName(
       fieldName,
-      this._FlattenFormFields,
+      this._FlattenFields,
     );
     if (!field) return;
 
@@ -99,11 +91,12 @@ class JsonFormStore {
       return;
     }
 
-    const datas = {};
-    const rules = {};
-
-    datas[key] = attrs.value;
-    rules[key] = settings.rule;
+    const datas = {
+      [key]: attrs.value,
+    };
+    const rules = {
+      [key]: attrs.rule,
+    };
 
     const errors = plugins.validator.validate(datas, rules);
 
@@ -121,28 +114,19 @@ class JsonFormStore {
 
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
 
-    // this._formMixinPrivate.setAllFieldsErrorsNested(checkResult.errors, this.form.fields);
-    this._jsonFormPrivate.setAllFieldsErrors(errors, this._FlattenFormFields);
-    return this.form.meta.isValid;
+    // this._formMixinPrivate.setAllFieldsErrorsNested(checkResult.errors, this.fields);
+    this._jsonFormPrivate.setAllFieldsErrors(errors, this._FlattenFields);
+    return Object.keys(errors).length === 0;
   };
 
   resetAllFields = () => {
-    // this._formMixinPrivate.resetAllFieldsNested(this.form.fields);
-    this._jsonFormPrivate.resetAllFields(this._FlattenFormFields);
-    this.form.meta.isValid = true;
-    this.form.meta.error = '';
+    // this._formMixinPrivate.resetAllFieldsNested(this.fields);
+    this._jsonFormPrivate.resetAllFields(this._FlattenFields);
   };
 
   clearAllErrors = () => {
-    // this._formMixinPrivate.setAllFieldsErrorsNested(null, this.form.fields);
-    this._jsonFormPrivate.setAllFieldsErrors(null, this._FlattenFormFields);
-    this.form.meta.isValid = true;
-    this.form.meta.error = '';
-  };
-
-  @action
-  setError = errMsg => {
-    this.form.meta.error = errMsg;
+    // this._formMixinPrivate.setAllFieldsErrorsNested(null, this.fields);
+    this._jsonFormPrivate.setAllFieldsErrors(null, this._FlattenFields);
   };
 
   // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓Internal Functions↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ //
@@ -150,21 +134,21 @@ class JsonFormStore {
    * Do not check if rule was empty
    */
   _getAvailableValueRulesKeyLabel = () => {
-    // const fields = toJS(this.form.fields);
+    // const fields = toJS(this.fields);
     // const allvals = this._formMixinPrivate.getFlattenedValuesNested('attrs.value', fields);
     // const allrules = this._formMixinPrivate.getFlattenedValuesNested('settings.rule', fields);
     // const allnames = this._formMixinPrivate.getFlattenedValuesNested('attrs.name', fields);
     const allvals = this._jsonFormPrivate.getFlattenedValues(
       'attrs.value',
-      this._FlattenFormFields,
+      this._FlattenFields,
     );
     const allrules = this._jsonFormPrivate.getFlattenedValues(
       'settings.rule',
-      this._FlattenFormFields,
+      this._FlattenFields,
     );
     const allnames = this._jsonFormPrivate.getFlattenedValues(
       'attrs.name',
-      this._FlattenFormFields,
+      this._FlattenFields,
     );
 
     const vals = {};
@@ -184,16 +168,16 @@ class JsonFormStore {
    * Do not check if rule was empty
    */
   _getAvailableValueRulesKeyField = () => {
-    // const fields = toJS(this.form.fields);
+    // const fields = toJS(this.fields);
     // const allvals = this._formMixinPrivate.getFlattenedValuesNested('attrs.value', fields);
     // const allrules = this._formMixinPrivate.getFlattenedValuesNested('settings.rule', fields);
     const allvals = this._jsonFormPrivate.getFlattenedValues(
       'attrs.value',
-      this._FlattenFormFields,
+      this._FlattenFields,
     );
     const allrules = this._jsonFormPrivate.getFlattenedValues(
       'settings.rule',
-      this._FlattenFormFields,
+      this._FlattenFields,
     );
 
     const vals = {};

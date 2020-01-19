@@ -13,7 +13,7 @@ const IndexPage = props => {
     <Container maxWidth="sm">
       <Grid container spacing={2}>
         <JsonForm
-          fields={store.form.fields}
+          fields={store.fields}
           widgetMap={widgetMap}
           onChange={store.onFieldChangeCheckAll}
         />
