@@ -1,0 +1,42 @@
+{
+  "name": "@mobx-json/form",
+  "version": "0.1.0",
+  "description": "create forms by json & mobx",
+  "main": "./index.js",
+  "files": [
+    "core",
+    "lib",
+    "stores"
+  ],
+  "scripts": {
+    "eslint:src": "eslint ./src",
+    "eslint": "yarn eslint:src",
+    "eslint:prod": "cross-env NODE_ENV=production yarn eslint:src",
+    "jest": "jest",
+    "test": "yarn eslint:src && yarn jest",
+    "build:src": "babel src --out-dir ./ --verbose",
+    "prebuild": "rimraf core/ lib/ stores/",
+    "build": "cross-env NODE_ENV=production yarn build:src",
+    "dev": "yarn run prebuild && yarn build:src --watch"
+  },
+  "author": "ThunderMiracle",
+  "license": "MIT",
+  "peerDependencies": {
+    "mobx": ">4.0.0",
+    "mobx-react": ">6.0.0",
+    "react": ">16.8.0",
+    "react-dom": ">16.8.0",
+    "validatorjs": ">3.0.0"
+  },
+  "dependencies": {
+    "ramda": "0.26.1"
+  },
+  "devDependencies": {
+    "mobx": "4.13.0",
+    "mobx-react": "6.1.5",
+    "prop-types": "15.7.2",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "validatorjs": "3.18.1"
+  }
+}

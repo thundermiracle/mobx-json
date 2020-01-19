@@ -1,0 +1,40 @@
+{
+  "fields": [
+    {
+      "settings": {
+        "widget": "TextField",
+        "type": "string",
+        "rule": "required|min:5"
+      },
+      "attrs": {
+        "name": "name",
+        "label": "ID",
+        "placeholder": "Input your user id",
+        "required": true,
+        "fullWidth": true,
+        "grid": {
+          "xs": 12,
+          "md": 6
+        }
+      }
+    },
+    {
+      "settings": {
+        "widget": "TextField",
+        "type": "string",
+        "rule": "required|min:6"
+      },
+      "attrs": {
+        "name": "password",
+        "type": "password",
+        "label": "Password",
+        "placeholder": "Input your password",
+        "fullWidth": true,
+        "grid": {
+          "xs": 12,
+          "md": 6
+        }
+      }
+    }
+  ]
+}

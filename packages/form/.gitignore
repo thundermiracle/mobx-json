@@ -1,0 +1,5 @@
+# build output
+/core
+/lib
+/stores
+/index.js

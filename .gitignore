@@ -1,0 +1,11 @@
+# build output
+npm-debug.log
+lerna-debug.log
+yarn-error.log
+
+# dependencies
+node_modules/
+
+# test output
+.next/
+coverage/
