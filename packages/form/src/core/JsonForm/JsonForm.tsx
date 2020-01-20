@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import NativeHtmlWidget from './widget/NativeHtmlWidget';
 import withMobxAttrs from './hoc/withMobxAttrs';
 
-const renderAllFields = (fields, widgetMap, factoryProps) => {
+const renderAllFields = (fields: any, widgetMap: any, factoryProps: any) => {
   const allComponents = Object.keys(fields)
     .map(key => fields[key])
     .map(field => {
@@ -43,8 +43,12 @@ const renderAllFields = (fields, widgetMap, factoryProps) => {
   return allComponents;
 };
 
-const ReacbMobxJsonForm = props => {
-  const { fields, widgetMap, ...restProps } = props;
+interface Props {
+  fields: any;
+  widgetMap?: any;
+}
+
+const ReacbMobxJsonForm = ({ fields, widgetMap = {}, ...restProps }: Props) => {
   const allComponents = renderAllFields(fields, widgetMap, restProps);
   return allComponents;
 };

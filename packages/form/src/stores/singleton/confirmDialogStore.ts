@@ -1,10 +1,12 @@
 import { observable, action } from 'mobx';
 
-import DialogStoreMixin from 'stores/DialogStoreMixin';
+import DialogStore from 'stores/DialogStore';
 
-class ConfirmDialogStore extends DialogStoreMixin() {
+class ConfirmDialogStore extends DialogStore {
   @observable
-  dialogMessage;
+  dialogMessage: string = '';
+
+  private _confirmResolver: any;
 
   /**
    * display confirm dialog

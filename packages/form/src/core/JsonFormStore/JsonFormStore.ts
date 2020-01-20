@@ -7,15 +7,15 @@ class JsonFormStore {
   /**
    * Private methods class
    */
-  _jsonFormPrivate = new _JsonFormStore();
+  private _jsonFormPrivate = new _JsonFormStore();
 
   // Flatten fields For Quicker Search(References of this.fields)
-  _FlattenFields;
+  private _FlattenFields: any;
 
   @observable
-  fields = {};
+  fields: any = {};
 
-  setValueByArray = dataArray => {
+  setValueByArray = (dataArray: null | undefined | any) => {
     if (dataArray == null) {
       return;
     }
@@ -33,7 +33,7 @@ class JsonFormStore {
    *  @param {any} fieldsProp
    *  @param {any} extraMustHaveKeys
    */
-  initFieldsByJsonBlueprint = (fieldsProp, extraMustHaveKeys = []) => {
+  initFieldsByJsonBlueprint = (fieldsProp: any, extraMustHaveKeys = []) => {
     this.fields = this._jsonFormPrivate.initObservableFields(
       fieldsProp.fields,
       extraMustHaveKeys,
@@ -47,7 +47,7 @@ class JsonFormStore {
    * [ONLY affect field.error which is modified now]
    */
   @action
-  onFieldChangeCheckAll = (fieldName, value) => {
+  onFieldChangeCheckAll = (fieldName: string, value: any) => {
     // const field = this._formMixinPrivate.getFieldByNameNested(fieldName, this.fields);
     const field = this._jsonFormPrivate.getFieldByName(
       fieldName,
@@ -73,7 +73,7 @@ class JsonFormStore {
    * ONLY affect the field which is modified now.
    */
   @action
-  onFieldChange = (fieldName, value) => {
+  onFieldChange = (fieldName: string, value: any) => {
     // const field = this._formMixinPrivate.getFieldByNameNested(fieldName, this.fields);
     const field = this._jsonFormPrivate.getFieldByName(
       fieldName,
@@ -151,8 +151,8 @@ class JsonFormStore {
       this._FlattenFields,
     );
 
-    const vals = {};
-    const rules = {};
+    const vals: any = {};
+    const rules: any = {};
 
     Object.keys(allvals).forEach(key => {
       if (allrules[key] != null && allrules[key] !== '') {
@@ -180,8 +180,8 @@ class JsonFormStore {
       this._FlattenFields,
     );
 
-    const vals = {};
-    const rules = {};
+    const vals: any = {};
+    const rules: any = {};
 
     Object.keys(allvals).forEach(key => {
       if (allrules[key] != null && allrules[key] !== '') {

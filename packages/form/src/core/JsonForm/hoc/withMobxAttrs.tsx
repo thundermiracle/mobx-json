@@ -1,14 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, IReactComponent } from 'mobx-react';
+
+interface Props {
+  attrs?: any;
+  settings?: any;
+  fields?: object;
+  onChange?: Function;
+}
 
 /**
  * Inject common attrs
  */
-export default Component => {
+export default (Component: IReactComponent) => {
   const ObserveMUIComponent = observer(Component);
 
-  const WithMobxAttrs = ({ onChange, settings, attrs }) => {
+  const WithMobxAttrs = ({ onChange, settings, attrs }: Props) => {
     const innerOnChange = React.useCallback(
       (eventOrName, value) => {
         if (onChange) {
@@ -39,17 +45,6 @@ export default Component => {
         onChange={innerOnChange}
       />
     );
-  };
-
-  WithMobxAttrs.propTypes = {
-    attrs: PropTypes.object.isRequired,
-    settings: PropTypes.object,
-    onChange: PropTypes.func,
-  };
-
-  WithMobxAttrs.defaultProps = {
-    settings: null,
-    onChange: null,
   };
 
   return observer(WithMobxAttrs);

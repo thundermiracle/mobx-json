@@ -1,5 +1,13 @@
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const base = require('../../jest.config.base');
+const { compilerOptions } = require('./tsconfig');
+const pack = require('./package.json');
+
 module.exports = {
-  collectCoverage: true,
-  transformIgnorePatterns: ['/node_modules/(?!ramda).+\\.js$', 'dist'],
-  testPathIgnorePatterns: ['mocks'],
+  ...base,
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/src/',
+  }),
+  name: pack.name,
+  displayName: pack.name,
 };

@@ -1,18 +1,18 @@
-import { compose } from 'ramda';
+import { compose } from './utils';
 
-const makeWidgetMap = (allComponents, hocs = []) => {
+const makeWidgetMap = (allComponentsMap: any, hocs: Function[] = []) => {
   if (!hocs || hocs.length === 0) {
     // return original mapping if hocs is not defined
-    return allComponents;
+    return allComponentsMap;
   }
 
   const mixedHoc = compose(...hocs);
 
-  const innerWidgetMap = {};
-  Object.keys(allComponents).forEach(name => {
+  const innerWidgetMap: any = {};
+  Object.keys(allComponentsMap).forEach(name => {
     if (typeof name !== 'string') return;
 
-    const Component = allComponents[name];
+    const Component = allComponentsMap[name];
     if (hocs) {
       innerWidgetMap[name] = mixedHoc(Component);
     }

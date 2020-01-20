@@ -1,16 +1,14 @@
 import ValidatorJSManager from 'lib/ValidatorJSManager';
 
-const privateData = {
-  validator: null,
-};
-
 class Plugins {
+  private _validator: any;
+
   get validator() {
-    return privateData.validator;
+    return this._validator;
   }
 
   set validator(validator) {
-    privateData.validator = validator;
+    this._validator = validator;
   }
 }
 

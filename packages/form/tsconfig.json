@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "baseUrl": "src",
+    "paths": {
+      "src/*": ["*"],
+      "core/*": ["core/*"],
+      "stores/*": ["stores/*"],
+      "lib/*": ["lib/*"]
+    }
+  },
+  "include": ["src/**/*", "__test__/**/*"]
+}

@@ -7,6 +7,18 @@
   },
   "eslint.validate": [
     "javascript",
-    "javascriptreact"
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "directory": "./packages/form",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./packages/mui-form",
+      "changeProcessCWD": true
+    },
   ]
 }
