@@ -1,16 +1,27 @@
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-import Grid from '@material-ui/core/Grid';
 
-import withGrid from '@mobx-json/form/lib/withGrid';
 import makeWidgetMap from '@mobx-json/form/lib/makeWidgetMap';
 import withMUIError from './withMUIError';
+import withGridItem from './withGridItem';
+import GridContainer from '../components/GridContainer';
 
 const allComponents = {
   TextField,
   Dialog,
 };
+const allComponentsWidgetMap = makeWidgetMap(allComponents, [
+  withGridItem,
+  withMUIError,
+]);
 
-const widgetMap = makeWidgetMap(allComponents, withGrid(Grid), withMUIError);
+const containerComponents = {
+  GridContainer,
+};
+
+const widgetMap = {
+  ...allComponentsWidgetMap,
+  ...containerComponents,
+};
 
 export default widgetMap;

@@ -1,7 +1,8 @@
 import { toJS, observable } from 'mobx';
 
 class JsonFormPrivateStore {
-  _MustHaveKeys = ['attrs.name', 'settings.widget', 'settings.type'];
+  // set settings.type to 'undefined'
+  _MustHaveKeys = ['attrs.name', 'settings.widget'];
 
   _CreateIfNotExistKeys = ['attrs.error'];
 
@@ -59,7 +60,7 @@ class JsonFormPrivateStore {
 
       /* BEGIN expanding */
       const fieldKey = attrs.name;
-      const valueType = settings.type;
+      const valueType = settings.type || 'string';
 
       // Contents
       const contents = {

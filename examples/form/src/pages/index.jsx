@@ -4,20 +4,20 @@ import PropTypes from 'prop-types';
 import { JsonForm } from '@mobx-json/form';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import store from '../client/stores/LoginFormStore';
 import widgetMap from '../client/views/widgetMap';
+import GridContainer from '../client/components/GridContainer';
 
 const IndexPage = props => {
   return (
     <Container maxWidth="sm">
-      <Grid container spacing={2}>
+      <GridContainer>
         <JsonForm
           fields={store.fields}
           widgetMap={widgetMap}
           onChange={store.onFieldChangeCheckAll}
         />
-      </Grid>
+      </GridContainer>
       <Button onClick={store.checkAllOnSubmit} color="primary">
         Login
       </Button>

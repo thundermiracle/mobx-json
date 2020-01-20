@@ -14,13 +14,17 @@ const renderAllFields = (fields, widgetMap, factoryProps) => {
       // set WrapperComponet to widget if it is not defined in mapper
       if (!widgetMap[widget]) {
         ObservableComponent = NativeHtmlWidget;
+      } else if (innerFields) {
+        // no need mobx attrs for Container(Grid, Group?)
+        ObservableComponent = widgetMap[widget];
       } else {
         ObservableComponent = withMobxAttrs(widgetMap[widget]);
       }
 
       let innerComponents;
-      if (innerFields)
+      if (innerFields) {
         innerComponents = renderAllFields(innerFields, widgetMap, factoryProps);
+      }
 
       if (innerComponents) {
         return (

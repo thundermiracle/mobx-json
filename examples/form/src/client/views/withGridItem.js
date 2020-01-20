@@ -1,24 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const defaultGridItemProps = {
-  xs: 12,
-  item: true,
-};
+import GridItem from '../components/GridItem';
 
 /**
  * Inject Grid layer(Main for material-ui/Grid)
  */
-export default GridComponent => MUIComponent => {
+export default MUIComponent => {
   const WithGrid = props => {
     const { grid, ...restProps } = props;
 
     if (grid == null) return <MUIComponent {...restProps} />;
 
     return (
-      <GridComponent {...defaultGridItemProps} {...grid}>
+      <GridItem {...grid}>
         <MUIComponent {...restProps} />
-      </GridComponent>
+      </GridItem>
     );
   };
 
