@@ -6,14 +6,12 @@
     "examples/*"
   ],
   "scripts": {
-    "clean": "lerna clean -y",
-    "bootstrap": "lerna bootstrap --use-workspaces",
     "build": "lerna run build --use-workspaces --stream",
     "eslint": "lerna run eslint:src --stream",
     "test": "lerna run test --stream",
     "dev:form": "lerna run dev --scope @mobx-json/form --stream",
     "dev:form:example": "lerna run dev --scope @mobx-json/form-example --stream",
-    "lerna-publish": "lerna publish"
+    "publish": "lerna publish"
   },
   "peerDependencies": {
     "react": ">= 16.8.0",

@@ -1,6 +1,3 @@
-const withTM = require('next-transpile-modules');
-
-module.exports = withTM({
-  transpileModules: ['next-mui-helper'],
+module.exports = {
   distDir: '../.next',
-});
+};

@@ -23,7 +23,7 @@
   "license": "MIT",
   "peerDependencies": {
     "mobx": ">4.0.0",
-    "mobx-react": ">6.0.0",
+    "mobx-react": ">5.0.0",
     "react": ">16.8.0",
     "react-dom": ">16.8.0",
     "validatorjs": ">3.0.0"
