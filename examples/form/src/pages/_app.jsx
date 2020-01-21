@@ -3,9 +3,16 @@ import App from 'next/app';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import init from '../init';
 import theme from '../theme';
 
 export default class MyApp extends App {
+  constructor() {
+    super();
+    init();
+  }
+
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');

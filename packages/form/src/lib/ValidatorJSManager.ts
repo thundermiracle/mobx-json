@@ -16,11 +16,15 @@ class ValidatorJSManager {
     this._messages = { ...messages, ...customMessages };
   };
 
+  /**
+   * return object of errors
+   * { name: [errMsg1, errMsg2] }
+   */
   validate = (value: any, rule: any) => {
     const validator = new Validator(value, rule, this._messages);
     validator.check();
 
-    return validator.errors;
+    return validator.errors.errors;
   };
 }
 

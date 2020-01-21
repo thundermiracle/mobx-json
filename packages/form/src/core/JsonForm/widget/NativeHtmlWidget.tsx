@@ -18,7 +18,12 @@ const NativeHtmlWidget = ({
   // wrap onChange if component is not defined
   const innerOnChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (onChange) onChange(e.target.name, e.target.value);
+      if (onChange) {
+        const newVal =
+          e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+        onChange(e.target.name, newVal);
+      }
     },
     [onChange],
   );

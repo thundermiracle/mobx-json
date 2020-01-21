@@ -81,6 +81,22 @@
           "md": 6
         }
       }
+    },
+    {
+      "settings": {
+        "widget": "CheckBox",
+        "type": "boolean",
+        "rule": "required"
+      },
+      "attrs": {
+        "name": "agreement",
+        "label": "I Agree!",
+        "fullWidth": true,
+        "grid": {
+          "xs": 6,
+          "md": 3
+        }
+      }
     }
   ]
 }

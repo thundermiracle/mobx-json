@@ -72,14 +72,10 @@ class JsonFormStore {
     const { attrs } = field;
     attrs.value = value;
 
-    const key = attrs.name;
-
     const checkData = this._getAvailableValueRulesKeyLabel();
 
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
-    const errorMsg = errors.first(key);
-
-    attrs.error = errorMsg === false ? null : errorMsg;
+    this._jsonFormPrivate.setAllFieldsErrors(errors, this._FlattenFields);
   };
 
   /**
@@ -109,13 +105,13 @@ class JsonFormStore {
       [key]: attrs.value,
     };
     const rules = {
-      [key]: attrs.rule,
+      [key]: settings.rule,
     };
 
     const errors = plugins.validator.validate(datas, rules);
 
-    const errorMsg = errors.first(key);
-    attrs.error = errorMsg === false ? null : errorMsg;
+    const [errorMsg] = errors[key] || [];
+    attrs.error = errorMsg || '';
   };
 
   /**

@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+import plugins from 'core/plugins';
 import NativeHtmlWidget from './widget/NativeHtmlWidget';
 import withMobxAttrs from './hoc/withMobxAttrs';
 
@@ -44,22 +44,32 @@ const renderAllFields = (fields: any, widgetMap: any, factoryProps: any) => {
 };
 
 interface Props {
-  fields: any;
+  store?: any;
+  fields?: any;
+  onChange?: Function;
   widgetMap?: any;
 }
 
-const ReacbMobxJsonForm = ({ fields, widgetMap = {}, ...restProps }: Props) => {
-  const allComponents = renderAllFields(fields, widgetMap, restProps);
+const ReacbMobxJsonForm = ({
+  store = {},
+  fields,
+  onChange,
+  widgetMap = plugins.widgetMap,
+  ...restProps
+}: Props) => {
+  // use store.OnFiledChange if onChange function is not passed
+  const extraProps = {
+    ...restProps,
+    onChange: onChange || store.onFieldChange,
+  };
+
+  // use store.fields if fields is not passed
+  const allComponents = renderAllFields(
+    fields || store.fields,
+    widgetMap,
+    extraProps,
+  );
   return allComponents;
-};
-
-ReacbMobxJsonForm.propTypes = {
-  fields: PropTypes.object.isRequired,
-  widgetMap: PropTypes.object,
-};
-
-ReacbMobxJsonForm.defaultProps = {
-  widgetMap: {},
 };
 
 export default ReacbMobxJsonForm;

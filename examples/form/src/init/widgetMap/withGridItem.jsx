@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import GridItem from '../components/GridItem';
+import GridItem from '../../client/components/GridItem';
 
 /**
  * Inject Grid layer(Main for material-ui/Grid)

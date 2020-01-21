@@ -20,7 +20,12 @@ export default (Component: IReactComponent) => {
         if (onChange) {
           if (typeof eventOrName === 'object') {
             // eventOrName is event
-            onChange(eventOrName.target.name, eventOrName.target.value);
+            const newVal =
+              eventOrName.target.type === 'checkbox'
+                ? eventOrName.target.checked
+                : eventOrName.target.value;
+
+            onChange(eventOrName.target.name, newVal);
           } else {
             // eventOrName is name
             onChange(eventOrName, value);

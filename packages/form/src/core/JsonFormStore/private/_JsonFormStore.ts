@@ -271,13 +271,9 @@ class JsonFormPrivateStore {
   /* End of nested fields methods                                    */
   /* *************************************************************** */
 
-  private _setFieldError = (
-    field: any,
-    key: string,
-    errors: any | null = null,
-  ) => {
-    const errorMsg = errors ? errors.first(key) : null;
-    field.attrs.error = errorMsg === false ? null : errorMsg;
+  private _setFieldError = (field: any, key: string, errors: any = {}) => {
+    const [errorMsg] = errors[key] || [];
+    field.attrs.error = errorMsg || '';
   };
 
   private _resetDefaultValue = (field: any) => {
