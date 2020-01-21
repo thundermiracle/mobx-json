@@ -11,12 +11,16 @@ class JsonFormPrivateStore {
    */
   private _FLATTEN_FIELDS: any = {};
 
+  // constructor() {
+  //   this.initObservableFields = this.initObservableFields.bind(this);
+  // }
+
   /**
    * [Check whether paramObj has all keys in mustHaveList or not]
    * @param {object} paramObj
    * @param {array} mustHaveList
    */
-  _checkParams = (paramObj: object, mustHaveList: string[] = []) => {
+  private _checkParams = (paramObj: object, mustHaveList: string[] = []) => {
     let errMsg = `Keys in Json are not enough: Please check following keys carefully. [${mustHaveList.join(
       '&',
     )}];\n`;
@@ -107,17 +111,17 @@ class JsonFormPrivateStore {
   /**
    * Get all fields' references
    */
-  getFlattenAllFieldsReferences() {
+  getFlattenAllFieldsReferences = () => {
     return this._FLATTEN_FIELDS;
-  }
+  };
 
   /**
    * Get field from ReferenceFields
    * @param {string} fieldName
    */
-  getFieldByName(fieldName: string, paraFields = this._FLATTEN_FIELDS) {
+  getFieldByName = (fieldName: string, paraFields = this._FLATTEN_FIELDS) => {
     return paraFields[fieldName];
-  }
+  };
 
   /**
    * Get values from ReferenceFields
@@ -267,12 +271,16 @@ class JsonFormPrivateStore {
   /* End of nested fields methods                                    */
   /* *************************************************************** */
 
-  _setFieldError = (field: any, key: string, errors: any | null = null) => {
+  private _setFieldError = (
+    field: any,
+    key: string,
+    errors: any | null = null,
+  ) => {
     const errorMsg = errors ? errors.first(key) : null;
     field.attrs.error = errorMsg === false ? null : errorMsg;
   };
 
-  _resetDefaultValue = (field: any) => {
+  private _resetDefaultValue = (field: any) => {
     field.attrs.value = field.attrs.defaultValue || field.attrs.value;
   };
 
@@ -283,7 +291,7 @@ class JsonFormPrivateStore {
    * @param {any} value
    * @param {any} defValue
    */
-  _setDefaultValue = (
+  private _setDefaultValue = (
     targetObj: any,
     key: string,
     value: any,
@@ -297,7 +305,7 @@ class JsonFormPrivateStore {
    * get value by Nestedkey
    * exp: attrs.name => field.attrs.name
    */
-  _getValueByNestedKey = (obj: object, nestedKey: string) => {
+  private _getValueByNestedKey = (obj: object, nestedKey: string) => {
     return nestedKey.split('.').reduce((prevObj: any, key) => {
       if (prevObj) {
         return prevObj[key];
@@ -311,7 +319,11 @@ class JsonFormPrivateStore {
    * set value by NestedKey
    * exp: attrs.name => field.attrs.name
    */
-  _setValueByNestedKey = (obj: any, nestedKey: string, value = null) => {
+  private _setValueByNestedKey = (
+    obj: any,
+    nestedKey: string,
+    value = null,
+  ) => {
     let schema = obj;
     const pList = nestedKey.split('.');
     const len = pList.length;
@@ -324,7 +336,7 @@ class JsonFormPrivateStore {
     schema[pList[len - 1]] = value;
   };
 
-  _getDefaultValue = (valueType: string) => {
+  private _getDefaultValue = (valueType: string) => {
     switch (valueType) {
       case 'number':
         return 0;

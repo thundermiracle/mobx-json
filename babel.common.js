@@ -1,18 +1,7 @@
 console.log(`[babel mode]: ${process.env.NODE_ENV}`);
 
 const babelCommonConfig = {
-  presets: [
-    '@babel/typescript',
-    [
-      '@babel/env',
-      {
-        targets: {
-          node: 'current',
-        },
-      },
-    ],
-    '@babel/react',
-  ],
+  presets: ['@babel/typescript', '@babel/env', '@babel/react'],
   plugins: [
     'add-module-exports',
     'react-require',

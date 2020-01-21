@@ -15,14 +15,28 @@ class JsonFormStore {
   @observable
   fields: any = {};
 
-  setValueByArray = (dataArray: null | undefined | any) => {
-    if (dataArray == null) {
+  /**
+   *
+   * @param fieldsProps
+   * @param extraMustHaveKeys
+   */
+  constructor(fieldsProps: any, extraMustHaveKeys = undefined) {
+    if (fieldsProps != null) {
+      this.initFieldsByJsonBlueprint(fieldsProps, extraMustHaveKeys);
+    }
+  }
+
+  /**
+   * @param dataObj
+   */
+  setFieldsValue = (dataObj: null | undefined | any) => {
+    if (dataObj == null) {
       return;
     }
 
-    Object.keys(dataArray).forEach(key => {
+    Object.keys(dataObj).forEach(key => {
       if (this.fields[key] != null) {
-        this.fields[key].value = dataArray[key];
+        this.fields[key].value = dataObj[key];
       }
     });
   };
@@ -133,7 +147,7 @@ class JsonFormStore {
   /**
    * Do not check if rule was empty
    */
-  _getAvailableValueRulesKeyLabel = () => {
+  private _getAvailableValueRulesKeyLabel = () => {
     // const fields = toJS(this.fields);
     // const allvals = this._formMixinPrivate.getFlattenedValuesNested('attrs.value', fields);
     // const allrules = this._formMixinPrivate.getFlattenedValuesNested('settings.rule', fields);
@@ -167,7 +181,7 @@ class JsonFormStore {
   /**
    * Do not check if rule was empty
    */
-  _getAvailableValueRulesKeyField = () => {
+  private _getAvailableValueRulesKeyField = () => {
     // const fields = toJS(this.fields);
     // const allvals = this._formMixinPrivate.getFlattenedValuesNested('attrs.value', fields);
     // const allrules = this._formMixinPrivate.getFlattenedValuesNested('settings.rule', fields);

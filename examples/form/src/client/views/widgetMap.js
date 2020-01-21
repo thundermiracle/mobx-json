@@ -1,7 +1,7 @@
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 
-import makeWidgetMap from '@mobx-json/form/dist/lib/makeWidgetMap';
+import { makeWidgetMap } from '@mobx-json/form';
 import withMUIError from './withMUIError';
 import withGridItem from './withGridItem';
 import GridContainer from '../components/GridContainer';
