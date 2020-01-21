@@ -1,4 +1,4 @@
-const eslintrcCommon = require('../../.eslintrc');
+const eslintrcCommon = require('../../baseconfig/eslintrc.ts.base');
 
 module.exports = {
   ...eslintrcCommon,

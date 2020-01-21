@@ -4,7 +4,7 @@ import DialogStore from 'stores/DialogStore';
 
 class ConfirmDialogStore extends DialogStore {
   @observable
-  dialogMessage: string = '';
+  dialogMessage = '';
 
   private _confirmResolver: any;
 

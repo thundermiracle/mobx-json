@@ -1,7 +1,7 @@
 console.log(`[babel mode]: ${process.env.NODE_ENV}`);
 
-const babelCommonConfig = {
-  presets: ['@babel/typescript', '@babel/env', '@babel/react'],
+const babelBaseConfig = {
+  presets: ['@babel/env', '@babel/react'],
   plugins: [
     'add-module-exports',
     'react-require',
@@ -46,4 +46,4 @@ const babelCommonConfig = {
   },
 };
 
-module.exports = babelCommonConfig;
+module.exports = babelBaseConfig;

@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-const compileConfig = require('../../babel.common');
+const compileConfig = require('../../baseconfig/babel.base');
 
 console.log('NODE_ENV:', process.env.NODE_ENV);
 
@@ -18,9 +18,12 @@ const plugins = [
   ],
 ];
 
+const presets = ['@babel/typescript', ...compileConfig.presets];
+
 // merge
 const babelConfig = {
   ...compileConfig,
+  presets,
   plugins,
 };
 

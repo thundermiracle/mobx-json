@@ -4,6 +4,9 @@
     "module": "commonjs",
     "declaration": true,
 
+    "experimentalDecorators": true,
+    "jsx": "react",
+
     "strict": true,
 
     "moduleResolution": "node",

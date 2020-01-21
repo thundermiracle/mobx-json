@@ -1,8 +1,6 @@
 {
-  "extends": "../../tsconfig",
+  "extends": "../../baseconfig/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react",
-    "experimentalDecorators": true,
     "baseUrl": "src",
     "paths": {
       "src/*": ["*"],

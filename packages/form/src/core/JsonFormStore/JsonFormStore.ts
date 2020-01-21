@@ -20,7 +20,7 @@ class JsonFormStore {
    * @param fieldsProps
    * @param extraMustHaveKeys
    */
-  constructor(fieldsProps: any, extraMustHaveKeys = undefined) {
+  constructor(fieldsProps?: any, extraMustHaveKeys = undefined) {
     if (fieldsProps != null) {
       this.initFieldsByJsonBlueprint(fieldsProps, extraMustHaveKeys);
     }

@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "eslint:src": "eslint ./src",
     "dev": "next ./src"
   },
   "dependencies": {

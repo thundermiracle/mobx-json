@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 function compose(...fns: Function[]) {
   return (...args: any[]) =>
     fns.reduceRight((prevBC, fn) => {

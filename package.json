@@ -6,11 +6,15 @@
     "examples/*"
   ],
   "scripts": {
-    "build": "lerna run build --use-workspaces --stream",
-    "eslint": "lerna run eslint:src --stream",
-    "test": "lerna run test --stream",
     "dev:form": "lerna run dev --scope @mobx-json/form --stream",
     "dev:form:example": "lerna run dev --scope @mobx-json/form-example --stream",
+    "build": "lerna run build --use-workspaces --stream",
+    "eslint": "lerna run eslint:src --stream",
+    "type-check": "lerna run type-check --stream",
+    "jest": "jest && codecov",
+    "test:q": "yarn eslint && yarn type-check && yarn jest",
+    "jest:ci": "jest -i && codecov",
+    "test": "yarn eslint && yarn type-check && yarn jest:ci",
     "publish": "lerna publish"
   },
   "peerDependencies": {
@@ -55,6 +59,7 @@
     "eslint-plugin-import": "2.20.0",
     "eslint-plugin-jest": "23.6.0",
     "eslint-plugin-jsx-a11y": "6.2.3",
+    "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.17.0",
     "eslint-plugin-react-hooks": "2.3.0",
     "fs-extra": "8.1.0",
