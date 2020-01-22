@@ -1,15 +1,10 @@
-import { toJS, observable } from 'mobx';
+import { toJS, observable, action } from 'mobx';
 
 class JsonFormPrivateStore {
   // set settings.type to 'undefined'
   private _MustHaveKeys = ['attrs.name', 'settings.widget'];
 
   private _CreateIfNotExistKeys = ['attrs.error'];
-
-  /**
-   * Save all fields' references, for quicker search
-   */
-  private _FLATTEN_FIELDS: any = {};
 
   // constructor() {
   //   this.initObservableFields = this.initObservableFields.bind(this);
@@ -64,7 +59,7 @@ class JsonFormPrivateStore {
 
       /* BEGIN expanding */
       const fieldKey = attrs.name;
-      const valueType = settings.type || 'string';
+      const valueType = settings.type;
 
       // Contents
       const contents = {
@@ -102,67 +97,9 @@ class JsonFormPrivateStore {
       }
 
       resultFields[fieldKey] = observable(contents);
-      this._FLATTEN_FIELDS[fieldKey] = resultFields[fieldKey];
     });
 
     return resultFields;
-  };
-
-  /**
-   * Get all fields' references
-   */
-  getFlattenAllFieldsReferences = () => {
-    return this._FLATTEN_FIELDS;
-  };
-
-  /**
-   * Get field from ReferenceFields
-   * @param {string} fieldName
-   */
-  getFieldByName = (fieldName: string, paraFields = this._FLATTEN_FIELDS) => {
-    return paraFields[fieldName];
-  };
-
-  /**
-   * Get values from ReferenceFields
-   * @param {array} fields
-   * @param {string} valueKey
-   */
-  getFlattenedValues = (
-    valueKey = 'attrs.value',
-    paraFields = this._FLATTEN_FIELDS,
-  ) => {
-    const fields = toJS(paraFields);
-    return Object.keys(fields).reduce((prevObj: any, key) => {
-      prevObj[key] = this._getValueByNestedKey(fields[key], valueKey);
-      return prevObj;
-    }, {});
-  };
-
-  /**
-   * reset all fields
-   * @param {*} fields
-   */
-  resetAllFields = (paraFields = this._FLATTEN_FIELDS) => {
-    Object.keys(paraFields).forEach(key => {
-      const field = paraFields[key];
-      // clear errors
-      this._setFieldError(field, key);
-      // set default values
-      this._resetDefaultValue(field);
-    });
-  };
-
-  /**
-   * set errors to all fields
-   * @param {*} fields
-   * @param {*} errors
-   */
-  setAllFieldsErrors = (errors: any, paraFields = this._FLATTEN_FIELDS) => {
-    Object.keys(paraFields).forEach(key => {
-      const field = paraFields[key];
-      this._setFieldError(field, key, errors);
-    });
   };
 
   /* *************************************************************** */
@@ -173,7 +110,7 @@ class JsonFormPrivateStore {
    * @param {string} fieldName
    * @param {object} fields
    */
-  getFieldByNameNested = (fieldName: string, fields: any) => {
+  getFieldByName = (fieldName: string, fields: any) => {
     if (!fields) return null;
 
     let field = fields[fieldName];
@@ -186,7 +123,7 @@ class JsonFormPrivateStore {
       const subFields = fields[oneFieldName].fields;
       if (!subFields) return false;
 
-      field = this.getFieldByNameNested(fieldName, subFields);
+      field = this.getFieldByName(fieldName, subFields);
       if (field) return true;
 
       return false;
@@ -200,18 +137,22 @@ class JsonFormPrivateStore {
    * @param {array} fields
    * @param {string} valueKey
    */
-  getFlattenedValuesNested = (valueKey = 'attrs.value', fields: any) => {
+  getFlattenedValues = (fields: any, valueKey = 'attrs.value') => {
     let data: any = {};
 
     Object.keys(fields).forEach(key => {
       const value = this._getValueByNestedKey(fields[key], valueKey);
-      data[key] = value;
+      const type = fields[key].settings.type;
+
+      if (type != null) {
+        data[key] = value;
+      }
 
       if (fields[key].fields) {
         // subfields
-        const subDataObj = this.getFlattenedValuesNested(
-          valueKey,
+        const subDataObj = this.getFlattenedValues(
           fields[key].fields,
+          valueKey,
         );
         data = { ...data, ...subDataObj };
       }
@@ -221,16 +162,34 @@ class JsonFormPrivateStore {
   };
 
   /**
+   * TODO: SIDE_EFFECT
+   */
+  setDataToAllFields = (fields: any, dataObj: any) => {
+    this._invokeFuncToAllFields(this._setValToField, fields, dataObj);
+  };
+
+  private _setValToField = (field: any, key: string, dataObj: any) => {
+    if (dataObj[key] != null) {
+      field.attrs.value = dataObj[key];
+    }
+  };
+
+  /**
    * Operation for all nested fields
    * @param {*} func
    * @param {*} fields
    * @param {*} funcArg
    */
-  invokeSetFuncToAllField = (func: Function, fields: any, ...funcArg: any) => {
+  @action
+  private _invokeFuncToAllFields = (
+    func: Function,
+    fields: any,
+    ...funcArg: any
+  ) => {
     Object.keys(fields).forEach(key => {
       const field = fields[key];
       if (field.fields) {
-        this.invokeSetFuncToAllField(func, field.fields, ...funcArg);
+        this._invokeFuncToAllFields(func, field.fields, ...funcArg);
       } else {
         func(field, key, ...funcArg);
       }
@@ -241,17 +200,12 @@ class JsonFormPrivateStore {
    * reset all fields
    * @param {*} fields
    */
-  resetAllFieldsNested = (fields: any) => {
-    // const newFields = toJS(fields);
-    const newFields = fields;
-
+  resetAllFields = (fields: any) => {
     // clear errors
-    this.invokeSetFuncToAllField(this._setFieldError, newFields);
+    this._invokeFuncToAllFields(this._setFieldError, fields);
 
     // set default values
-    this.invokeSetFuncToAllField(this._resetDefaultValue, newFields);
-
-    // return observable(newFields);
+    this._invokeFuncToAllFields(this._resetDefaultValue, fields);
   };
 
   /**
@@ -259,14 +213,10 @@ class JsonFormPrivateStore {
    * @param {*} fields
    * @param {*} errors
    */
-  setAllFieldsErrorsNested = (errors: any, fields: any) => {
-    // const newFields = toJS(fields);
-    const newFields = fields;
-
-    this.invokeSetFuncToAllField(this._setFieldError, newFields, errors);
-
-    // return observable(newFields);
+  setAllFieldsErrors = (errors: any, fields: any) => {
+    this._invokeFuncToAllFields(this._setFieldError, fields, errors);
   };
+
   /* *************************************************************** */
   /* End of nested fields methods                                    */
   /* *************************************************************** */

@@ -9,13 +9,13 @@ interface MuiJsonFormProps {
 function makeMuiJsonForm({ blueprint, data }: MuiJsonFormProps) {
   // initilize mobx store
   const store = new JsonFormStore(blueprint);
-  store.setFieldsValue(data);
+  store.setData(data);
 
   const form = <JsonForm store={store} />;
 
   const onSubmit = () => {
     if (store.checkAllOnSubmit()) {
-      return { status: 'ok!' };
+      return store.getData();
     }
 
     return false;

@@ -21,12 +21,17 @@ const IndexPage = props => {
     data: dataFromDb,
   });
 
+  const handleSubmit = React.useCallback(() => {
+    const data = onSubmit();
+    console.log(data);
+  }, [onSubmit]);
+
   return (
     <Container maxWidth="sm">
       <Grid container spacing={1}>
         {form}
       </Grid>
-      <Button color="primary" onClick={onSubmit}>
+      <Button color="primary" onClick={handleSubmit}>
         Login
       </Button>
     </Container>

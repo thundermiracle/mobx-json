@@ -11,13 +11,13 @@ function useMuiJsonForm({ blueprint, data }: MuiJsonFormProps) {
   const store = React.useMemo(() => {
     return new JsonFormStore(blueprint);
   }, [blueprint]);
-  store.setFieldsValue(data);
+  store.setData(data);
 
   const form = <JsonForm store={store} />;
 
   const onSubmit = React.useCallback(() => {
     if (store.checkAllOnSubmit()) {
-      return { status: 'ok!' };
+      return store.getData();
     }
 
     return false;
