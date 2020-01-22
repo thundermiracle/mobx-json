@@ -36,7 +36,7 @@ class JsonFormStore {
 
     Object.keys(dataObj).forEach(key => {
       if (this.fields[key] != null) {
-        this.fields[key].value = dataObj[key];
+        this.fields[key].attrs.value = dataObj[key];
       }
     });
   };

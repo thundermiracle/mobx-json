@@ -7,7 +7,9 @@
   ],
   "scripts": {
     "dev:form": "lerna run dev --scope @mobx-json/form --stream",
-    "dev:form:example": "lerna run dev --scope @mobx-json/form-example --stream",
+    "dev:muiform": "lerna run dev --scope @mobx-json/mui-form --stream",
+    "dev:form:exp": "lerna run dev --scope @mobx-json/form-example --stream",
+    "dev:muiform:exp": "lerna run dev --scope @mobx-json/mui-form-example --stream",
     "build": "lerna run build --use-workspaces --stream",
     "eslint": "lerna run eslint:src --stream",
     "type-check": "lerna run type-check --stream",

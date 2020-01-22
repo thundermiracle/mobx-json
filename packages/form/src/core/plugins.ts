@@ -1,4 +1,4 @@
-import ValidatorJSManager from 'lib/ValidatorJSManager';
+import ValidatorJSManager from '../lib/ValidatorJSManager';
 
 class Plugins {
   // default plugins

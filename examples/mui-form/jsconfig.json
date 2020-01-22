@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "blueprints": ["src/blueprints/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
