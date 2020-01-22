@@ -1,7 +1,7 @@
 {
-  "name": "@mobx-json/form",
+  "name": "@mobx-json/mui-form",
   "version": "0.1.0",
-  "description": "create forms by json & mobx",
+  "description": "create material-ui forms by json & mobx",
   "main": "./dist/index.js",
   "files": [
     "dist"
@@ -26,20 +26,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "mobx": ">4.0.0",
-    "mobx-react": ">5.0.0",
-    "react": ">16.8.0",
-    "react-dom": ">16.8.0",
-    "validatorjs": ">3.0.0"
-  },
   "dependencies": {
-    "ramda": "0.26.1"
-  },
-  "devDependencies": {
+    "@material-ui/core": "4.8.3",
+    "@mobx-json/form": "0.1.0",
     "mobx": "4.13.0",
     "mobx-react": "6.1.5",
-    "prop-types": "15.7.2",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "validatorjs": "3.18.1"

@@ -69,7 +69,7 @@ const ReacbMobxJsonForm = ({
     widgetMap,
     extraProps,
   );
-  return allComponents;
+  return <>{allComponents}</>;
 };
 
 export default ReacbMobxJsonForm;
