@@ -11,6 +11,7 @@ const plugins = [
       root: ['./'],
       alias: {
         components: './src/components',
+        containers: './src/containers',
         lib: './src/lib',
       },
     },

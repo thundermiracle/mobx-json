@@ -1,29 +1,24 @@
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-
 import { makeWidgetMap } from '@mobx-json/form';
-import CheckBox from 'components/CheckBox';
-import GridContainer from 'components/GridContainer';
-import withMUIError from './withMUIError';
+import * as MUIComponents from 'components';
+
+import GridItemContainer from 'containers/GridItemContainer';
+
+import withMUIProps from './withMUIProps';
 import withGridItem from './withGridItem';
 
-const allComponents = {
-  TextField,
-  Dialog,
-  CheckBox,
-};
+const allComponents = MUIComponents;
 const allComponentsWidgetMap = makeWidgetMap(allComponents, [
   withGridItem,
-  withMUIError,
+  withMUIProps,
 ]);
 
-const containerComponents = {
-  GridContainer,
+const containerComponentsWidgetMap = {
+  GridItemContainer,
 };
 
 const widgetMap = {
   ...allComponentsWidgetMap,
-  ...containerComponents,
+  ...containerComponentsWidgetMap,
 };
 
 export default widgetMap;

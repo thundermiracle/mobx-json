@@ -28,7 +28,7 @@ const IndexPage = props => {
 
   return (
     <Container maxWidth="sm">
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         {form}
       </Grid>
       <Button color="primary" onClick={handleSubmit}>

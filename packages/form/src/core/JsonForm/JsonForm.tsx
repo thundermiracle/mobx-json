@@ -3,6 +3,7 @@ import React from 'react';
 import plugins from 'core/plugins';
 import NativeHtmlWidget from './widget/NativeHtmlWidget';
 import withMobxAttrs from './hoc/withMobxAttrs';
+import withFieldAttrs from './hoc/withFieldAttrs';
 
 const renderAllFields = (fields: any, widgetMap: any, factoryProps: any) => {
   const allComponents = Object.keys(fields)
@@ -16,7 +17,7 @@ const renderAllFields = (fields: any, widgetMap: any, factoryProps: any) => {
         ObservableComponent = NativeHtmlWidget;
       } else if (innerFields) {
         // no need mobx attrs for Container(Grid, Group?)
-        ObservableComponent = widgetMap[widget];
+        ObservableComponent = withFieldAttrs(widgetMap[widget]);
       } else {
         ObservableComponent = withMobxAttrs(widgetMap[widget]);
       }

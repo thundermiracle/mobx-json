@@ -5,7 +5,7 @@ import { makeWidgetMap } from '@mobx-json/form';
 import CheckBox from './CheckBox';
 import withMUIError from './withMUIError';
 import withGridItem from './withGridItem';
-import GridContainer from '../../client/components/GridContainer';
+import GridItemContainer from '../../client/components/GridItemContainer';
 
 const allComponents = {
   TextField,
@@ -18,7 +18,7 @@ const allComponentsWidgetMap = makeWidgetMap(allComponents, [
 ]);
 
 const containerComponents = {
-  GridContainer,
+  GridItemContainer,
 };
 
 const widgetMap = {

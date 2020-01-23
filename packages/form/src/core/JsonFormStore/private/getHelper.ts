@@ -5,10 +5,14 @@ import { toJS, observable, action } from 'mobx';
  * functions with SIDE_EFFECT should be moved to _setHelpers.ts
  */
 class GetHelper {
-  // set settings.type to 'undefined'
+  // set settings.valueType to 'undefined'
   private _MustHaveKeys = ['attrs.name', 'settings.widget'];
 
   private _CreateIfNotExistKeys = ['attrs.error'];
+
+  private _defaultValueType = 'string';
+
+  private _containerValueType = 'container';
 
   // constructor() {
   //   this.initObservableFields = this.initObservableFields.bind(this);
@@ -41,22 +45,30 @@ class GetHelper {
 
       /* BEGIN expanding */
       const fieldKey = attrs.name;
-      const valueType = settings.type;
+      const valueType = settings.valueType || this._defaultValueType;
 
       // field's contents
       // copy from json
       const settingsFlatten = { ...settings };
 
       const attrsFlatten = { ...attrs };
-      // set value to defaultValue if exist, otherwise set it by settings.type
-      if (attrsFlatten.value == null && valueType != null) {
+      // set value to defaultValue if exist, otherwise set it by settings.valueType
+      if (
+        attrsFlatten.value == null &&
+        valueType !== this._containerValueType
+      ) {
         attrsFlatten.value =
           attrsFlatten.defaultValue || this._getDefaultValueByType(valueType);
       }
       // add error if not defined
-      if ((attrsFlatten.error == null && valueType) != null) {
+      if (
+        (attrsFlatten.error == null && valueType) !== this._containerValueType
+      ) {
         attrsFlatten.error = '';
       }
+      // required property
+      attrsFlatten.required =
+        this._isRequired(settingsFlatten) || attrsFlatten.required;
 
       // nested fields
       const fieldsFlatten = childFields
@@ -115,9 +127,9 @@ class GetHelper {
 
     Object.keys(fields).forEach(key => {
       const value = this._getValueByNestedKey(fields[key], valueKey);
-      const type = fields[key].settings.type;
+      const valueType = fields[key].settings.valueType;
 
-      if (type != null) {
+      if (valueType !== this._containerValueType) {
         data[key] = value;
       }
 
@@ -175,6 +187,14 @@ class GetHelper {
     });
 
     return { value: vals, rule: rules };
+  };
+
+  private _isRequired = (settings: any) => {
+    // required string in rule
+    const { rule = '' } = settings;
+    const allRules = rule.split('|');
+
+    return allRules.includes('required');
   };
 
   private _getDefaultValueByType = (valueType: string) => {

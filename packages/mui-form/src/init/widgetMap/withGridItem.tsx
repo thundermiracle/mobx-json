@@ -1,7 +1,7 @@
 import React from 'react';
 import { IReactComponent } from 'mobx-react';
 
-import GridItem from 'components/GridItem';
+import GridItem from 'containers/GridItem';
 
 interface Props {
   grid?: any;

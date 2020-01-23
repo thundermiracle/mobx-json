@@ -2,7 +2,8 @@
   "fields": [
     {
       "settings": {
-        "widget": "GridContainer"
+        "widget": "GridItemContainer",
+        "valueType": "container"
       },
       "attrs": {
         "name": "grid1"
@@ -11,7 +12,6 @@
         {
           "settings": {
             "widget": "TextField",
-            "type": "string",
             "rule": "required|min:5"
           },
           "attrs": {
@@ -29,7 +29,6 @@
         {
           "settings": {
             "widget": "TextField",
-            "type": "string",
             "rule": "required|min:5"
           },
           "attrs": {
@@ -49,7 +48,6 @@
     {
       "settings": {
         "widget": "TextField",
-        "type": "string",
         "rule": "required|min:5"
       },
       "attrs": {
@@ -67,7 +65,6 @@
     {
       "settings": {
         "widget": "TextField",
-        "type": "string",
         "rule": "required|min:6"
       },
       "attrs": {

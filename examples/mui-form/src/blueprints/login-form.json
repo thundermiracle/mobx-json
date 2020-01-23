@@ -2,24 +2,23 @@
   "fields": [
     {
       "settings": {
-        "widget": "GridContainer"
+        "widget": "GridItemContainer",
+        "valueType": "container"
       },
       "attrs": {
-        "name": "grid1"
+        "name": "grid1",
+        "spacing": 4
       },
       "fields": [
         {
           "settings": {
             "widget": "TextField",
-            "type": "string",
             "rule": "required|min:5"
           },
           "attrs": {
             "name": "sub1",
             "label": "sub1",
             "placeholder": "Input your user id",
-            "required": true,
-            "fullWidth": true,
             "grid": {
               "xs": 6,
               "md": 3
@@ -29,15 +28,12 @@
         {
           "settings": {
             "widget": "TextField",
-            "type": "string",
             "rule": "required|min:5"
           },
           "attrs": {
             "name": "sub2",
             "label": "sub2",
             "placeholder": "Input your user id",
-            "required": true,
-            "fullWidth": true,
             "grid": {
               "xs": 6,
               "md": 3
@@ -49,15 +45,12 @@
     {
       "settings": {
         "widget": "TextField",
-        "type": "string",
         "rule": "required|min:5"
       },
       "attrs": {
         "name": "name",
         "label": "ID",
         "placeholder": "Input your user id",
-        "required": true,
-        "fullWidth": true,
         "grid": {
           "xs": 12,
           "md": 6
@@ -67,7 +60,6 @@
     {
       "settings": {
         "widget": "TextField",
-        "type": "string",
         "rule": "required|min:6"
       },
       "attrs": {
@@ -75,7 +67,6 @@
         "type": "password",
         "label": "Password",
         "placeholder": "Input your password",
-        "fullWidth": true,
         "grid": {
           "xs": 12,
           "md": 6
@@ -84,14 +75,43 @@
     },
     {
       "settings": {
+        "widget": "TextField",
+        "rule": "required"
+      },
+      "attrs": {
+        "name": "birthday",
+        "label": "Birthday",
+        "type": "date",
+        "grid": {
+          "xs": 6,
+          "md": 3
+        }
+      }
+    },
+    {
+      "settings": {
+        "widget": "TextField",
+        "rule": "required"
+      },
+      "attrs": {
+        "name": "birthtime",
+        "type": "time",
+        "keepLabelSpace": true,
+        "grid": {
+          "xs": 6,
+          "md": 3
+        }
+      }
+    },
+    {
+      "settings": {
         "widget": "CheckBox",
-        "type": "boolean",
+        "valueType": "boolean",
         "rule": "required"
       },
       "attrs": {
         "name": "agreement",
         "label": "I Agree!",
-        "fullWidth": true,
         "grid": {
           "xs": 6,
           "md": 3

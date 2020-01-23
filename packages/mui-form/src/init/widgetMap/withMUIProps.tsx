@@ -7,7 +7,9 @@ interface Props {
 
 export default (Component: IReactComponent) => {
   const WithMUIError = ({ error = '', ...restProps }: Props) => {
-    return <Component {...restProps} error={!!error} helperText={error} />;
+    return (
+      <Component fullWidth {...restProps} error={!!error} helperText={error} />
+    );
   };
 
   return observer(WithMUIError);
