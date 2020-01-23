@@ -1,14 +1,10 @@
 import { action, observable, toJS } from 'mobx';
 
 import plugins from '../plugins';
-import _JsonFormStore from './private/_JsonFormStore';
+import getHelper from './private/getHelper';
+import setHelper from './private/setHelper';
 
 class JsonFormStore {
-  /**
-   * Private methods class
-   */
-  private _jsonFormPrivate = new _JsonFormStore();
-
   @observable
   fields: any = {};
 
@@ -30,7 +26,7 @@ class JsonFormStore {
    *  @param {any} extraMustHaveKeys
    */
   initFieldsByJsonBlueprint = (fieldsProp: any, extraMustHaveKeys = []) => {
-    this.fields = this._jsonFormPrivate.initObservableFields(
+    this.fields = getHelper.initObservableFields(
       fieldsProp.fields,
       extraMustHaveKeys,
     );
@@ -44,14 +40,14 @@ class JsonFormStore {
       return;
     }
 
-    this._jsonFormPrivate.setDataToAllFields(this.fields, dataObj);
+    setHelper.setDataToAllFields(this.fields, dataObj);
   };
 
   /**
    * get data for submit
    */
   getData = () => {
-    return this._jsonFormPrivate.getFlattenedValues(this.fields);
+    return getHelper.getFlattenedValues(this.fields);
   };
 
   /**
@@ -61,16 +57,16 @@ class JsonFormStore {
    */
   @action
   onFieldChangeCheckAll = (fieldName: string, value: any) => {
-    const field = this._jsonFormPrivate.getFieldByName(fieldName, this.fields);
+    const field = getHelper.getFieldByName(fieldName, this.fields);
     if (!field) return;
 
     const { attrs } = field;
     attrs.value = value;
 
-    const checkData = this._getAvailableValueRulesKeyLabel();
+    const checkData = getHelper.getAvailableValueRulesKeyLabel(this.fields);
 
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
-    this._jsonFormPrivate.setAllFieldsErrors(errors, this.fields);
+    setHelper.setAllFieldsErrors(errors, this.fields);
   };
 
   /**
@@ -79,7 +75,7 @@ class JsonFormStore {
    */
   @action
   onFieldChange = (fieldName: string, value: any) => {
-    const field = this._jsonFormPrivate.getFieldByName(fieldName, this.fields);
+    const field = getHelper.getFieldByName(fieldName, this.fields);
     if (!field) return;
 
     const { attrs, settings } = field;
@@ -111,78 +107,20 @@ class JsonFormStore {
    */
   @action
   checkAllOnSubmit = () => {
-    const checkData = this._getAvailableValueRulesKeyLabel();
+    const checkData = getHelper.getAvailableValueRulesKeyLabel(this.fields);
 
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
 
-    this._jsonFormPrivate.setAllFieldsErrors(errors, this.fields);
+    setHelper.setAllFieldsErrors(errors, this.fields);
     return Object.keys(errors).length === 0;
   };
 
   resetAllFields = () => {
-    this._jsonFormPrivate.resetAllFields(this.fields);
+    setHelper.resetAllFields(this.fields);
   };
 
   clearAllErrors = () => {
-    this._jsonFormPrivate.setAllFieldsErrors(null, this.fields);
-  };
-
-  // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓Internal Functions↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ //
-  /**
-   * Do not check if rule was empty
-   */
-  private _getAvailableValueRulesKeyLabel = () => {
-    const fields = toJS(this.fields);
-    const allvals = this._jsonFormPrivate.getFlattenedValues(
-      fields,
-      'attrs.value',
-    );
-    const allrules = this._jsonFormPrivate.getFlattenedValues(
-      fields,
-      'settings.rule',
-    );
-    const allnames = this._jsonFormPrivate.getFlattenedValues(
-      fields,
-      'attrs.name',
-    );
-
-    const vals: any = {};
-    const rules: any = {};
-
-    Object.keys(allvals).forEach(key => {
-      if (allrules[key] != null && allrules[key] !== '') {
-        vals[allnames[key]] = allvals[key];
-        rules[allnames[key]] = allrules[key];
-      }
-    });
-
-    return { value: vals, rule: rules };
-  };
-
-  /**
-   * Do not check if rule was empty
-   */
-  private _getAvailableValueRulesKeyField = () => {
-    const fields = toJS(this.fields);
-    const allvals = this._jsonFormPrivate.getFlattenedValues(
-      fields,
-      'attrs.value',
-    );
-    const allrules = this._jsonFormPrivate.getFlattenedValues(
-      fields,
-      'settings.rule',
-    );
-    const vals: any = {};
-    const rules: any = {};
-
-    Object.keys(allvals).forEach(key => {
-      if (allrules[key] != null && allrules[key] !== '') {
-        vals[key] = allvals[key];
-        rules[key] = allrules[key];
-      }
-    });
-
-    return { value: vals, rule: rules };
+    setHelper.setAllFieldsErrors(null, this.fields);
   };
 }
 
