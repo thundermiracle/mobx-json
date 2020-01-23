@@ -105,7 +105,37 @@
     },
     {
       "settings": {
-        "widget": "CheckBox",
+        "widget": "Radio",
+        "valueType": "number",
+        "rule": "required"
+      },
+      "attrs": {
+        "name": "sex",
+        "label": "Sex",
+        "defaultValue": 1,
+        "items": [
+          {
+            "label": "male",
+            "value": 0
+          },
+          {
+            "label": "female",
+            "value": 1
+          },
+          {
+            "label": "other",
+            "value": -1
+          }
+        ],
+        "grid": {
+          "xs": 12,
+          "md": 6
+        }
+      }
+    },
+    {
+      "settings": {
+        "widget": "Checkbox",
         "valueType": "boolean",
         "rule": "required"
       },
@@ -113,8 +143,7 @@
         "name": "agreement",
         "label": "I Agree!",
         "grid": {
-          "xs": 6,
-          "md": 3
+          "xs": 12
         }
       }
     }

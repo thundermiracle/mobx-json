@@ -1,11 +1,16 @@
 import React from 'react';
 
 import plugins from 'core/plugins';
+import { isNativeWidget } from './lib/utils';
 import NativeHtmlWidget from './widget/NativeHtmlWidget';
 import withMobxAttrs from './hoc/withMobxAttrs';
 import withFieldAttrs from './hoc/withFieldAttrs';
 
-const renderAllFields = (fields: any, widgetMap: any, factoryProps: any) => {
+const renderAllFields = (
+  fields: any,
+  widgetMap: any,
+  factoryProps: any,
+): JSX.Element[] => {
   const allComponents = Object.keys(fields)
     .map(key => fields[key])
     .map(field => {
@@ -13,7 +18,7 @@ const renderAllFields = (fields: any, widgetMap: any, factoryProps: any) => {
       const widget = settings.widget;
       let ObservableComponent;
       // set WrapperComponet to widget if it is not defined in mapper
-      if (!widgetMap[widget]) {
+      if (isNativeWidget(widget)) {
         ObservableComponent = NativeHtmlWidget;
       } else if (innerFields) {
         // no need mobx attrs for Container(Grid, Group?)

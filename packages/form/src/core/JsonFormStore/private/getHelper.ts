@@ -214,6 +214,23 @@ class GetHelper {
   };
 
   /**
+   * format value for onChange or submit
+   */
+  getTypedValue = (value: any, type = 'string') => {
+    switch (type) {
+      case 'number':
+        return +value;
+      case 'boolean':
+        // eslint-disable-next-line eqeqeq
+        return value == true;
+      case 'string':
+        return value.toString();
+      default:
+        return value;
+    }
+  };
+
+  /**
    * [Check whether paramObj has all keys in mustHaveList or not]
    * @param {object} paramObj
    * @param {array} mustHaveList

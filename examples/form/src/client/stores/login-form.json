@@ -18,7 +18,6 @@
             "name": "sub1",
             "label": "sub1",
             "placeholder": "Input your user id",
-            "required": true,
             "fullWidth": true,
             "grid": {
               "xs": 6,
@@ -35,7 +34,6 @@
             "name": "sub2",
             "label": "sub2",
             "placeholder": "Input your user id",
-            "required": true,
             "fullWidth": true,
             "grid": {
               "xs": 6,
@@ -54,7 +52,6 @@
         "name": "name",
         "label": "ID",
         "placeholder": "Input your user id",
-        "required": true,
         "fullWidth": true,
         "grid": {
           "xs": 12,
@@ -76,22 +73,6 @@
         "grid": {
           "xs": 12,
           "md": 6
-        }
-      }
-    },
-    {
-      "settings": {
-        "widget": "CheckBox",
-        "type": "boolean",
-        "rule": "required"
-      },
-      "attrs": {
-        "name": "agreement",
-        "label": "I Agree!",
-        "fullWidth": true,
-        "grid": {
-          "xs": 6,
-          "md": 3
         }
       }
     }

@@ -35,7 +35,7 @@ class JsonFormStore {
   /**
    * @param dataObj
    */
-  setData = (dataObj: null | undefined | any) => {
+  setData = (dataObj: null | undefined | any): void => {
     if (dataObj == null) {
       return;
     }
@@ -79,7 +79,7 @@ class JsonFormStore {
     if (!field) return;
 
     const { attrs, settings } = field;
-    attrs.value = value;
+    attrs.value = getHelper.getTypedValue(value, settings.valueType);
 
     const key = attrs.name;
 

@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import MUITextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { FieldProps } from './types';
+
 const TypesNeedHover = ['date', 'time', 'week', 'month', 'datetime-local'];
 
 const useStyles = makeStyles(() => ({
@@ -12,13 +14,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-interface TextFieldProps {
-  label?: string;
+type TextFieldProps = {
   type?: string;
   InputLabelProps?: any;
-  keepLabelSpace?: boolean;
-  className?: string;
-}
+} & FieldProps;
 
 const TextField = ({
   label = '',
@@ -27,7 +26,7 @@ const TextField = ({
   keepLabelSpace = false,
   className,
   ...restProps
-}: TextFieldProps) => {
+}: TextFieldProps): JSX.Element => {
   const classes = useStyles();
 
   let extraLabelProps = {};
