@@ -42,7 +42,12 @@ const Checkbox = ({
     >
       <FormControlLabel
         control={
-          <MUICheckbox checked={value} value={checkedValue} {...restProps} />
+          <MUICheckbox
+            checked={value}
+            value={checkedValue}
+            color="primary"
+            {...restProps}
+          />
         }
         label={label}
       />

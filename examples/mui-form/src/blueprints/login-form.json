@@ -105,6 +105,20 @@
     },
     {
       "settings": {
+        "widget": "Checkbox",
+        "valueType": "boolean",
+        "rule": "required"
+      },
+      "attrs": {
+        "name": "agreement",
+        "label": "I Agree!",
+        "grid": {
+          "xs": 12
+        }
+      }
+    },
+    {
+      "settings": {
         "widget": "Radio",
         "valueType": "number",
         "rule": "required"
@@ -135,13 +149,27 @@
     },
     {
       "settings": {
-        "widget": "Checkbox",
-        "valueType": "boolean",
+        "widget": "Checkboxes",
+        "valueType": "array",
         "rule": "required"
       },
       "attrs": {
-        "name": "agreement",
-        "label": "I Agree!",
+        "name": "interest",
+        "label": "Interest",
+        "items": [
+          {
+            "label": "Movie",
+            "value": 1
+          },
+          {
+            "label": "Gaming",
+            "value": 2
+          },
+          {
+            "label": "Coding",
+            "value": 3
+          }
+        ],
         "grid": {
           "xs": 12
         }

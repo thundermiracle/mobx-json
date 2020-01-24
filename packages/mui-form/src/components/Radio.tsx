@@ -24,6 +24,8 @@ const Radio = ({
   fullWidth = false,
   row = true,
   items = [],
+  value,
+  onChange,
   ...restProps
 }: RadioProps): JSX.Element => {
   const helperTextPart = helperText ? (
@@ -38,13 +40,18 @@ const Radio = ({
       component="fieldset"
     >
       <FormLabel>{label}</FormLabel>
-      <RadioGroup aria-label="gender" row={row} {...restProps}>
+      <RadioGroup
+        aria-label="gender"
+        row={row}
+        value={value}
+        onChange={onChange}
+      >
         {items.map(
           ({ label: itemLabel, value: itemValue, ...restProperties }: Item) => (
             <FormControlLabel
               key={itemValue.toString()}
               value={itemValue}
-              control={<MUIRadio />}
+              control={<MUIRadio color="primary" {...restProps} />}
               label={itemLabel || itemValue}
               {...restProperties}
             />

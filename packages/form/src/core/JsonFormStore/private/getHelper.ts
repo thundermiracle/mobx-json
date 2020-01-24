@@ -242,6 +242,8 @@ class GetHelper {
         return 0;
       case 'object':
         return {};
+      case 'array':
+        return [];
       case 'boolean':
         return false;
       case 'string':
