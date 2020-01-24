@@ -1,33 +1,18 @@
 import React from 'react';
 
-import clsx from 'clsx';
 import {
   FormControl,
-  FormLabel,
   FormControlLabel,
-  FormHelperText,
   RadioGroup,
   Radio as MUIRadio,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import FormLabel from './lib/MyFormLabel';
+import FormHelperText from './lib/MyFormHelperText';
+
 import { FieldProps, Item } from './types';
 
-const useStyles = makeStyles({
-  label: {
-    fontSize: `${13 / 16}rem`,
-  },
-  directionHorizon: {
-    flexDirection: 'row',
-  },
-});
-
-enum Direction {
-  Horizon = 'horizon',
-  Vertical = 'vertical',
-}
-
 type RadioProps = {
-  direction?: Direction;
+  row?: boolean;
   items?: Item[];
 } & FieldProps;
 
@@ -37,13 +22,10 @@ const Radio = ({
   error = false,
   helperText = '',
   fullWidth = false,
-  direction = Direction.Horizon,
-  className,
+  row = true,
   items = [],
   ...restProps
 }: RadioProps): JSX.Element => {
-  const classes = useStyles();
-
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
   ) : null;
@@ -55,26 +37,19 @@ const Radio = ({
       required={required}
       component="fieldset"
     >
-      <FormLabel component="legend" className={classes.label}>
-        {label}
-      </FormLabel>
-      <RadioGroup
-        aria-label="gender"
-        {...restProps}
-        className={clsx(
-          { [classes.directionHorizon]: direction === Direction.Horizon },
-          className,
+      <FormLabel>{label}</FormLabel>
+      <RadioGroup aria-label="gender" row={row} {...restProps}>
+        {items.map(
+          ({ label: itemLabel, value: itemValue, ...restProperties }: Item) => (
+            <FormControlLabel
+              key={itemValue.toString()}
+              value={itemValue}
+              control={<MUIRadio />}
+              label={itemLabel || itemValue}
+              {...restProperties}
+            />
+          ),
         )}
-      >
-        {items.map(({ label, value, ...restProperties }: Item) => (
-          <FormControlLabel
-            key={value.toString()}
-            value={value}
-            control={<MUIRadio />}
-            label={label || value}
-            {...restProperties}
-          />
-        ))}
       </RadioGroup>
       {helperTextPart}
     </FormControl>

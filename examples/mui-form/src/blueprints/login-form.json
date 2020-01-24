@@ -112,7 +112,7 @@
       "attrs": {
         "name": "sex",
         "label": "Sex",
-        "defaultValue": 1,
+        "defaultValue": null,
         "items": [
           {
             "label": "male",

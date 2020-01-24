@@ -57,8 +57,9 @@ class GetHelper {
         attrsFlatten.value == null &&
         valueType !== this._containerValueType
       ) {
-        attrsFlatten.value =
-          attrsFlatten.defaultValue || this._getDefaultValueByType(valueType);
+        attrsFlatten.value = this._isKeyInObj('defaultValue', attrsFlatten)
+          ? this._purgeDefaultValue(attrsFlatten.defaultValue)
+          : this._getDefaultValueByType(valueType);
       }
       // add error if not defined
       if (
@@ -189,6 +190,44 @@ class GetHelper {
     return { value: vals, rule: rules };
   };
 
+  /**
+   * format value for onChange or submit
+   */
+  getTypedValue = (value: any, type = 'string') => {
+    // [], null, undefined, ''
+    if (value == null || value.length === 0) {
+      return value;
+    }
+
+    switch (type) {
+      case 'number':
+        return +value;
+      case 'boolean':
+        // eslint-disable-next-line eqeqeq
+        return value == true;
+      case 'string':
+        return value.toString();
+      default:
+        return value;
+    }
+  };
+
+  private _isKeyInObj = (key: string, obj: object) => {
+    return Object.keys(obj).includes(key);
+  };
+
+  /**
+   * return '' if defaultValue is null
+   * to avoid uncontrolled component -> controlled component warning
+   */
+  private _purgeDefaultValue = (defaultVal?: any) => {
+    if (defaultVal === null) {
+      return '';
+    }
+
+    return defaultVal;
+  };
+
   private _isRequired = (settings: any) => {
     // required string in rule
     const { rule = '' } = settings;
@@ -210,23 +249,6 @@ class GetHelper {
       case 'undefined':
       default:
         return null;
-    }
-  };
-
-  /**
-   * format value for onChange or submit
-   */
-  getTypedValue = (value: any, type = 'string') => {
-    switch (type) {
-      case 'number':
-        return +value;
-      case 'boolean':
-        // eslint-disable-next-line eqeqeq
-        return value == true;
-      case 'string':
-        return value.toString();
-      default:
-        return value;
     }
   };
 
