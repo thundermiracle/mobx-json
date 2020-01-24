@@ -1,20 +1,13 @@
 import React from 'react';
 
-import clsx from 'clsx';
 import {
   FormControl,
   FormControlLabel,
   FormHelperText,
   Checkbox as MUICheckbox,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { FieldProps } from './types';
-
-const useStyles = makeStyles(() => ({
-  labelSpace: {
-    paddingTop: 12,
-  },
-}));
+import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 
 type CheckboxProps = {
   value?: boolean;
@@ -32,7 +25,9 @@ const Checkbox = ({
   keepLabelSpace = false,
   ...restProps
 }: CheckboxProps): JSX.Element => {
-  const classes = useStyles();
+  const labelSpaceClass = useKeepLabelSpace({
+    keepLabelSpace,
+  });
 
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
@@ -43,7 +38,7 @@ const Checkbox = ({
       fullWidth={fullWidth}
       required={required}
       error={error}
-      className={clsx({ [classes.labelSpace]: keepLabelSpace })}
+      className={labelSpaceClass}
     >
       <FormControlLabel
         control={

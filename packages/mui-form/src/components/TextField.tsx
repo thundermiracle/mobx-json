@@ -1,18 +1,11 @@
 import React from 'react';
 
-import clsx from 'clsx';
 import MUITextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 
+import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 import { FieldProps } from './types';
 
 const TypesNeedHover = ['date', 'time', 'week', 'month', 'datetime-local'];
-
-const useStyles = makeStyles(() => ({
-  labelSpace: {
-    paddingTop: 16,
-  },
-}));
 
 type TextFieldProps = {
   type?: string;
@@ -27,7 +20,7 @@ const TextField = ({
   className,
   ...restProps
 }: TextFieldProps): JSX.Element => {
-  const classes = useStyles();
+  const labelSpaceClass = useKeepLabelSpace({ className, keepLabelSpace });
 
   let extraLabelProps = {};
   if (TypesNeedHover.includes(type)) {
@@ -43,10 +36,7 @@ const TextField = ({
     <MUITextField
       {...restProps}
       label={label}
-      className={clsx(
-        { [classes.labelSpace]: keepLabelSpace && !label },
-        className,
-      )}
+      className={labelSpaceClass}
       type={type}
       InputLabelProps={newInputLabelProps}
     />

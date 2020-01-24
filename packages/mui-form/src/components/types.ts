@@ -6,6 +6,7 @@ interface FieldProps {
   fullWidth?: boolean;
   keepLabelSpace?: boolean;
   className?: string;
+  disabled?: boolean;
   [key: string]: any;
 }
 
