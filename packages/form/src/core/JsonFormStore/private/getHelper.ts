@@ -1,4 +1,4 @@
-import { toJS, observable, action } from 'mobx';
+import { toJS, observable, action, isObservableObject } from 'mobx';
 
 /**
  * ALL functions in this class MUST be pure,
@@ -24,14 +24,14 @@ class GetHelper {
    *
    * Make fields.attrs observable and copy other property in fields into this.fields
    * Nested fields will also be expanded.
-   * @param {array} fieldsDef: definition from Json
+   * @param {array} fieldsJson: definition from Json
    */
-  initObservableFields = (fieldsDef: any[], extraMustHaveKeys = []) => {
-    if (!fieldsDef) return null;
+  initObservableFields = (fieldsJson: any[], extraMustHaveKeys = []) => {
+    if (!fieldsJson) return null;
 
     const resultFields: any = {};
 
-    fieldsDef.forEach(field => {
+    fieldsJson.forEach(field => {
       const { attrs, settings, fields: childFields, ...restProperties } = field;
 
       // MUST have attrs and settings
@@ -77,10 +77,11 @@ class GetHelper {
         : null;
 
       // contents
-      const contents = {
+      const contents: any = {
         settings: settingsFlatten,
         attrs: attrsFlatten,
-      } as any;
+        ...restProperties,
+      };
       if (fieldsFlatten != null) {
         contents.fields = fieldsFlatten;
       }
@@ -93,10 +94,10 @@ class GetHelper {
 
   /**
    * Get field by name from nested-fields
-   * @param {string} fieldName
    * @param {object} fields
+   * @param {string} fieldName
    */
-  getFieldByName = (fieldName: string, fields: any) => {
+  getFieldByName = (fields: any, fieldName: string) => {
     if (!fields) return null;
 
     let field = fields[fieldName];
@@ -109,7 +110,7 @@ class GetHelper {
       const subFields = fields[oneFieldName].fields;
       if (!subFields) return false;
 
-      field = this.getFieldByName(fieldName, subFields);
+      field = this.getFieldByName(subFields, fieldName);
       if (field) return true;
 
       return false;
@@ -123,8 +124,13 @@ class GetHelper {
    * @param {array} fields
    * @param {string} valueKey
    */
-  getFlattenedValues = (fields: any, valueKey = 'attrs.value') => {
+  getFlattenedValues = (fieldsMobx: any, valueKey = 'attrs.value') => {
     let data: any = {};
+
+    // purify fields if it's Mobx Observable object
+    const fields = isObservableObject(fieldsMobx)
+      ? toJS(fieldsMobx)
+      : fieldsMobx;
 
     Object.keys(fields).forEach(key => {
       const value = this._getValueByNestedKey(fields[key], valueKey);
@@ -143,7 +149,7 @@ class GetHelper {
         data = { ...data, ...subDataObj };
       }
     });
-
+    // console.log(fields)
     return data;
   };
 

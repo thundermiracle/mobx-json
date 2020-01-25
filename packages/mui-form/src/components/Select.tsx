@@ -18,7 +18,7 @@ const Select = ({
   items = [],
   helperText,
   fullWidth = false,
-  emptyItem = true,
+  emptyItem = false,
   ...restProps
 }: FieldProps) => {
   const helperTextPart = helperText ? (

@@ -57,7 +57,7 @@ class JsonFormStore {
    */
   @action
   onFieldChangeCheckAll = (fieldName: string, value: any) => {
-    const field = getHelper.getFieldByName(fieldName, this.fields);
+    const field = getHelper.getFieldByName(this.fields, fieldName);
     if (!field) return;
 
     const { attrs } = field;
@@ -75,7 +75,7 @@ class JsonFormStore {
    */
   @action
   onFieldChange = (fieldName: string, value: any) => {
-    const field = getHelper.getFieldByName(fieldName, this.fields);
+    const field = getHelper.getFieldByName(this.fields, fieldName);
     if (!field) return;
 
     const { attrs, settings } = field;
@@ -84,7 +84,7 @@ class JsonFormStore {
     const key = attrs.name;
 
     // check only if rule is exist
-    if (settings.rule === null || settings.rule === '') {
+    if (settings.rule == null || settings.rule === '') {
       return;
     }
 
