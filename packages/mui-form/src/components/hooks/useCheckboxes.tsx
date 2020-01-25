@@ -24,11 +24,13 @@ const initCheckStatus = (itemVals: any, checkedVals: any) => {
 function useCheckboxes({ name, items, value: checkedVals, onChange }: any) {
   const itemVals = propAll('value', items);
   const initStatus = initCheckStatus(itemVals, checkedVals);
-  const [checkedStatus, setCheckStatus] = React.useState(initStatus);
+  const [itemsCheckedStatus, setItemsCheckedStatus] = React.useState(
+    initStatus,
+  );
 
   // recalculate check status if value changed
   React.useEffect(() => {
-    setCheckStatus(initStatus);
+    setItemsCheckedStatus(initStatus);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkedVals]);
 
@@ -43,7 +45,7 @@ function useCheckboxes({ name, items, value: checkedVals, onChange }: any) {
       } else {
         // as uncontrolled component
         const newCheckStatus = zipObjArrWithVal(isChecked, itemVals);
-        setCheckStatus(newCheckStatus);
+        setItemsCheckedStatus(newCheckStatus);
       }
     },
     [itemVals, onChange, name],
@@ -55,7 +57,7 @@ function useCheckboxes({ name, items, value: checkedVals, onChange }: any) {
       const valStatus = e.target.checked;
 
       const newCheckStatus = {
-        ...checkedStatus,
+        ...itemsCheckedStatus,
         [valStr]: valStatus,
       };
 
@@ -66,13 +68,17 @@ function useCheckboxes({ name, items, value: checkedVals, onChange }: any) {
         onChange(name, valCheckedArray);
       } else {
         // as uncontrolled component
-        setCheckStatus(newCheckStatus);
+        setItemsCheckedStatus(newCheckStatus);
       }
     },
-    [checkedStatus, onChange, name],
+    [itemsCheckedStatus, onChange, name],
   );
 
-  return { checkStatus: checkedStatus, handleSelectAll, handleItemOnChange };
+  return {
+    itemsCheckedStatus,
+    handleSelectAll,
+    handleItemOnChange,
+  };
 }
 
 export default useCheckboxes;

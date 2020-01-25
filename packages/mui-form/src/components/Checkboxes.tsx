@@ -29,7 +29,7 @@ const Checkboxes = ({
   name,
   items,
   label,
-  displaySelectAll = true,
+  selectAll = false,
   selectAllLabel = 'ALL',
   required,
   hidden,
@@ -44,7 +44,11 @@ const Checkboxes = ({
 }: FieldProps) => {
   const classes = useStyles();
   const labelSpaceClass = useKeepLabelSpace({ keepLabelSpace });
-  const { checkStatus, handleSelectAll, handleItemOnChange } = useCheckboxes({
+  const {
+    itemsCheckedStatus,
+    handleSelectAll,
+    handleItemOnChange,
+  } = useCheckboxes({
     name,
     items,
     value,
@@ -52,12 +56,14 @@ const Checkboxes = ({
   });
 
   let selectAllPart;
-  if (displaySelectAll) {
-    const isAllItemsChecked = keys(pickBy(x => !x, checkStatus)).length === 0;
+  if (selectAll) {
+    const checkedCount = keys(pickBy(val => val, itemsCheckedStatus)).length;
 
     selectAllPart = (
       <SelectAllCheckbox
-        checked={isAllItemsChecked}
+        isSelected={checkedCount > 0}
+        isIndeterminate={checkedCount > 0 && checkedCount < items.length}
+        itemsCount={items.length}
         onChange={handleSelectAll}
         disabled={disabled}
         label={selectAllLabel}
@@ -96,7 +102,7 @@ const Checkboxes = ({
                   <MUICheckbox
                     name={itemValStr}
                     value={itemValStr}
-                    checked={checkStatus[itemValStr]}
+                    checked={itemsCheckedStatus[itemValStr]}
                     onChange={handleItemOnChange}
                     disabled={disabled || itemDisabled}
                     color="primary"
