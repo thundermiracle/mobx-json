@@ -83,7 +83,7 @@
         "label": "Birthday",
         "type": "date",
         "grid": {
-          "xs": 6,
+          "xs": 4,
           "md": 3
         }
       }
@@ -98,8 +98,37 @@
         "type": "time",
         "keepLabelSpace": true,
         "grid": {
-          "xs": 6,
+          "xs": 4,
           "md": 3
+        }
+      }
+    },
+    {
+      "settings": {
+        "widget": "Select",
+        "valueType": "string"
+      },
+      "attrs": {
+        "name": "city",
+        "label": "City",
+        "defaultValue": "",
+        "items": [
+          {
+            "label": "Tokyo",
+            "value": "tokyo"
+          },
+          {
+            "label": "Kanagawa",
+            "value": "kanagawa"
+          },
+          {
+            "label": "Chiba",
+            "value": "chiba"
+          }
+        ],
+        "grid": {
+          "xs": 4,
+          "md": 2
         }
       }
     },

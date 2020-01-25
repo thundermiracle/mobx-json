@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-import LoginFormJson from 'blueprints/login-form.json';
+import BasicFormJson from 'blueprints/basic-form.json';
 
 const dataFromDb = {
   name: 'Hello',
@@ -17,7 +17,7 @@ const dataFromDb = {
 
 const IndexPage = props => {
   const { form, onSubmit } = useMuiJsonForm({
-    blueprint: LoginFormJson,
+    blueprint: BasicFormJson,
     data: dataFromDb,
   });
 
