@@ -26,7 +26,11 @@ class GetHelper {
    * Nested fields will also be expanded.
    * @param {array} fieldsJson: definition from Json
    */
-  initObservableFields = (fieldsJson: any[], extraMustHaveKeys = []) => {
+  initObservableFields = (
+    fieldsJson: any[],
+    itemsSource: any,
+    extraMustHaveKeys = [],
+  ) => {
     if (!fieldsJson) return null;
 
     const resultFields: any = {};
@@ -70,6 +74,12 @@ class GetHelper {
       // required property
       attrsFlatten.required =
         this._isRequired(settingsFlatten) || attrsFlatten.required;
+
+      // itemsSource -> items, remove unnecessary items
+      if (attrsFlatten.itemsSource) {
+        attrsFlatten.items = itemsSource[attrsFlatten.itemsSource] || [];
+        Reflect.deleteProperty(attrsFlatten, 'itemsSource');
+      }
 
       // nested fields
       const fieldsFlatten = childFields

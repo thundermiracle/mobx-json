@@ -28,6 +28,7 @@ class JsonFormStore {
   initFieldsByJsonBlueprint = (fieldsProp: any, extraMustHaveKeys = []) => {
     this.fields = getHelper.initObservableFields(
       fieldsProp.fields,
+      plugins.itemsSource,
       extraMustHaveKeys,
     );
   };
