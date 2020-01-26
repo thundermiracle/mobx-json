@@ -203,6 +203,20 @@
           "xs": 12
         }
       }
+    },
+    {
+      "settings": {
+        "widget": "Switch",
+        "valueType": "boolean"
+      },
+      "attrs": {
+        "name": "airplace",
+        "label": "Airplane",
+        "fullWidth": false,
+        "grid": {
+          "xs": 12
+        }
+      }
     }
   ]
 }
