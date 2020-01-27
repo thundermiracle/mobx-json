@@ -2,6 +2,14 @@
   "fields": [
     {
       "settings": {
+        "widget": "Data"
+      },
+      "attrs": {
+        "name": "id"
+      }
+    },
+    {
+      "settings": {
         "widget": "GridItemContainer",
         "valueType": "container"
       },

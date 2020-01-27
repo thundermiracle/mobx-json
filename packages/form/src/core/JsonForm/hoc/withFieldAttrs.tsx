@@ -14,7 +14,9 @@ export default (Component: IReactComponent) => {
     fields,
     ...restProps
   }: FieldProps) => {
-    return <Component {...attrs} {...restProps} />;
+    const { hidden, ...restAttrs } = attrs;
+
+    return <Component {...restAttrs} {...restProps} />;
   };
 
   return observer(WithFieldAttrs);

@@ -35,7 +35,7 @@ export default (Component: IReactComponent) => {
       [onChange],
     );
 
-    const { defaultValue, ...restAttrs } = attrs;
+    const { defaultValue, hidden, ...restAttrs } = attrs;
     let valueProps;
     if (!attrs.value) {
       // show defaultValue if value is null

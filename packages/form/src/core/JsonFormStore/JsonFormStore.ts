@@ -3,10 +3,11 @@ import { action, observable, toJS } from 'mobx';
 import plugins from '../plugins';
 import getHelper from './private/getHelper';
 import setHelper from './private/setHelper';
+import { Fields } from './types';
 
 class JsonFormStore {
   @observable
-  fields: any = {};
+  fields: Fields = {};
 
   /**
    *

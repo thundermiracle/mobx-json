@@ -5,14 +5,16 @@ import { isNativeWidget } from './lib/utils';
 import NativeHtmlWidget from './widget/NativeHtmlWidget';
 import withMobxAttrs from './hoc/withMobxAttrs';
 import withFieldAttrs from './hoc/withFieldAttrs';
+import { filterFields } from './filters';
+
+import { Fields } from '../JsonFormStore/types';
 
 const renderAllFields = (
-  fields: any,
+  fields: Fields,
   widgetMap: any,
   factoryProps: any,
 ): JSX.Element[] => {
-  const allComponents = Object.keys(fields)
-    .map(key => fields[key])
+  const allComponents = filterFields(Object.values(fields))
     .map(field => {
       const { attrs, settings, fields: innerFields } = field;
       const widget = settings.widget;

@@ -1,4 +1,5 @@
 import { toJS, observable, action, isObservableObject } from 'mobx';
+import { Fields, JsonField } from '../types';
 
 /**
  * ALL functions in this class MUST be pure,
@@ -27,11 +28,13 @@ class GetHelper {
    * @param {array} fieldsJson: definition from Json
    */
   initObservableFields = (
-    fieldsJson: any[],
+    fieldsJson: JsonField[],
     itemsSource: any,
     extraMustHaveKeys = [],
-  ) => {
-    if (!fieldsJson) return null;
+  ): Fields => {
+    if (!fieldsJson) {
+      throw new Error('[JSON file error] JSON file is not defined.');
+    }
 
     const resultFields: any = {};
 
