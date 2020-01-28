@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 import BasicFormJson from 'blueprints/basic-form.json';
+import BasicDetailJson from 'blueprints/basic-detail.json';
 
 const dataFromDb = {
   id: 'userid12345',
@@ -14,10 +15,21 @@ const dataFromDb = {
   password: 'World',
   sub1: 'Sub1111',
   sub2: 'Sub222',
+  city: 'tokyo',
+  birthday: '2012-03-24T11:00:00',
+  agreement: true,
+  sex: 0,
+  interest: [2, 3],
+  airplane: true,
 };
 
 const IndexPage = props => {
-  const { form, submitWithCheck } = useMuiJsonForm({
+  const { form: detailForm } = useMuiJsonForm({
+    blueprint: BasicDetailJson,
+    data: dataFromDb,
+  });
+
+  const { form: modifyForm, submitWithCheck } = useMuiJsonForm({
     blueprint: BasicFormJson,
     data: dataFromDb,
   });
@@ -30,11 +42,14 @@ const IndexPage = props => {
   return (
     <Container maxWidth="sm">
       <Grid container spacing={2}>
-        {form}
+        {detailForm}
+      </Grid>
+      {/* <Grid container spacing={2}>
+        {modifyForm}
       </Grid>
       <Button color="primary" onClick={handleSubmit}>
         Login
-      </Button>
+      </Button> */}
     </Container>
   );
 };

@@ -38,6 +38,15 @@ const babelBaseConfig = {
       },
       'tree-shaking-mui-icons',
     ],
+    [
+      'import',
+      {
+        libraryName: 'date-fns',
+        libraryDirectory: '',
+        camel2DashComponentName: false,
+      },
+      'tree-shaking-date-fns',
+    ],
   ],
   env: {
     production: {

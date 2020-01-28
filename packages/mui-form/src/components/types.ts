@@ -1,3 +1,8 @@
+interface Format {
+  type: string;
+  template?: string;
+}
+
 interface FieldProps {
   label?: string;
   required?: boolean;
@@ -7,6 +12,7 @@ interface FieldProps {
   keepLabelSpace?: boolean;
   className?: string;
   disabled?: boolean;
+  format?: Format;
   [key: string]: any;
 }
 

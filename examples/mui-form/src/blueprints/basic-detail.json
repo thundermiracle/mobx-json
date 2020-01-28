@@ -83,13 +83,15 @@
     },
     {
       "settings": {
-        "widget": "TextField",
-        "rule": "required"
+        "widget": "Display"
       },
       "attrs": {
         "name": "birthday",
         "label": "Birthday",
-        "type": "date",
+        "format": {
+          "type": "date",
+          "template": "yyyy年MM月dd日"
+        },
         "grid": {
           "xs": 4,
           "md": 3
@@ -98,8 +100,7 @@
     },
     {
       "settings": {
-        "widget": "TextField",
-        "rule": "required"
+        "widget": "TextField"
       },
       "attrs": {
         "name": "birthtime",
@@ -117,6 +118,7 @@
         "valueType": "string"
       },
       "attrs": {
+        "disabled": true,
         "name": "city",
         "label": "City",
         "defaultValue": "",
@@ -131,24 +133,21 @@
     {
       "settings": {
         "widget": "Checkbox",
-        "valueType": "boolean",
-        "rule": "required"
+        "valueType": "boolean"
       },
       "attrs": {
+        "disabled": true,
         "name": "agreement",
-        "label": "I Agree!",
-        "grid": {
-          "xs": 12
-        }
+        "label": "I Agree!"
       }
     },
     {
       "settings": {
         "widget": "Radio",
-        "valueType": "number",
-        "rule": "required"
+        "valueType": "number"
       },
       "attrs": {
+        "disabled": true,
         "name": "sex",
         "label": "Sex",
         "defaultValue": null,
@@ -162,10 +161,10 @@
     {
       "settings": {
         "widget": "Checkboxes",
-        "valueType": "array",
-        "rule": "required"
+        "valueType": "array"
       },
       "attrs": {
+        "disabled": true,
         "name": "interest",
         "label": "Interest",
         "items": [
@@ -181,10 +180,7 @@
             "label": "Coding",
             "value": 3
           }
-        ],
-        "grid": {
-          "xs": 12
-        }
+        ]
       }
     },
     {
@@ -193,12 +189,10 @@
         "valueType": "boolean"
       },
       "attrs": {
+        "disabled": true,
         "name": "airplane",
         "label": "Airplane",
-        "fullWidth": false,
-        "grid": {
-          "xs": 12
-        }
+        "fullWidth": false
       }
     }
   ]

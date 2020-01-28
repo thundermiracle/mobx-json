@@ -1,4 +1,13 @@
-import { map, pick, prop, pluck, curry, zipObj, repeat } from 'ramda';
+import {
+  map,
+  isNil,
+  anyPass,
+  isEmpty,
+  pluck,
+  curry,
+  zipObj,
+  repeat,
+} from 'ramda';
 
 /**
  * ('a', [{ a: 1, b: 2}, { a: 3, b: 4} ])  => [ 1, 3 ]
@@ -21,4 +30,22 @@ const zipObjArrWithVal = curry((val: any, arr: string[]) => {
   return zipObj(arr, repeat(val, arr.length));
 });
 
-export { propAll, valsToString, zipObjArrWithVal };
+/**
+ * [], '', null, undefined -> true
+ */
+const isNilOrEmpty = anyPass([isNil, isEmpty]);
+
+/**
+ * '2020-01-28' -> true
+ * 'abc' -> false
+ * '' -> false
+ */
+const isDateStr = (dtStr: string): boolean => {
+  if (isNilOrEmpty(dtStr)) {
+    return false;
+  }
+
+  return new Date(dtStr).toString() !== 'Invalid Date';
+};
+
+export { propAll, valsToString, zipObjArrWithVal, isNilOrEmpty, isDateStr };
