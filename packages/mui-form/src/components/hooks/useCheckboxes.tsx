@@ -53,7 +53,7 @@ function useCheckboxes({ name, items, value: checkedVals, onChange }: any) {
 
   const handleItemOnChange = React.useCallback(
     e => {
-      const valStr = e.target.name;
+      const valStr = e.target.value;
       const valStatus = e.target.checked;
 
       const newCheckStatus = {

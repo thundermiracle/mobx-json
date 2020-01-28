@@ -1,15 +1,11 @@
 import React from 'react';
 
-import {
-  FormControl,
-  FormControlLabel,
-  RadioGroup,
-  Radio as MUIRadio,
-} from '@material-ui/core';
+import { FormControl, FormControlLabel, RadioGroup } from '@material-ui/core';
 import FormLabel from './lib/MyFormLabel';
 import FormHelperText from './lib/MyFormHelperText';
 
 import { FieldProps, Item } from './types';
+import MyRadio from './lib/MyRadio';
 
 type RadioProps = {
   row?: boolean;
@@ -26,6 +22,7 @@ const Radio = ({
   items = [],
   value,
   onChange,
+  domFocusRipple = true,
   ...restProps
 }: RadioProps): JSX.Element => {
   const helperTextPart = helperText ? (
@@ -51,7 +48,13 @@ const Radio = ({
             <FormControlLabel
               key={itemValue.toString()}
               value={itemValue}
-              control={<MUIRadio color="primary" {...restProps} />}
+              control={
+                <MyRadio
+                  color="primary"
+                  domFocusRipple={domFocusRipple}
+                  {...restProps}
+                />
+              }
               label={itemLabel || itemValue}
               {...restProperties}
             />

@@ -17,15 +17,15 @@ const dataFromDb = {
 };
 
 const IndexPage = props => {
-  const { form, onSubmit } = useMuiJsonForm({
+  const { form, submitWithCheck } = useMuiJsonForm({
     blueprint: BasicFormJson,
     data: dataFromDb,
   });
 
   const handleSubmit = React.useCallback(() => {
-    const data = onSubmit();
+    const data = submitWithCheck();
     console.log(data);
-  }, [onSubmit]);
+  }, [submitWithCheck]);
 
   return (
     <Container maxWidth="sm">

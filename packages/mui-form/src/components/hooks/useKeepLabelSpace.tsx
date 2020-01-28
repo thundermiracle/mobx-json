@@ -14,7 +14,7 @@ interface HookKeepLabelSpaceProps {
   keepLabelSpace?: boolean;
 }
 
-export default function useKeepLabelSpace({
+function useKeepLabelSpace({
   className,
   keepLabelSpace = false,
 }: HookKeepLabelSpaceProps) {
@@ -22,3 +22,5 @@ export default function useKeepLabelSpace({
 
   return clsx({ [classes.labelSpace]: keepLabelSpace }, className);
 }
+
+export default useKeepLabelSpace;

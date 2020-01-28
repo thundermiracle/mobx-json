@@ -4,12 +4,7 @@ import clsx from 'clsx';
 import { pickBy, keys } from 'ramda';
 
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  Checkbox as MUICheckbox,
-} from '@material-ui/core';
+import { FormControl, FormControlLabel, FormGroup } from '@material-ui/core';
 import FormLabel from './lib/MyFormLabel';
 import FormHelperText from './lib/MyFormHelperText';
 
@@ -17,6 +12,7 @@ import useCheckboxes from './hooks/useCheckboxes';
 import { FieldProps } from './types';
 import SelectAllCheckbox from './lib/SelectAllCheckbox';
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
+import MyCheckbox from './lib/MyCheckbox';
 
 const useStyles = makeStyles({
   hidden: {
@@ -40,6 +36,7 @@ const Checkboxes = ({
   keepLabelSpace = false,
   row = true,
   fullWidth = false,
+  domFocusRipple = true,
   ...restProps
 }: FieldProps) => {
   const classes = useStyles();
@@ -99,13 +96,14 @@ const Checkboxes = ({
               <FormControlLabel
                 key={itemValStr}
                 control={
-                  <MUICheckbox
-                    name={itemValStr}
+                  <MyCheckbox
+                    name={name}
                     value={itemValStr}
                     checked={itemsCheckedStatus[itemValStr]}
                     onChange={handleItemOnChange}
                     disabled={disabled || itemDisabled}
                     color="primary"
+                    domFocusRipple={domFocusRipple}
                     {...restProps}
                   />
                 }

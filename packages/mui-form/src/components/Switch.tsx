@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControlLabel, Switch as MUISwitch } from '@material-ui/core';
 import { FieldProps } from './types';
+import useMuiDomFocusRipple from './hooks/useMuiDomFocusRipple';
 
 const useStyles = makeStyles({
   fullWidth: {
@@ -18,15 +19,18 @@ const Switch = ({
   labelPlacement = 'end',
   error,
   helperText,
+  domFocusRipple = true,
   ...restProps
 }: FieldProps) => {
   const classes = useStyles();
+  const muiDomFocusRippleProps = useMuiDomFocusRipple();
+  const extraProps = domFocusRipple ? muiDomFocusRippleProps : {};
 
   return (
     <FormControlLabel
       className={clsx({ [classes.fullWidth]: fullWidth })}
       label={label}
-      control={<MUISwitch color="primary" {...restProps} />}
+      control={<MUISwitch color="primary" {...extraProps} {...restProps} />}
       labelPlacement={labelPlacement}
     />
   );

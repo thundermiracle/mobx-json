@@ -4,12 +4,12 @@ import { FormControlLabel, Checkbox as MUICheckbox } from '@material-ui/core';
 
 import { FieldProps } from '../types';
 
-function SelectAllCheckbox({
+const SelectAllCheckbox = ({
   label,
   isSelected,
   isIndeterminate,
   ...restProps
-}: FieldProps) {
+}: FieldProps): JSX.Element => {
   return (
     <FormControlLabel
       control={
@@ -23,6 +23,6 @@ function SelectAllCheckbox({
       label={label}
     />
   );
-}
+};
 
 export default SelectAllCheckbox;

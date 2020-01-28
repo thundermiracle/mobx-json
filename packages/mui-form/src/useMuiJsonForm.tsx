@@ -15,7 +15,7 @@ function useMuiJsonForm({ blueprint, data }: MuiJsonFormProps) {
 
   const form = <JsonForm store={store} />;
 
-  const onSubmit = React.useCallback(() => {
+  const submitWithCheck = React.useCallback(() => {
     if (store.checkAllOnSubmit()) {
       return store.getData();
     }
@@ -25,7 +25,7 @@ function useMuiJsonForm({ blueprint, data }: MuiJsonFormProps) {
 
   return {
     form,
-    onSubmit,
+    submitWithCheck,
   };
 }
 

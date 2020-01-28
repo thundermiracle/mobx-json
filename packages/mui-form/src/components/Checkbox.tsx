@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { FieldProps } from './types';
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
+import useMuiDomFocusRipple from './hooks/useMuiDomFocusRipple';
 
 type CheckboxProps = {
   value?: boolean;
@@ -23,11 +24,14 @@ const Checkbox = ({
   error = false,
   fullWidth = false,
   keepLabelSpace = false,
+  domFocusRipple = true,
   ...restProps
 }: CheckboxProps): JSX.Element => {
   const labelSpaceClass = useKeepLabelSpace({
     keepLabelSpace,
   });
+  const muiDomFocusRippleProps = useMuiDomFocusRipple();
+  const extraProps = domFocusRipple ? muiDomFocusRippleProps : {};
 
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
@@ -46,6 +50,7 @@ const Checkbox = ({
             checked={value}
             value={checkedValue}
             color="primary"
+            {...extraProps}
             {...restProps}
           />
         }
