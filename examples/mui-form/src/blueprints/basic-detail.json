@@ -10,6 +10,14 @@
     },
     {
       "settings": {
+        "widget": "Data"
+      },
+      "attrs": {
+        "name": "password"
+      }
+    },
+    {
+      "settings": {
         "widget": "GridItemContainer",
         "valueType": "container"
       },
@@ -20,13 +28,11 @@
       "fields": [
         {
           "settings": {
-            "widget": "TextField",
-            "rule": "required|min:5"
+            "widget": "Display"
           },
           "attrs": {
             "name": "sub1",
             "label": "sub1",
-            "placeholder": "Input your user id",
             "grid": {
               "xs": 6,
               "md": 3
@@ -35,13 +41,11 @@
         },
         {
           "settings": {
-            "widget": "TextField",
-            "rule": "required|min:5"
+            "widget": "Display"
           },
           "attrs": {
             "name": "sub2",
             "label": "sub2",
-            "placeholder": "Input your user id",
             "grid": {
               "xs": 6,
               "md": 3
@@ -52,13 +56,11 @@
     },
     {
       "settings": {
-        "widget": "TextField",
-        "rule": "required|min:5"
+        "widget": "Display"
       },
       "attrs": {
         "name": "name",
         "label": "ID",
-        "placeholder": "Input your user id",
         "grid": {
           "xs": 12,
           "md": 6
@@ -67,14 +69,12 @@
     },
     {
       "settings": {
-        "widget": "TextField",
-        "rule": "required|min:6"
+        "widget": "Display"
       },
       "attrs": {
-        "name": "password",
-        "type": "password",
+        "name": "passwordFake",
         "label": "Password",
-        "placeholder": "Input your password",
+        "value": "xxxxxxxx",
         "grid": {
           "xs": 12,
           "md": 6
@@ -100,12 +100,15 @@
     },
     {
       "settings": {
-        "widget": "TextField"
+        "widget": "Display"
       },
       "attrs": {
         "name": "birthtime",
-        "type": "time",
         "keepLabelSpace": true,
+        "format": {
+          "type": "time",
+          "template": "HH:mm"
+        },
         "grid": {
           "xs": 4,
           "md": 3
@@ -114,15 +117,11 @@
     },
     {
       "settings": {
-        "widget": "Select",
-        "valueType": "string"
+        "widget": "Display"
       },
       "attrs": {
-        "disabled": true,
         "name": "city",
         "label": "City",
-        "defaultValue": "",
-        "emptyItem": true,
         "itemsSource": "City",
         "grid": {
           "xs": 4,
@@ -167,20 +166,7 @@
         "disabled": true,
         "name": "interest",
         "label": "Interest",
-        "items": [
-          {
-            "label": "Movie",
-            "value": 1
-          },
-          {
-            "label": "Gaming",
-            "value": 2
-          },
-          {
-            "label": "Coding",
-            "value": 3
-          }
-        ]
+        "itemsSource": "Interest"
       }
     },
     {

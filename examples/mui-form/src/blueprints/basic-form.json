@@ -136,10 +136,7 @@
       },
       "attrs": {
         "name": "agreement",
-        "label": "I Agree!",
-        "grid": {
-          "xs": 12
-        }
+        "label": "I Agree!"
       }
     },
     {
@@ -181,10 +178,7 @@
             "label": "Coding",
             "value": 3
           }
-        ],
-        "grid": {
-          "xs": 12
-        }
+        ]
       }
     },
     {
@@ -195,10 +189,7 @@
       "attrs": {
         "name": "airplane",
         "label": "Airplane",
-        "fullWidth": false,
-        "grid": {
-          "xs": 12
-        }
+        "fullWidth": false
       }
     }
   ]

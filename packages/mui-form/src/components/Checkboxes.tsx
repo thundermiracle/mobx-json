@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 
 import clsx from 'clsx';
@@ -39,6 +40,10 @@ const Checkboxes = ({
   domFocusRipple = true,
   ...restProps
 }: FieldProps) => {
+  if (items == null) {
+    return null;
+  }
+
   const classes = useStyles();
   const labelSpaceClass = useKeepLabelSpace({ keepLabelSpace });
   const {

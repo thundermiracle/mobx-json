@@ -7,6 +7,8 @@ import {
   curry,
   zipObj,
   repeat,
+  propEq,
+  find,
 } from 'ramda';
 
 /**
@@ -48,4 +50,23 @@ const isDateStr = (dtStr: string): boolean => {
   return new Date(dtStr).toString() !== 'Invalid Date';
 };
 
-export { propAll, valsToString, zipObjArrWithVal, isNilOrEmpty, isDateStr };
+/**
+ * ('a', 2, [{a: 1}, {a: 2}, {a: 3}]) -> {a: 2}
+ * ('a', 4, [{a: 1}, {a: 2}, {a: 3}]) -> undefined
+ */
+const findByPropVal = (
+  propKey: string,
+  propVal: string | number,
+  objArr: object[],
+): object | undefined => {
+  return find(propEq(propKey, propVal), objArr);
+};
+
+export {
+  propAll,
+  valsToString,
+  zipObjArrWithVal,
+  isNilOrEmpty,
+  isDateStr,
+  findByPropVal,
+};

@@ -9,7 +9,6 @@ import MyRadio from './lib/MyRadio';
 
 type RadioProps = {
   row?: boolean;
-  items?: Item[];
 } & FieldProps;
 
 const Radio = ({
