@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { pickBy, keys } from 'ramda';
 import { propAll, valsToString, zipObjArrWithVal } from 'lib/utils';
 
-const initCheckStatus = (itemVals: any, checkedVals: any) => {
+import { Item } from '../ComponentTypes';
+
+interface CheckStatus {
+  [key: string]: boolean;
+}
+
+interface UseCheckboxesInput {
+  name: string;
+  items: Item[];
+  value: string[] | number[];
+  onChange: (name: string, value: any) => void;
+}
+
+interface UseCheckboxes {
+  itemsCheckedStatus: CheckStatus;
+  handleSelectAll: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleItemOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const initCheckStatus = (
+  itemVals: string[] | number[],
+  checkedVals: string[] | number[],
+): CheckStatus => {
   // array[any] -> array[string]
   const itemValsStr = valsToString(itemVals);
   const checkedValsStr = valsToString(checkedVals);
@@ -20,7 +42,12 @@ const initCheckStatus = (itemVals: any, checkedVals: any) => {
   return initStatus;
 };
 
-function useCheckboxes({ name, items, value: checkedVals, onChange }: any) {
+function useCheckboxes({
+  name,
+  items,
+  value: checkedVals,
+  onChange,
+}: UseCheckboxesInput): UseCheckboxes {
   const itemVals = propAll('value', items);
   const initStatus = initCheckStatus(itemVals, checkedVals);
   const [itemsCheckedStatus, setItemsCheckedStatus] = React.useState(

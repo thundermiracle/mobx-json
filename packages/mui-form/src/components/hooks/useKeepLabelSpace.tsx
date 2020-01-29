@@ -17,7 +17,7 @@ interface HookKeepLabelSpaceProps {
 function useKeepLabelSpace({
   className,
   keepLabelSpace = false,
-}: HookKeepLabelSpaceProps) {
+}: HookKeepLabelSpaceProps): string {
   const classes = useStyles();
 
   return clsx({ [classes.labelSpace]: keepLabelSpace }, className);

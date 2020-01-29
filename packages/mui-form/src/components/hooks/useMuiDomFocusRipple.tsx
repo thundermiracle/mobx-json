@@ -3,7 +3,10 @@ import React from 'react';
 /**
  * SIDE_EFFECT: click label will trigger ripple effect!!
  */
-function useMuiDomFocusRipple() {
+function useMuiDomFocusRipple(): {
+  action: React.MutableRefObject<any>;
+  onFocus: Function;
+} {
   // https://material-ui.com/api/button-base/#props
   const action: any = React.useRef();
 
