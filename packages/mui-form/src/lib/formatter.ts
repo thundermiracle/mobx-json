@@ -2,10 +2,14 @@ import { format, differenceInYears } from 'date-fns';
 
 import { isDateStr, isNilOrEmpty } from './utils';
 
+interface Formatters {
+  [key: string]: any;
+}
+
 /**
  * return '' or -1 if parsing failed to keep Component in controlled
  */
-const formatter = {
+const formatters: Formatters = {
   date(dateStr: string, template: string): string {
     if (!isDateStr(dateStr)) {
       return '';
@@ -60,7 +64,7 @@ export default (
   type: string,
   template?: string,
 ): string | number => {
-  const formatFunc: any = formatter[type];
+  const formatFunc = formatters[type];
   if (formatFunc == null) {
     return strBef;
   }
