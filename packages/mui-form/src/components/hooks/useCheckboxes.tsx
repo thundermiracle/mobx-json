@@ -1,21 +1,20 @@
 import React from 'react';
-import { pickBy, keys, without } from 'ramda';
+import { pickBy, keys } from 'ramda';
 import { propAll, valsToString, zipObjArrWithVal } from 'lib/utils';
 
 const initCheckStatus = (itemVals: any, checkedVals: any) => {
   // array[any] -> array[string]
   const itemValsStr = valsToString(itemVals);
   const checkedValsStr = valsToString(checkedVals);
-  const uncheckedValsStr = without(checkedVals, itemValsStr);
 
   // array[checked value] -> { checkedvalue: true, uncheckedvalue: false }
   const checkedValsObj = zipObjArrWithVal(true, checkedValsStr);
-  const uncheckedValsObj = zipObjArrWithVal(false, uncheckedValsStr);
+  const uncheckedAllValsObj = zipObjArrWithVal(false, itemValsStr);
 
   // init Checkboxes internal status
   const initStatus = {
+    ...uncheckedAllValsObj,
     ...checkedValsObj,
-    ...uncheckedValsObj,
   };
 
   return initStatus;
