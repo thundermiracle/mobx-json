@@ -14,22 +14,25 @@ const Select = ({
   error = false,
   required = false,
   label,
-  keepLabelSpace,
+  keepLabelSpace = false,
   items = [],
   helperText,
   fullWidth = false,
   emptyItem = false,
   ...restProps
-}: FieldProps) => {
+}: FieldProps): JSX.Element => {
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
   ) : null;
 
   const emptyItemPart = emptyItem ? <MenuItem value="" /> : null;
 
+  const labelPart =
+    label || keepLabelSpace ? <InputLabel>{label}</InputLabel> : null;
+
   return (
     <FormControl required={required} error={error} fullWidth={fullWidth}>
-      <InputLabel>{label}</InputLabel>
+      {labelPart}
       <MUISelect {...restProps}>
         {emptyItemPart}
         {items.map(({ value: itemValue, label: itemLabel }: any) => (
