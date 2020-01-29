@@ -2,10 +2,14 @@ import React from 'react';
 
 import { Checkbox as MUICheckbox } from '@material-ui/core';
 
-import { FieldProps } from '../types';
 import useMuiDomFocusRipple from '../hooks/useMuiDomFocusRipple';
 
-const MyCheckbox = ({ domFocusRipple = true, ...restProps }: FieldProps) => {
+import { FieldProps } from '../ComponentTypes';
+
+const MyCheckbox = ({
+  domFocusRipple = true,
+  ...restProps
+}: FieldProps): JSX.Element => {
   const muiDomFocusRippleProps = useMuiDomFocusRipple();
   const extraProps = domFocusRipple ? muiDomFocusRippleProps : {};
 

@@ -1,13 +1,14 @@
 import React from 'react';
 
 import plugins from 'core/plugins';
-import { isNativeWidget } from './lib/utils';
+import { isNativeWidget } from 'lib/utils';
+
 import NativeHtmlWidget from './widget/NativeHtmlWidget';
 import withMobxAttrs from './hoc/withMobxAttrs';
 import withFieldAttrs from './hoc/withFieldAttrs';
 import { filterFields } from './filters';
 
-import { Fields } from '../JsonFormStore/types';
+import { Fields, JsonForm } from '../JsonFormTypes';
 
 const renderAllFields = (
   fields: Fields,
@@ -51,20 +52,13 @@ const renderAllFields = (
   return allComponents;
 };
 
-interface Props {
-  store?: any;
-  fields?: any;
-  onChange?: Function;
-  widgetMap?: any;
-}
-
-const ReacbMobxJsonForm = ({
+const ReacbMobxJsonForm: React.FC<JsonForm> = ({
   store = {},
   fields,
   onChange,
   widgetMap = plugins.widgetMap,
   ...restProps
-}: Props) => {
+}) => {
   // use store.OnFiledChange if onChange function is not passed
   const extraProps = {
     ...restProps,

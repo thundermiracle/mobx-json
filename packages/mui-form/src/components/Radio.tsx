@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { FormControl, FormControlLabel, RadioGroup } from '@material-ui/core';
-import FormLabel from './lib/MyFormLabel';
-import FormHelperText from './lib/MyFormHelperText';
+import FormLabel from './internal/MyFormLabel';
+import FormHelperText from './internal/MyFormHelperText';
+import MyRadio from './internal/MyRadio';
 
-import { FieldProps, Item } from './types';
-import MyRadio from './lib/MyRadio';
+import { FieldProps, Item } from './ComponentTypes';
 
 type RadioProps = {
   row?: boolean;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FormControlLabel, Checkbox as MUICheckbox } from '@material-ui/core';
 
-import { FieldProps } from '../types';
+import { FieldProps } from '../ComponentTypes';
 
 const SelectAllCheckbox = ({
   label,

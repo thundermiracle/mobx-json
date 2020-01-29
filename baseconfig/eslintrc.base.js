@@ -43,7 +43,7 @@ module.exports = {
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 2,
     'react/jsx-filename-extension': 0,
-    'react/jsx-props-no-spreading': 1,
+    'react/jsx-props-no-spreading': 0,
   },
   settings: {
     'import/resolver': {

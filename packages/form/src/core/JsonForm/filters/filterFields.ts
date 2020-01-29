@@ -1,7 +1,6 @@
-import { Field } from 'core/JsonFormStore/types';
+import { transduce, listCombiner, compose } from 'lib/utils';
 
-import { transduce, listCombiner, compose } from '../lib/utils';
-
+import { Field } from '../../JsonFormTypes';
 import widget from './widget';
 import hidden from './hidden';
 

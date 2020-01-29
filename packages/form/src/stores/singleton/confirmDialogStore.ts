@@ -14,7 +14,7 @@ class ConfirmDialogStore extends DialogStore {
    * @param {*string} dialogMessage: [DEFAULT]Are you sure?
    */
   @action
-  confirmDiscardChanges = (dialogMessage = '') => {
+  confirmDiscardChanges = (dialogMessage = ''): Promise<any> => {
     this.dialogMessage = dialogMessage || 'Are you sure?';
 
     return new Promise(resolve => {
@@ -23,12 +23,12 @@ class ConfirmDialogStore extends DialogStore {
     });
   };
 
-  handleOk = () => {
+  handleOk = (): void => {
     this.closeDialog();
     this._confirmResolver(true);
   };
 
-  handleCancel = () => {
+  handleCancel = (): void => {
     this.closeDialog();
     if (this._confirmResolver) {
       this._confirmResolver(false);

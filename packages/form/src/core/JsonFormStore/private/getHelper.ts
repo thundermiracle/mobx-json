@@ -1,5 +1,11 @@
-import { toJS, observable, action, isObservableObject } from 'mobx';
-import { Fields, JsonField } from '../types';
+import { toJS, observable, isObservableObject } from 'mobx';
+import {
+  Fields,
+  JsonField,
+  Field,
+  Settings,
+  AnyObject,
+} from '../../JsonFormTypes';
 
 /**
  * ALL functions in this class MUST be pure,
@@ -110,10 +116,10 @@ class GetHelper {
    * @param {object} fields
    * @param {string} fieldName
    */
-  getFieldByName = (fields: any, fieldName: string) => {
+  getFieldByName = (fields: Fields, fieldName: string): Field | null => {
     if (!fields) return null;
 
-    let field = fields[fieldName];
+    let field: Field | null = fields[fieldName];
 
     // Found
     if (field) return field;
@@ -137,7 +143,10 @@ class GetHelper {
    * @param {array} fields
    * @param {string} valueKey
    */
-  getFlattenedValues = (fieldsMobx: any, valueKey = 'attrs.value') => {
+  getFlattenedValues = (
+    fieldsMobx: Fields,
+    valueKey = 'attrs.value',
+  ): AnyObject => {
     let data: any = {};
 
     // purify fields if it's Mobx Observable object
@@ -153,10 +162,10 @@ class GetHelper {
         data[key] = value;
       }
 
-      if (fields[key].fields) {
+      if (fields[key].fields != null) {
         // subfields
         const subDataObj = this.getFlattenedValues(
-          fields[key].fields,
+          fields[key].fields!,
           valueKey,
         );
         data = { ...data, ...subDataObj };
@@ -170,7 +179,9 @@ class GetHelper {
   /**
    * Do not check if rule was empty
    */
-  getAvailableValueRulesKeyLabel = (fields: any) => {
+  getAvailableValueRulesKeyLabel = (
+    fields: Fields,
+  ): { value: object; rule: object } => {
     const pureFields = toJS(fields);
     const allvals = this.getFlattenedValues(pureFields, 'attrs.value');
     const allrules = this.getFlattenedValues(pureFields, 'settings.rule');
@@ -192,7 +203,9 @@ class GetHelper {
   /**
    * Do not check if rule was empty
    */
-  getAvailableValueRulesKeyField = (fields: any) => {
+  getAvailableValueRulesKeyField = (
+    fields: Fields,
+  ): { value: object; rule: object } => {
     const pureFields = toJS(fields);
     const allvals = this.getFlattenedValues(pureFields, 'attrs.value');
     const allrules = this.getFlattenedValues(pureFields, 'settings.rule');
@@ -212,7 +225,7 @@ class GetHelper {
   /**
    * format value for onChange or submit
    */
-  getTypedValue = (value: any, type = 'string') => {
+  getTypedValue = (value: any, type = 'string'): any => {
     // [], null, undefined, ''
     if (value == null || value.length === 0) {
       return value;
@@ -231,7 +244,7 @@ class GetHelper {
     }
   };
 
-  private _isKeyInObj = (key: string, obj: object) => {
+  private _isKeyInObj = (key: string, obj: object): boolean => {
     return Object.keys(obj).includes(key);
   };
 
@@ -239,7 +252,7 @@ class GetHelper {
    * return '' if defaultValue is null
    * to avoid uncontrolled component -> controlled component warning
    */
-  private _purgeDefaultValue = (defaultVal?: any) => {
+  private _purgeDefaultValue = (defaultVal?: any): any => {
     if (defaultVal === null) {
       return '';
     }
@@ -247,7 +260,7 @@ class GetHelper {
     return defaultVal;
   };
 
-  private _isRequired = (settings: any) => {
+  private _isRequired = (settings: Settings): boolean => {
     // required string in rule
     const { rule = '' } = settings;
     const allRules = rule.split('|');
@@ -255,7 +268,9 @@ class GetHelper {
     return allRules.includes('required');
   };
 
-  private _getDefaultValueByType = (valueType: string) => {
+  private _getDefaultValueByType = (
+    valueType: string,
+  ): number | object | boolean | string | null => {
     switch (valueType) {
       case 'number':
         return 0;
@@ -278,7 +293,10 @@ class GetHelper {
    * @param {object} paramObj
    * @param {array} mustHaveList
    */
-  private _checkParams = (paramObj: object, mustHaveList: string[] = []) => {
+  private _checkParams = (
+    paramObj: object,
+    mustHaveList: string[] = [],
+  ): string => {
     let errMsg = `Keys in Json are not enough: Please check following keys carefully. [${mustHaveList.join(
       '&',
     )}];\n`;
@@ -299,7 +317,7 @@ class GetHelper {
    * get value by Nestedkey
    * exp: attrs.name => field.attrs.name
    */
-  private _getValueByNestedKey = (obj: object, nestedKey: string) => {
+  private _getValueByNestedKey = (obj: object, nestedKey: string): any => {
     return nestedKey.split('.').reduce((prevObj: any, key) => {
       if (prevObj) {
         return prevObj[key];

@@ -1,6 +1,10 @@
 import { compose } from './utils';
+import { AnyObject } from '../core/JsonFormTypes';
 
-const makeWidgetMap = (allComponentsMap: any, hocs: Function[] = []) => {
+const makeWidgetMap = (
+  allComponentsMap: any,
+  hocs: Function[] = [],
+): AnyObject => {
   if (!hocs || hocs.length === 0) {
     // return original mapping if hocs is not defined
     return allComponentsMap;

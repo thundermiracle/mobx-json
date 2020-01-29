@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "src/*": ["*"],
       "core/*": ["core/*"],
       "stores/*": ["stores/*"],
       "lib/*": ["lib/*"]

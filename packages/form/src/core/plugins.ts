@@ -1,4 +1,5 @@
 import ValidatorJSManager from '../lib/ValidatorJSManager';
+import { AnyObject } from './JsonFormTypes';
 
 class Plugins {
   // default plugins
@@ -16,7 +17,7 @@ class Plugins {
    */
   private _itemsSource = {};
 
-  get validator() {
+  get validator(): any {
     return this._validator;
   }
 
@@ -24,7 +25,7 @@ class Plugins {
     this._validator = validator;
   }
 
-  get widgetMap() {
+  get widgetMap(): AnyObject {
     return this._widgetMap;
   }
 
@@ -32,7 +33,7 @@ class Plugins {
     this._widgetMap = widgetMap;
   }
 
-  get itemsSource() {
+  get itemsSource(): AnyObject {
     return this._itemsSource;
   }
 

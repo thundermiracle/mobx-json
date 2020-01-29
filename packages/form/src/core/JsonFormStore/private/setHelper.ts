@@ -1,4 +1,5 @@
 import { action } from 'mobx';
+import { Fields, Field } from '../../JsonFormTypes';
 
 /**
  * SIDE_EFFECT
@@ -6,11 +7,11 @@ import { action } from 'mobx';
  * modify properties in fields directly
  */
 class SetHelper {
-  setDataToAllFields = (fields: any, dataObj: any) => {
+  setDataToAllFields = (fields: Fields, dataObj: any): void => {
     this._invokeFuncToAllFields(this._setValToField, fields, dataObj);
   };
 
-  private _setValToField = (field: any, key: string, dataObj: any) => {
+  private _setValToField = (field: Field, key: string, dataObj: any): void => {
     if (dataObj[key] != null) {
       field.attrs.value = dataObj[key];
     }
@@ -20,7 +21,7 @@ class SetHelper {
    * reset all fields
    * @param {*} fields
    */
-  resetAllFields = (fields: any) => {
+  resetAllFields = (fields: Fields): void => {
     // clear errors
     this._invokeFuncToAllFields(this._setFieldError, fields);
 
@@ -33,7 +34,7 @@ class SetHelper {
    * @param {*} fields
    * @param {*} errors
    */
-  setAllFieldsErrors = (errors: any, fields: any) => {
+  setAllFieldsErrors = (errors: any, fields: any): void => {
     this._invokeFuncToAllFields(this._setFieldError, fields, errors);
   };
 
@@ -46,9 +47,9 @@ class SetHelper {
   @action
   private _invokeFuncToAllFields = (
     func: Function,
-    fields: any,
+    fields: Fields,
     ...funcArg: any
-  ) => {
+  ): void => {
     Object.keys(fields).forEach(key => {
       const field = fields[key];
       if (field.fields) {
@@ -63,12 +64,16 @@ class SetHelper {
   /* End of nested fields methods                                    */
   /* *************************************************************** */
 
-  private _setFieldError = (field: any, key: string, errors: any = {}) => {
+  private _setFieldError = (
+    field: Field,
+    key: string,
+    errors: any = {},
+  ): void => {
     const [errorMsg] = errors[key] || [];
     field.attrs.error = errorMsg || '';
   };
 
-  private _resetDefaultValue = (field: any) => {
+  private _resetDefaultValue = (field: Field): void => {
     field.attrs.value = field.attrs.defaultValue || field.attrs.value;
   };
 }

@@ -1,20 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-interface Props {
-  attrs?: object;
-  settings?: any;
-  fields?: object;
-  onChange?: Function;
-}
+import { JsonFormComponent } from '../../JsonFormTypes';
 
-const NativeHtmlWidget = ({
+const NativeHtmlWidget: React.FC<JsonFormComponent> = ({
   attrs,
   settings = {},
   fields,
   onChange,
   ...restProps
-}: Props) => {
+}) => {
   // wrap onChange if component is not defined
   const innerOnChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

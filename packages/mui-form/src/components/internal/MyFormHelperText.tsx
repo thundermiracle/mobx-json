@@ -2,13 +2,14 @@ import React from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-import { FieldProps } from '../types';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+import { FieldProps } from '../ComponentTypes';
 
 const useStyles = makeStyles({
-  headerFont: {
-    // default is 1rem
-    fontSize: `${13 / 16}rem`,
+  lowMargin: {
+    // default is 8px
+    marginTop: 1,
   },
 });
 
@@ -16,9 +17,8 @@ const MyFormLabel = ({ className, ...restProps }: FieldProps): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <FormLabel
-      component="legend"
-      className={clsx(classes.headerFont, className)}
+    <FormHelperText
+      className={clsx(classes.lowMargin, className)}
       {...restProps}
     />
   );

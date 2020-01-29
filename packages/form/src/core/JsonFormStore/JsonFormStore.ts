@@ -1,9 +1,9 @@
-import { action, observable, toJS } from 'mobx';
+import { action, observable } from 'mobx';
 
+import { Fields, AnyObject } from '../JsonFormTypes';
 import plugins from '../plugins';
 import getHelper from './private/getHelper';
 import setHelper from './private/setHelper';
-import { Fields } from './types';
 
 class JsonFormStore {
   @observable
@@ -26,7 +26,10 @@ class JsonFormStore {
    *  @param {any} fieldsProp
    *  @param {any} extraMustHaveKeys
    */
-  initFieldsByJsonBlueprint = (fieldsProp: any, extraMustHaveKeys = []) => {
+  initFieldsByJsonBlueprint = (
+    fieldsProp: any,
+    extraMustHaveKeys = [],
+  ): void => {
     this.fields = getHelper.initObservableFields(
       fieldsProp.fields,
       plugins.itemsSource,
@@ -48,7 +51,7 @@ class JsonFormStore {
   /**
    * get data for submit
    */
-  getData = () => {
+  getData = (): AnyObject => {
     return getHelper.getFlattenedValues(this.fields);
   };
 
@@ -58,7 +61,7 @@ class JsonFormStore {
    * [ONLY affect field.error which is modified now]
    */
   @action
-  onFieldChangeCheckAll = (fieldName: string, value: any) => {
+  onFieldChangeCheckAll = (fieldName: string, value: any): void => {
     const field = getHelper.getFieldByName(this.fields, fieldName);
     if (!field) return;
 
@@ -76,7 +79,7 @@ class JsonFormStore {
    * ONLY affect the field which is modified now.
    */
   @action
-  onFieldChange = (fieldName: string, value: any) => {
+  onFieldChange = (fieldName: string, value: any): void => {
     const field = getHelper.getFieldByName(this.fields, fieldName);
     if (!field) return;
 
@@ -108,7 +111,7 @@ class JsonFormStore {
    * Affect all fields and apply errormessage to all fields
    */
   @action
-  checkAllOnSubmit = () => {
+  checkAllOnSubmit = (): boolean => {
     const checkData = getHelper.getAvailableValueRulesKeyLabel(this.fields);
 
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
@@ -117,11 +120,11 @@ class JsonFormStore {
     return Object.keys(errors).length === 0;
   };
 
-  resetAllFields = () => {
+  resetAllFields = (): void => {
     setHelper.resetAllFields(this.fields);
   };
 
-  clearAllErrors = () => {
+  clearAllErrors = (): void => {
     setHelper.setAllFieldsErrors(null, this.fields);
   };
 }

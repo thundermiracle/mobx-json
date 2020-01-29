@@ -6,9 +6,10 @@ import {
   FormHelperText,
   Checkbox as MUICheckbox,
 } from '@material-ui/core';
-import { FieldProps } from './types';
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 import useMuiDomFocusRipple from './hooks/useMuiDomFocusRipple';
+
+import { FieldProps } from './ComponentTypes';
 
 type CheckboxProps = {
   value?: boolean;

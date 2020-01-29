@@ -1,20 +1,19 @@
 import React from 'react';
 import { observer, IReactComponent } from 'mobx-react';
 
-interface Props {
-  attrs?: any;
-  settings?: any;
-  fields?: object;
-  onChange?: Function;
-}
+import { JsonFormComponent } from '../../JsonFormTypes';
 
 /**
  * Inject common attrs
  */
-export default (Component: IReactComponent) => {
+export default (Component: IReactComponent): React.FC<JsonFormComponent> => {
   const ObserveMUIComponent = observer(Component);
 
-  const WithMobxAttrs = ({ onChange, settings, attrs }: Props) => {
+  const WithMobxAttrs: React.FC<JsonFormComponent> = ({
+    onChange,
+    settings,
+    attrs,
+  }) => {
     const innerOnChange = React.useCallback(
       (eventOrName, value) => {
         if (onChange) {

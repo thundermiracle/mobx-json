@@ -3,7 +3,8 @@ import React from 'react';
 import MUITextField from '@material-ui/core/TextField';
 
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
-import { FieldProps } from './types';
+
+import { FieldProps } from './ComponentTypes';
 
 const TypesNeedHover = ['date', 'time', 'week', 'month', 'datetime-local'];
 

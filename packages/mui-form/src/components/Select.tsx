@@ -8,7 +8,7 @@ import {
   MenuItem,
 } from '@material-ui/core';
 
-import { FieldProps } from './types';
+import { FieldProps } from './ComponentTypes';
 
 const Select = ({
   error = false,

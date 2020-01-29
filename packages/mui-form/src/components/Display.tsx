@@ -6,8 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import formatter from 'lib/formatter';
 import { findByPropVal } from 'lib/utils';
 
-import MyFormLabel from './lib/MyFormLabel';
-import { FieldProps } from './types';
+import MyFormLabel from './internal/MyFormLabel';
+
+import { FieldProps } from './ComponentTypes';
 
 const useStyles = makeStyles({
   root: {
@@ -36,7 +37,7 @@ const Display = ({
   format,
   keepLabelSpace = false,
   items,
-}: FieldProps) => {
+}: FieldProps): JSX.Element => {
   const classes = useStyles();
 
   let displayValue = value;

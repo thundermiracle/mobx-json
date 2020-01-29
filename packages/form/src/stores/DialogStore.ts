@@ -5,12 +5,12 @@ class DialogStore {
   openDialogFlag = false;
 
   @action
-  openDialog = () => {
+  openDialog = (): void => {
     this.openDialogFlag = true;
   };
 
   @action
-  closeDialog = () => {
+  closeDialog = (): void => {
     this.openDialogFlag = false;
   };
 }

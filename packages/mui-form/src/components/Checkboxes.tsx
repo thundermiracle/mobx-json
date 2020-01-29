@@ -6,14 +6,15 @@ import { pickBy, keys } from 'ramda';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, FormControlLabel, FormGroup } from '@material-ui/core';
-import FormLabel from './lib/MyFormLabel';
-import FormHelperText from './lib/MyFormHelperText';
+import FormLabel from './internal/MyFormLabel';
+import FormHelperText from './internal/MyFormHelperText';
+import SelectAllCheckbox from './internal/SelectAllCheckbox';
+import MyCheckbox from './internal/MyCheckbox';
 
 import useCheckboxes from './hooks/useCheckboxes';
-import { FieldProps } from './types';
-import SelectAllCheckbox from './lib/SelectAllCheckbox';
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
-import MyCheckbox from './lib/MyCheckbox';
+
+import { FieldProps } from './ComponentTypes';
 
 const useStyles = makeStyles({
   hidden: {
@@ -39,7 +40,7 @@ const Checkboxes = ({
   fullWidth = false,
   domFocusRipple = true,
   ...restProps
-}: FieldProps) => {
+}: FieldProps): JSX.Element | null => {
   if (items == null) {
     return null;
   }
