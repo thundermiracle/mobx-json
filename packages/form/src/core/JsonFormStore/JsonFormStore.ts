@@ -1,11 +1,16 @@
 import { action, observable } from 'mobx';
 
-import { Fields, AnyObject } from '../JsonFormTypes';
+import {
+  Fields,
+  AnyObject,
+  Blueprint,
+  JsonFormStore as JsonFormStoreClass,
+} from '../JsonFormTypes';
 import plugins from '../plugins';
 import getHelper from './private/getHelper';
 import setHelper from './private/setHelper';
 
-class JsonFormStore {
+class JsonFormStore implements JsonFormStoreClass {
   @observable
   fields: Fields = {};
 
@@ -27,8 +32,8 @@ class JsonFormStore {
    *  @param {any} extraMustHaveKeys
    */
   initFieldsByJsonBlueprint = (
-    fieldsProp: any,
-    extraMustHaveKeys = [],
+    fieldsProp: Blueprint,
+    extraMustHaveKeys: string[] = [],
   ): void => {
     this.fields = getHelper.initObservableFields(
       fieldsProp.fields,
@@ -71,7 +76,7 @@ class JsonFormStore {
     const checkData = getHelper.getAvailableValueRulesKeyLabel(this.fields);
 
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
-    setHelper.setAllFieldsErrors(errors, this.fields);
+    setHelper.setAllFieldsErrors(this.fields, errors);
   };
 
   /**
@@ -100,7 +105,7 @@ class JsonFormStore {
       [key]: settings.rule,
     };
 
-    const errors = plugins.validator.validate(datas, rules);
+    const errors = plugins.validator.validate(datas, rules) || {};
 
     const [errorMsg] = errors[key] || [];
     attrs.error = errorMsg || '';
@@ -116,8 +121,8 @@ class JsonFormStore {
 
     const errors = plugins.validator.validate(checkData.value, checkData.rule);
 
-    setHelper.setAllFieldsErrors(errors, this.fields);
-    return Object.keys(errors).length === 0;
+    setHelper.setAllFieldsErrors(this.fields, errors);
+    return Object.keys(errors || {}).length === 0;
   };
 
   resetAllFields = (): void => {
@@ -125,7 +130,7 @@ class JsonFormStore {
   };
 
   clearAllErrors = (): void => {
-    setHelper.setAllFieldsErrors(null, this.fields);
+    setHelper.setAllFieldsErrors(this.fields, null);
   };
 }
 

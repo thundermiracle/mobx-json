@@ -1,12 +1,15 @@
 import ValidatorJSManager from '../lib/ValidatorJSManager';
-import { AnyObject } from './JsonFormTypes';
+import {
+  AnyObject,
+  ValidatorJSManager as ValidatorJSManagerClass,
+} from './JsonFormTypes';
 
 class Plugins {
   // default plugins
-  private _validator = new ValidatorJSManager();
+  private _validator: ValidatorJSManagerClass = new ValidatorJSManager();
 
   // JsonForm will use widgetMap here if widget is not passed as prop
-  private _widgetMap = {};
+  private _widgetMap: AnyObject = {};
 
   /*
    * itemsSource in Json definition
@@ -17,7 +20,7 @@ class Plugins {
    */
   private _itemsSource = {};
 
-  get validator(): any {
+  get validator(): ValidatorJSManagerClass {
     return this._validator;
   }
 

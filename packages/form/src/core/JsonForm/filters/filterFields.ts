@@ -1,8 +1,8 @@
 import { transduce, listCombiner, compose } from 'lib/utils';
 
-import { Field } from '../../JsonFormTypes';
 import widget from './widget';
 import hidden from './hidden';
+import { Field } from '../../JsonFormTypes';
 
 function filterFields(fields: Field[]): Field[] {
   const filtersTrans = compose(widget, hidden);

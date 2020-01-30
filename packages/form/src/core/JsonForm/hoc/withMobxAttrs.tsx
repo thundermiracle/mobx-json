@@ -9,12 +9,12 @@ import { JsonFormComponent } from '../../JsonFormTypes';
 export default (
   Component: React.Component & React.FC,
 ): React.FC<JsonFormComponent> => {
-  const ObserveMUIComponent = observer(Component);
+  const ObserveMUIComponent = observer(Component) as any;
 
   const WithMobxAttrs: React.FC<JsonFormComponent> = ({
     onChange,
     settings,
-    attrs,
+    attrs = {},
   }) => {
     const innerOnChange = React.useCallback(
       (eventOrName, value) => {
@@ -47,7 +47,6 @@ export default (
       <ObserveMUIComponent
         {...valueProps}
         {...restAttrs}
-        label={settings.hideLabel ? null : attrs.label}
         onChange={innerOnChange}
       />
     );

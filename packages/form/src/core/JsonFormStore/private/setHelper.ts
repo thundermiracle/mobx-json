@@ -1,5 +1,5 @@
 import { action } from 'mobx';
-import { Fields, Field } from '../../JsonFormTypes';
+import { Fields, Field, AnyObject } from '../../JsonFormTypes';
 
 /**
  * SIDE_EFFECT
@@ -7,14 +7,8 @@ import { Fields, Field } from '../../JsonFormTypes';
  * modify properties in fields directly
  */
 class SetHelper {
-  setDataToAllFields = (fields: Fields, dataObj: any): void => {
+  setDataToAllFields = (fields: Fields, dataObj: AnyObject): void => {
     this._invokeFuncToAllFields(this._setValToField, fields, dataObj);
-  };
-
-  private _setValToField = (field: Field, key: string, dataObj: any): void => {
-    if (dataObj[key] != null) {
-      field.attrs.value = dataObj[key];
-    }
   };
 
   /**
@@ -34,8 +28,18 @@ class SetHelper {
    * @param {*} fields
    * @param {*} errors
    */
-  setAllFieldsErrors = (errors: any, fields: any): void => {
+  setAllFieldsErrors = (fields: Fields, errors: AnyObject | null): void => {
     this._invokeFuncToAllFields(this._setFieldError, fields, errors);
+  };
+
+  private _setValToField = (
+    field: Field,
+    key: string,
+    dataObj: AnyObject,
+  ): void => {
+    if (dataObj[key] != null) {
+      field.attrs.value = dataObj[key];
+    }
   };
 
   /**
@@ -60,14 +64,10 @@ class SetHelper {
     });
   };
 
-  /* *************************************************************** */
-  /* End of nested fields methods                                    */
-  /* *************************************************************** */
-
   private _setFieldError = (
     field: Field,
     key: string,
-    errors: any = {},
+    errors: AnyObject = {},
   ): void => {
     const [errorMsg] = errors[key] || [];
     field.attrs.error = errorMsg || '';

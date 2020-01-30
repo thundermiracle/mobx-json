@@ -1,11 +1,15 @@
 import Validator from 'validatorjs';
 
-import { AnyObject } from '../core/JsonFormTypes';
+import {
+  AnyObject,
+  ValidatorRule,
+  ValidatorJSManager as ValidatorJSManagerClass,
+} from '../core/JsonFormTypes';
 
-class ValidatorJSManager {
-  private _messages: any;
+class ValidatorJSManager implements ValidatorJSManagerClass {
+  private _messages: AnyObject = {};
 
-  setRules = (rules: any): void => {
+  setRules = (rules: ValidatorRule[]): void => {
     if (rules != null && Array.isArray(rules)) {
       rules.forEach(({ name, callback, message }) => {
         Validator.register(name, callback, message);
@@ -14,7 +18,7 @@ class ValidatorJSManager {
   };
 
   setMessages = (
-    customMessages: object,
+    customMessages: AnyObject,
     locale: string | null | undefined,
   ): void => {
     const messages = Validator.getMessages(locale || 'en');
@@ -25,8 +29,8 @@ class ValidatorJSManager {
    * return object of errors
    * { name: [errMsg1, errMsg2] }
    */
-  validate = (value: any, rule: any): AnyObject => {
-    const validator = new Validator(value, rule, this._messages);
+  validate = (value: AnyObject, valueRule: AnyObject): AnyObject => {
+    const validator = new Validator(value, valueRule, this._messages);
     validator.check();
 
     return validator.errors.errors;

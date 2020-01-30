@@ -2,7 +2,7 @@ import { compose } from './utils';
 import { AnyObject } from '../core/JsonFormTypes';
 
 const makeWidgetMap = (
-  allComponentsMap: any,
+  allComponentsMap: AnyObject,
   hocs: Function[] = [],
 ): AnyObject => {
   if (!hocs || hocs.length === 0) {

@@ -35,14 +35,14 @@ class GetHelper {
    */
   initObservableFields = (
     fieldsJson: JsonField[],
-    itemsSource: any,
-    extraMustHaveKeys = [],
+    itemsSource: AnyObject,
+    extraMustHaveKeys: string[] = [],
   ): Fields => {
     if (!fieldsJson) {
       throw new Error('[JSON file error] JSON file is not defined.');
     }
 
-    const resultFields: any = {};
+    const resultFields: Fields = {};
 
     fieldsJson.forEach(field => {
       const { attrs, settings, fields: childFields, ...restProperties } = field;
@@ -125,8 +125,7 @@ class GetHelper {
     if (field) return field;
 
     // try to find in SubFields
-    Object.keys(fields).some(oneFieldName => {
-      const subFields = fields[oneFieldName].fields;
+    Object.values(fields).some(({ fields: subFields }) => {
       if (!subFields) return false;
 
       field = this.getFieldByName(subFields, fieldName);
@@ -147,7 +146,7 @@ class GetHelper {
     fieldsMobx: Fields,
     valueKey = 'attrs.value',
   ): AnyObject => {
-    let data: any = {};
+    let data: AnyObject = {};
 
     // purify fields if it's Mobx Observable object
     const fields = isObservableObject(fieldsMobx)
@@ -165,6 +164,7 @@ class GetHelper {
       if (fields[key].fields != null) {
         // subfields
         const subDataObj = this.getFlattenedValues(
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           fields[key].fields!,
           valueKey,
         );
@@ -253,7 +253,7 @@ class GetHelper {
    * to avoid uncontrolled component -> controlled component warning
    */
   private _purgeDefaultValue = (defaultVal?: any): any => {
-    if (defaultVal === null) {
+    if (defaultVal == null) {
       return '';
     }
 

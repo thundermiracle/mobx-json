@@ -2,11 +2,13 @@ import { observable, action } from 'mobx';
 
 import DialogStore from 'stores/DialogStore';
 
+type ConfirmResolver = ((value: boolean) => void) | null;
+
 class ConfirmDialogStore extends DialogStore {
   @observable
   dialogMessage = '';
 
-  private _confirmResolver: any;
+  private _confirmResolver: ConfirmResolver = null;
 
   /**
    * display confirm dialog
@@ -25,7 +27,9 @@ class ConfirmDialogStore extends DialogStore {
 
   handleOk = (): void => {
     this.closeDialog();
-    this._confirmResolver(true);
+    if (this._confirmResolver) {
+      this._confirmResolver(true);
+    }
   };
 
   handleCancel = (): void => {

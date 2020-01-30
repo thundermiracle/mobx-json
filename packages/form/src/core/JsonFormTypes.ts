@@ -2,6 +2,10 @@ interface AnyObject {
   [key: string]: any;
 }
 
+interface OnChange {
+  (eventOrName: any, value?: any): void;
+}
+
 interface Settings {
   widget: string;
   valueType: string;
@@ -11,6 +15,8 @@ interface Settings {
 interface Attrs {
   name: string;
   hidden?: boolean;
+  value?: any;
+  defaultValue?: any;
   [key: string]: any;
 }
 
@@ -32,18 +38,52 @@ type JsonField = {
   fields?: JsonField[];
 } & BaseField;
 
+interface Blueprint {
+  fields: JsonField[];
+}
+
 interface JsonForm {
-  store?: any;
-  fields?: any;
+  store?: JsonFormStore;
+  fields?: Fields;
   onChange?: Function;
-  widgetMap?: any;
+  widgetMap?: AnyObject;
 }
 
 interface JsonFormComponent {
-  attrs?: any;
-  settings?: any;
-  fields?: object;
-  onChange?: Function;
+  attrs?: Attrs;
+  settings?: Settings;
+  fields?: Fields;
+  onChange?: OnChange;
+}
+
+interface JsonFormStore {
+  fields: Fields;
+  initFieldsByJsonBlueprint: (
+    fieldsProp: Blueprint,
+    extraMustHaveKeys?: string[],
+  ) => void;
+  setData: (dataObj: null | undefined | any) => void;
+  getData: () => AnyObject;
+  onFieldChangeCheckAll: (fieldName: string, value: any) => void;
+  onFieldChange: (fieldName: string, value: any) => void;
+  checkAllOnSubmit: () => boolean;
+  resetAllFields: () => void;
+  clearAllErrors: () => void;
+}
+
+interface ValidatorRule {
+  name: string;
+  callback: Function;
+  message: string;
+}
+
+interface ValidatorJSManager {
+  setRules: (rules: ValidatorRule[]) => void;
+  setMessages: (
+    customMessages: AnyObject,
+    locale: string | null | undefined,
+  ) => void;
+  validate: (value: AnyObject, valueRule: AnyObject) => AnyObject;
 }
 
 export {
@@ -53,6 +93,10 @@ export {
   Field,
   Fields,
   JsonField,
+  Blueprint,
   JsonForm,
   JsonFormComponent,
+  JsonFormStore,
+  ValidatorRule,
+  ValidatorJSManager,
 };

@@ -12,7 +12,7 @@ const NativeHtmlWidget: React.FC<JsonFormComponent> = ({
 }) => {
   // wrap onChange if component is not defined
   const innerOnChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    e => {
       if (onChange) {
         const newVal =
           e.target.type === 'checkbox' ? e.target.checked : e.target.value;
@@ -23,7 +23,7 @@ const NativeHtmlWidget: React.FC<JsonFormComponent> = ({
     [onChange],
   );
 
-  const MyComponent = settings.widget || 'div';
+  const MyComponent = (settings.widget || 'div') as any;
 
   return <MyComponent {...attrs} {...restProps} onChange={innerOnChange} />;
 };

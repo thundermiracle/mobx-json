@@ -16,7 +16,7 @@ const dataFromDb = {
   sub1: 'Sub1111',
   sub2: 'Sub222',
   city: 'tokyo',
-  birthday: '2012-03-24T11:00:00',
+  birthday: '2012-03-24',
   birthtime: '01:10',
   agreement: true,
   sex: 0,

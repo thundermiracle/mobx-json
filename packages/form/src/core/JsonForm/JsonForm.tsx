@@ -11,7 +11,7 @@ import { filterFields } from './filters';
 import { Fields, JsonForm } from '../JsonFormTypes';
 
 const renderAllFields = (
-  fields: Fields,
+  fields: Fields = {},
   widgetMap: any,
   factoryProps: any,
 ): JSX.Element[] => {
