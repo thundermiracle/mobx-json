@@ -2,7 +2,11 @@ import React from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import { FormControlLabel, Switch as MUISwitch } from '@material-ui/core';
+import {
+  FormControlLabel,
+  Switch as MUISwitch,
+  SwitchProps as MUISwitchProps,
+} from '@material-ui/core';
 import useMuiDomFocusRipple from './hooks/useMuiDomFocusRipple';
 
 import { FieldProps } from './ComponentTypes';
@@ -14,7 +18,12 @@ const useStyles = makeStyles({
   },
 });
 
-const Switch = ({
+type SwitchProps = {
+  domFocusRipple?: boolean;
+} & FieldProps &
+  MUISwitchProps;
+
+const Switch: React.FC<SwitchProps> = ({
   label,
   fullWidth = false,
   labelPlacement = 'end',
@@ -22,7 +31,7 @@ const Switch = ({
   helperText,
   domFocusRipple = true,
   ...restProps
-}: FieldProps): JSX.Element => {
+}) => {
   const classes = useStyles();
   const muiDomFocusRippleProps = useMuiDomFocusRipple();
   const extraProps = domFocusRipple ? muiDomFocusRippleProps : {};

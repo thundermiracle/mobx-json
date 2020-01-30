@@ -2,9 +2,9 @@ import React from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import FormHelperText from '@material-ui/core/FormHelperText';
-
-import { FieldProps } from '../ComponentTypes';
+import FormHelperText, {
+  FormHelperTextProps,
+} from '@material-ui/core/FormHelperText';
 
 const useStyles = makeStyles({
   lowMargin: {
@@ -13,7 +13,10 @@ const useStyles = makeStyles({
   },
 });
 
-const MyFormLabel = ({ className, ...restProps }: FieldProps): JSX.Element => {
+const MyFormHelperText: React.FC<FormHelperTextProps> = ({
+  className,
+  ...restProps
+}) => {
   const classes = useStyles();
 
   return (
@@ -24,4 +27,4 @@ const MyFormLabel = ({ className, ...restProps }: FieldProps): JSX.Element => {
   );
 };
 
-export default MyFormLabel;
+export default MyFormHelperText;

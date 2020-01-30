@@ -1,15 +1,23 @@
 import React from 'react';
 
-import { FormControlLabel, Checkbox as MUICheckbox } from '@material-ui/core';
+import {
+  FormControlLabel,
+  Checkbox as MUICheckbox,
+  CheckboxProps as MUICheckboxProps,
+} from '@material-ui/core';
 
-import { FieldProps } from '../ComponentTypes';
+type SelectAllCheckboxProps = {
+  label: string;
+  isSelected?: boolean;
+  isIndeterminate?: boolean;
+} & MUICheckboxProps;
 
-const SelectAllCheckbox = ({
+const SelectAllCheckbox: React.FC<SelectAllCheckboxProps> = ({
   label,
   isSelected,
   isIndeterminate,
   ...restProps
-}: FieldProps): JSX.Element => {
+}) => {
   return (
     <FormControlLabel
       control={

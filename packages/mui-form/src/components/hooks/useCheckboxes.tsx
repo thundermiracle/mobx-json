@@ -1,8 +1,8 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { pickBy, keys } from 'ramda';
 import { propAll, valsToString, zipObjArrWithVal } from 'lib/utils';
 
-import { Item } from '../ComponentTypes';
+import { Item, OnChange } from '../ComponentTypes';
 
 interface CheckStatus {
   [key: string]: boolean;
@@ -12,13 +12,13 @@ interface UseCheckboxesInput {
   name: string;
   items: Item[];
   value: string[] | number[];
-  onChange: (name: string, value: any) => void;
+  onChange?: OnChange;
 }
 
 interface UseCheckboxes {
   itemsCheckedStatus: CheckStatus;
-  handleSelectAll: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleItemOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleSelectAll: OnChange;
+  handleItemOnChange: OnChange;
 }
 
 const initCheckStatus = (

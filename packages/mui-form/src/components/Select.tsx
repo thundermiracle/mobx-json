@@ -6,11 +6,17 @@ import {
   InputLabel,
   Select as MUISelect,
   MenuItem,
+  SelectProps as MUISelectProps,
 } from '@material-ui/core';
 
 import { FieldProps } from './ComponentTypes';
 
-const Select = ({
+type SelectProps = {
+  emptyItem?: boolean;
+} & FieldProps &
+  MUISelectProps;
+
+const Select: React.FC<SelectProps> = ({
   error = false,
   required = false,
   label,
@@ -20,7 +26,7 @@ const Select = ({
   fullWidth = false,
   emptyItem = false,
   ...restProps
-}: FieldProps): JSX.Element => {
+}) => {
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
   ) : null;

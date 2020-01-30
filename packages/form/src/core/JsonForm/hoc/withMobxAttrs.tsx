@@ -1,12 +1,14 @@
 import React from 'react';
-import { observer, IReactComponent } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import { JsonFormComponent } from '../../JsonFormTypes';
 
 /**
  * Inject common attrs
  */
-export default (Component: IReactComponent): React.FC<JsonFormComponent> => {
+export default (
+  Component: React.Component & React.FC,
+): React.FC<JsonFormComponent> => {
   const ObserveMUIComponent = observer(Component);
 
   const WithMobxAttrs: React.FC<JsonFormComponent> = ({

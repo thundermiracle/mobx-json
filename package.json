@@ -6,6 +6,7 @@
     "examples/*"
   ],
   "scripts": {
+    "clean": "lerna clean -y",
     "dev:form": "lerna run dev --scope @mobx-json/form --stream",
     "dev:muiform": "lerna run dev --scope @mobx-json/mui-form --stream",
     "dev:form:exp": "lerna run dev --scope @mobx-json/form-example --stream",

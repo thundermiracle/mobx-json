@@ -5,6 +5,7 @@ import {
   FormControlLabel,
   FormHelperText,
   Checkbox as MUICheckbox,
+  CheckboxProps as MUICheckboxProps,
 } from '@material-ui/core';
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 import useMuiDomFocusRipple from './hooks/useMuiDomFocusRipple';
@@ -14,9 +15,10 @@ import { FieldProps } from './ComponentTypes';
 type CheckboxProps = {
   value?: boolean;
   checkedValue?: string;
-} & FieldProps;
+} & FieldProps &
+  MUICheckboxProps;
 
-const Checkbox = ({
+const Checkbox: React.FC<CheckboxProps> = ({
   label = '',
   required = false,
   value = false,
@@ -27,7 +29,7 @@ const Checkbox = ({
   keepLabelSpace = false,
   domFocusRipple = true,
   ...restProps
-}: CheckboxProps): JSX.Element => {
+}) => {
   const labelSpaceClass = useKeepLabelSpace({
     keepLabelSpace,
   });

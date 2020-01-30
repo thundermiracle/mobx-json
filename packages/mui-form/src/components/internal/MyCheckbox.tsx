@@ -8,10 +8,10 @@ type MyCheckboxProps = {
   domFocusRipple?: boolean;
 } & CheckboxProps;
 
-const MyCheckbox = ({
+const MyCheckbox: React.FC<MyCheckboxProps> = ({
   domFocusRipple = true,
   ...restProps
-}: MyCheckboxProps): JSX.Element => {
+}) => {
   const muiDomFocusRippleProps = useMuiDomFocusRipple();
   const extraProps = domFocusRipple ? muiDomFocusRippleProps : {};
 

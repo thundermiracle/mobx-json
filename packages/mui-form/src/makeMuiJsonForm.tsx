@@ -1,19 +1,19 @@
 import React from 'react';
-import { JsonForm, JsonFormStore } from '@mobx-json/form';
+import { JsonForm, JsonFormStore, JsonFormTypes } from '@mobx-json/form';
 
-interface MuiJsonFormProps {
-  blueprint: any;
-  data?: any;
-}
+import { MuiJsonFormInputProps, MuiJsonFormProps } from './useMuiJsonForm';
 
-function makeMuiJsonForm({ blueprint, data }: MuiJsonFormProps) {
+function makeMuiJsonForm({
+  blueprint,
+  data,
+}: MuiJsonFormInputProps): MuiJsonFormProps {
   // initilize mobx store
   const store = new JsonFormStore(blueprint);
   store.setData(data);
 
   const form = <JsonForm store={store} />;
 
-  const onSubmit = () => {
+  const submitWithCheck = (): false | JsonFormTypes.AnyObject => {
     if (store.checkAllOnSubmit()) {
       return store.getData();
     }
@@ -23,7 +23,7 @@ function makeMuiJsonForm({ blueprint, data }: MuiJsonFormProps) {
 
   return {
     form,
-    onSubmit,
+    submitWithCheck,
   };
 }
 

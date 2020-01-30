@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { Radio as MUIRadio } from '@material-ui/core';
+import { Radio as MUIRadio, RadioProps } from '@material-ui/core';
 
 import useMuiDomFocusRipple from '../hooks/useMuiDomFocusRipple';
 
-import { FieldProps } from '../ComponentTypes';
+type MyRadioProps = {
+  domFocusRipple?: boolean;
+} & RadioProps;
 
-const MyRadio = ({
+const MyRadio: React.FC<MyRadioProps> = ({
   domFocusRipple = true,
   ...restProps
-}: FieldProps): JSX.Element => {
+}) => {
   const muiDomFocusRippleProps = useMuiDomFocusRipple();
   const extraProps = domFocusRipple ? muiDomFocusRippleProps : {};
 

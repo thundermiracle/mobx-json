@@ -1,9 +1,8 @@
 import React from 'react';
-import { IReactComponent } from 'mobx-react';
 
 import GridItem from 'containers/GridItem';
 
-interface Props {
+interface WithGridProps {
   grid?: object;
   noGrid?: boolean;
 }
@@ -11,8 +10,14 @@ interface Props {
 /**
  * Inject Grid layer(Main for material-ui/Grid)
  */
-export default (MUIComponent: IReactComponent) => {
-  const WithGrid = ({ noGrid = false, grid, ...restProps }: Props) => {
+export default (
+  MUIComponent: React.Component & React.FC,
+): React.FC<WithGridProps> => {
+  const WithGrid: React.FC<WithGridProps> = ({
+    noGrid = false,
+    grid,
+    ...restProps
+  }) => {
     if (noGrid) return <MUIComponent {...restProps} />;
 
     return (

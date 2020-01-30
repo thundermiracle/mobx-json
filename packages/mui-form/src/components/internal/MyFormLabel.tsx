@@ -2,9 +2,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-
-import { FieldProps } from '../ComponentTypes';
+import FormLabel, { FormLabelProps } from '@material-ui/core/FormLabel';
 
 const useStyles = makeStyles({
   headerFont: {
@@ -13,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-const MyFormLabel = ({ className, ...restProps }: FieldProps): JSX.Element => {
+const MyFormLabel: React.FC<any> = ({ className, ...restProps }) => {
   const classes = useStyles();
 
   return (

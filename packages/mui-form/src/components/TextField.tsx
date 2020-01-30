@@ -1,6 +1,9 @@
 import React from 'react';
 
-import MUITextField from '@material-ui/core/TextField';
+import {
+  TextField as MUITextField,
+  TextFieldProps as MUITextFieldProps,
+} from '@material-ui/core';
 
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 
@@ -9,18 +12,18 @@ import { FieldProps } from './ComponentTypes';
 const TypesNeedHover = ['date', 'time', 'week', 'month', 'datetime-local'];
 
 type TextFieldProps = {
-  type?: string;
   InputLabelProps?: any;
-} & FieldProps;
+} & FieldProps &
+  MUITextFieldProps;
 
-const TextField = ({
+const TextField: React.FC<TextFieldProps> = ({
   label = '',
   type = 'text',
   InputLabelProps = {},
   keepLabelSpace = false,
   className,
   ...restProps
-}: TextFieldProps): JSX.Element => {
+}) => {
   const labelSpaceClass = useKeepLabelSpace({ className, keepLabelSpace });
 
   let extraLabelProps = {};

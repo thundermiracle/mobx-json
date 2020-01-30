@@ -1,9 +1,9 @@
 import React from 'react';
-import { observer, IReactComponent } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import { Field } from '../../JsonFormTypes';
 
-export default (Component: IReactComponent): React.FC<any> => {
+export default (Component: React.Component & React.FC): React.FC<Field> => {
   const WithFieldAttrs: React.FC<Field> = ({
     attrs = { name: '' },
     settings,

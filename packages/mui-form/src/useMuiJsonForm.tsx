@@ -1,12 +1,20 @@
 import React from 'react';
-import { JsonForm, JsonFormStore } from '@mobx-json/form';
+import { JsonForm, JsonFormStore, JsonFormTypes } from '@mobx-json/form';
 
-interface MuiJsonFormProps {
+export interface MuiJsonFormInputProps {
   blueprint: any;
   data?: any;
 }
 
-function useMuiJsonForm({ blueprint, data }: MuiJsonFormProps) {
+export interface MuiJsonFormProps {
+  form: JSX.Element;
+  submitWithCheck: () => false | JsonFormTypes.AnyObject;
+}
+
+function useMuiJsonForm({
+  blueprint,
+  data,
+}: MuiJsonFormInputProps): MuiJsonFormProps {
   // initilize mobx store
   const store = React.useMemo(() => {
     return new JsonFormStore(blueprint);

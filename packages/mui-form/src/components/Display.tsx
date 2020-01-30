@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Display = ({
+const Display: React.FC<FieldProps> = ({
   label,
   fullWidth = false,
   disabled = false,
@@ -37,7 +37,7 @@ const Display = ({
   format,
   keepLabelSpace = false,
   items,
-}: FieldProps): JSX.Element => {
+}) => {
   const classes = useStyles();
 
   let displayValue = value;

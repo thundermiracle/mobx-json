@@ -9,9 +9,10 @@ import { FieldProps, Item } from './ComponentTypes';
 
 type RadioProps = {
   row?: boolean;
+  domFocusRipple?: boolean;
 } & FieldProps;
 
-const Radio = ({
+const Radio: React.FC<RadioProps> = ({
   label = '',
   required = false,
   error = false,
@@ -23,7 +24,7 @@ const Radio = ({
   onChange,
   domFocusRipple = true,
   ...restProps
-}: RadioProps): JSX.Element => {
+}) => {
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
   ) : null;

@@ -22,7 +22,15 @@ const useStyles = makeStyles({
   },
 });
 
-const Checkboxes = ({
+type CheckboxesProps = {
+  selectAll?: boolean;
+  selectAllLabel?: string;
+  value?: string[] | number[];
+  row?: boolean;
+  domFocusRipple?: boolean;
+} & FieldProps;
+
+const Checkboxes: React.FC<CheckboxesProps> = ({
   disabled = false,
   name,
   items,
@@ -31,7 +39,7 @@ const Checkboxes = ({
   selectAllLabel = 'ALL',
   required,
   hidden,
-  value,
+  value = [],
   helperText,
   error,
   onChange,
@@ -40,7 +48,7 @@ const Checkboxes = ({
   fullWidth = false,
   domFocusRipple = true,
   ...restProps
-}: FieldProps): JSX.Element | null => {
+}) => {
   if (items == null) {
     return null;
   }
@@ -66,7 +74,6 @@ const Checkboxes = ({
       <SelectAllCheckbox
         isSelected={checkedCount > 0}
         isIndeterminate={checkedCount > 0 && checkedCount < items.length}
-        itemsCount={items.length}
         onChange={handleSelectAll}
         disabled={disabled}
         label={selectAllLabel}
