@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx';
 
+import { pickBy } from 'ramda';
 import {
   Fields,
   AnyObject,
@@ -58,6 +59,19 @@ class JsonFormStore implements JsonFormStoreClass {
    */
   getData = (): AnyObject => {
     return getHelper.getFlattenedValues(this.fields);
+  };
+
+  getErrors = (): AnyObject => {
+    const allColsErrs = getHelper.getFlattenedValues(
+      this.fields,
+      'attrs.error',
+    );
+    return pickBy(val => val !== '' && val != null, allColsErrs);
+  };
+
+  getFirstErrFieldName = (): string | undefined => {
+    const errObj = this.getErrors();
+    return Object.keys(errObj)[0];
   };
 
   /**

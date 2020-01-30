@@ -65,6 +65,8 @@ interface JsonFormStore {
   ) => void;
   setData: (dataObj: null | undefined | any) => void;
   getData: () => AnyObject;
+  getErrors: () => AnyObject;
+  getFirstErrFieldName: () => string | undefined;
   onFieldChangeCheckAll: (fieldName: string, value: any) => void;
   onFieldChange: (fieldName: string, value: any) => void;
   checkAllOnSubmit: () => boolean;

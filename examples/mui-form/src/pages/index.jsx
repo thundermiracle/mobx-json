@@ -43,14 +43,14 @@ const IndexPage = props => {
   return (
     <Container maxWidth="sm">
       <Grid container spacing={2}>
-        {detailForm}
-      </Grid>
-      {/* <Grid container spacing={2}>
         {modifyForm}
+      </Grid>
+      <Grid container spacing={2}>
+        {detailForm}
       </Grid>
       <Button color="primary" onClick={handleSubmit}>
         Login
-      </Button> */}
+      </Button>
     </Container>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { JsonForm, JsonFormStore, JsonFormTypes } from '@mobx-json/form';
+import domFocusByName from 'lib/domFocusByName';
 
 export interface MuiJsonFormInputProps {
   blueprint: any;
@@ -26,6 +27,11 @@ function useMuiJsonForm({
   const submitWithCheck = React.useCallback(() => {
     if (store.checkAllOnSubmit()) {
       return store.getData();
+    }
+
+    const errFieldName = store.getFirstErrFieldName();
+    if (errFieldName != null) {
+      domFocusByName(errFieldName);
     }
 
     return false;
