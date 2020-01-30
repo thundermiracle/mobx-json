@@ -23,7 +23,8 @@
       },
       "attrs": {
         "name": "grid1",
-        "spacing": 4
+        "spacing": 4,
+        "disabled": true
       },
       "fields": [
         {

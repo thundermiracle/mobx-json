@@ -17,6 +17,7 @@ interface Attrs {
   hidden?: boolean;
   value?: any;
   defaultValue?: any;
+  disabled?: boolean;
   [key: string]: any;
 }
 
