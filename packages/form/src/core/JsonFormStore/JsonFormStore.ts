@@ -12,8 +12,14 @@ import getHelper from './private/getHelper';
 import setHelper from './private/setHelper';
 
 class JsonFormStore implements JsonFormStoreClass {
+  private _formId: string;
+
   @observable
   fields: Fields = {};
+
+  get FormId(): string {
+    return this._formId;
+  }
 
   /**
    *
@@ -24,6 +30,8 @@ class JsonFormStore implements JsonFormStoreClass {
     if (fieldsProps != null) {
       this.initFieldsByJsonBlueprint(fieldsProps, extraMustHaveKeys);
     }
+
+    this._formId = Math.random().toString();
   }
 
   /**

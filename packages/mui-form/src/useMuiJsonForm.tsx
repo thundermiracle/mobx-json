@@ -1,10 +1,14 @@
 import React from 'react';
+
+import { Grid } from '@material-ui/core';
 import { JsonForm, JsonFormStore, JsonFormTypes } from '@mobx-json/form';
 import domFocusByName from 'lib/domFocusByName';
 import SmoothScroll from 'lib/SmoothScroll';
+import { AnyObject } from './components/ComponentTypes';
 
 interface MuiJsonFormInputOptions {
   smoothScroll?: boolean;
+  gridProps?: AnyObject;
 }
 
 export interface MuiJsonFormInputProps {
@@ -21,9 +25,9 @@ export interface MuiJsonFormProps {
 function useMuiJsonForm({
   blueprint,
   data,
-  options = { smoothScroll: true },
+  options = {},
 }: MuiJsonFormInputProps): MuiJsonFormProps {
-  const { smoothScroll } = options;
+  const { smoothScroll = true, gridProps } = options;
 
   // initilize mobx store
   const store = React.useMemo(() => {
@@ -34,7 +38,9 @@ function useMuiJsonForm({
   const form = (
     <>
       {smoothScroll ? <SmoothScroll /> : null}
-      <JsonForm store={store} />
+      <Grid id={store.FormId} container spacing={2} {...gridProps}>
+        <JsonForm store={store} />
+      </Grid>
     </>
   );
 
@@ -45,7 +51,7 @@ function useMuiJsonForm({
 
     const errFieldName = store.getFirstErrFieldName();
     if (errFieldName != null) {
-      domFocusByName(errFieldName);
+      domFocusByName(errFieldName, store.FormId);
     }
 
     return false;

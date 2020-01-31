@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { useMuiJsonForm } from '@mobx-json/mui-form';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 import BasicFormJson from 'blueprints/basic-form.json';
@@ -35,21 +34,34 @@ const IndexPage = props => {
     data: dataFromDb,
   });
 
+  const {
+    form: modifyForm2,
+    submitWithCheck: submitWithCheck2,
+  } = useMuiJsonForm({
+    blueprint: BasicFormJson,
+    data: dataFromDb,
+  });
+
   const handleSubmit = React.useCallback(() => {
     const data = submitWithCheck();
     console.log(data);
   }, [submitWithCheck]);
 
+  const handleSubmit2 = React.useCallback(() => {
+    const data = submitWithCheck2();
+    console.log(data);
+  }, [submitWithCheck2]);
+
   return (
     <Container maxWidth="sm">
-      <Grid container spacing={2}>
-        {modifyForm}
-      </Grid>
-      <Grid container spacing={2}>
-        {detailForm}
-      </Grid>
+      {modifyForm}
+      {detailForm}
+      {modifyForm2}
       <Button color="primary" onClick={handleSubmit}>
         Login
+      </Button>
+      <Button color="primary" onClick={handleSubmit2}>
+        Login2
       </Button>
     </Container>
   );
