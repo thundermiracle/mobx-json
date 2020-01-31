@@ -1,5 +1,8 @@
 import { ChangeEvent } from 'react';
 
+interface AnyObject {
+  [key: string]: any;
+}
 interface Format {
   type: string;
   template?: string;
@@ -35,4 +38,4 @@ interface FieldProps {
   [key: string]: any;
 }
 
-export { FieldProps, Item, OnChange };
+export { FieldProps, Item, OnChange, AnyObject };
