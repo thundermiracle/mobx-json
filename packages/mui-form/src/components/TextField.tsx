@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
+import IconWrapper from './internal/IconWrapper';
 
 import { FieldProps } from './ComponentTypes';
 
@@ -21,6 +22,7 @@ const TextField: React.FC<TextFieldProps> = ({
   type = 'text',
   InputLabelProps = {},
   keepLabelSpace = false,
+  IconComponent,
   className,
   ...restProps
 }) => {
@@ -37,13 +39,15 @@ const TextField: React.FC<TextFieldProps> = ({
   };
 
   return (
-    <MUITextField
-      {...restProps}
-      label={label}
-      className={labelSpaceClass}
-      type={type}
-      InputLabelProps={newInputLabelProps}
-    />
+    <IconWrapper IconComponent={IconComponent}>
+      <MUITextField
+        {...restProps}
+        label={label}
+        className={labelSpaceClass}
+        type={type}
+        InputLabelProps={newInputLabelProps}
+      />
+    </IconWrapper>
   );
 };
 

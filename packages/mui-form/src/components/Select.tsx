@@ -9,6 +9,7 @@ import {
   SelectProps as MUISelectProps,
 } from '@material-ui/core';
 
+import IconWrapper from './internal/IconWrapper';
 import { FieldProps } from './ComponentTypes';
 
 type SelectProps = {
@@ -25,6 +26,7 @@ const Select: React.FC<SelectProps> = ({
   helperText,
   fullWidth = false,
   emptyItem = false,
+  IconComponent,
   ...restProps
 }) => {
   const helperTextPart = helperText ? (
@@ -37,18 +39,20 @@ const Select: React.FC<SelectProps> = ({
     label || keepLabelSpace ? <InputLabel>{label}</InputLabel> : null;
 
   return (
-    <FormControl required={required} error={error} fullWidth={fullWidth}>
-      {labelPart}
-      <MUISelect {...restProps}>
-        {emptyItemPart}
-        {items.map(({ value: itemValue, label: itemLabel }: any) => (
-          <MenuItem key={itemValue} value={itemValue}>
-            {itemLabel || itemValue}
-          </MenuItem>
-        ))}
-      </MUISelect>
-      {helperTextPart}
-    </FormControl>
+    <IconWrapper IconComponent={IconComponent}>
+      <FormControl required={required} error={error} fullWidth={fullWidth}>
+        {labelPart}
+        <MUISelect {...restProps}>
+          {emptyItemPart}
+          {items.map(({ value: itemValue, label: itemLabel }: any) => (
+            <MenuItem key={itemValue} value={itemValue}>
+              {itemLabel || itemValue}
+            </MenuItem>
+          ))}
+        </MUISelect>
+        {helperTextPart}
+      </FormControl>
+    </IconWrapper>
   );
 };
 

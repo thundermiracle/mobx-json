@@ -38,7 +38,7 @@ function useMuiJsonForm({
   const form = (
     <>
       {smoothScroll ? <SmoothScroll /> : null}
-      <Grid id={store.FormId} container spacing={2} {...gridProps}>
+      <Grid container spacing={2} {...gridProps}>
         <JsonForm store={store} />
       </Grid>
     </>
@@ -51,7 +51,8 @@ function useMuiJsonForm({
 
     const errFieldName = store.getFirstErrFieldName();
     if (errFieldName != null) {
-      domFocusByName(errFieldName, store.FormId);
+      // domFocusByName(errFieldName, store.FormId);
+      domFocusByName(errFieldName);
     }
 
     return false;

@@ -35,6 +35,7 @@ interface FieldProps {
   format?: Format;
   items?: Item[];
   onChange?: OnChange;
+  IconComponent?: any;
   [key: string]: any;
 }
 

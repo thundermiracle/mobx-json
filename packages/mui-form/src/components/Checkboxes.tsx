@@ -10,6 +10,7 @@ import FormLabel from './internal/MyFormLabel';
 import FormHelperText from './internal/MyFormHelperText';
 import SelectAllCheckbox from './internal/SelectAllCheckbox';
 import MyCheckbox from './internal/MyCheckbox';
+import IconWrapper from './internal/IconWrapper';
 
 import useCheckboxes from './hooks/useCheckboxes';
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
@@ -19,6 +20,9 @@ import { FieldProps } from './ComponentTypes';
 const useStyles = makeStyles({
   hidden: {
     display: 'none',
+  },
+  icon: {
+    paddingBottom: 7,
   },
 });
 
@@ -47,6 +51,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
   row = true,
   fullWidth = false,
   domFocusRipple = true,
+  IconComponent,
   ...restProps
 }) => {
   if (items == null) {
@@ -88,46 +93,48 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
   ) : null;
 
   return (
-    <FormControl
-      fullWidth={fullWidth}
-      error={error}
-      required={required}
-      className={clsx({ [classes.hidden]: hidden }, labelSpaceClass)}
-    >
-      {labelPart}
-      {selectAllPart}
-      <FormGroup row={row}>
-        {items.map(
-          ({
-            value: itemValue,
-            disabled: itemDisabled,
-            label: itemLabel,
-          }: any) => {
-            const itemValStr = itemValue.toString();
+    <IconWrapper IconComponent={IconComponent} iconClassName={classes.icon}>
+      <FormControl
+        fullWidth={fullWidth}
+        error={error}
+        required={required}
+        className={clsx({ [classes.hidden]: hidden }, labelSpaceClass)}
+      >
+        {labelPart}
+        {selectAllPart}
+        <FormGroup row={row}>
+          {items.map(
+            ({
+              value: itemValue,
+              disabled: itemDisabled,
+              label: itemLabel,
+            }: any) => {
+              const itemValStr = itemValue.toString();
 
-            return (
-              <FormControlLabel
-                key={itemValStr}
-                control={
-                  <MyCheckbox
-                    name={name}
-                    value={itemValStr}
-                    checked={itemsCheckedStatus[itemValStr]}
-                    onChange={handleItemOnChange}
-                    disabled={disabled || itemDisabled}
-                    color="primary"
-                    domFocusRipple={domFocusRipple}
-                    {...restProps}
-                  />
-                }
-                label={itemLabel || itemValStr}
-              />
-            );
-          },
-        )}
-      </FormGroup>
-      {helperTextPart}
-    </FormControl>
+              return (
+                <FormControlLabel
+                  key={itemValStr}
+                  control={
+                    <MyCheckbox
+                      name={name}
+                      value={itemValStr}
+                      checked={itemsCheckedStatus[itemValStr]}
+                      onChange={handleItemOnChange}
+                      disabled={disabled || itemDisabled}
+                      color="primary"
+                      domFocusRipple={domFocusRipple}
+                      {...restProps}
+                    />
+                  }
+                  label={itemLabel || itemValStr}
+                />
+              );
+            },
+          )}
+        </FormGroup>
+        {helperTextPart}
+      </FormControl>
+    </IconWrapper>
   );
 };
 
