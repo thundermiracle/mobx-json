@@ -148,6 +148,45 @@
         "valueType": "container"
       },
       "attrs": {
+        "name": "idGrid",
+        "spacing": 4,
+        "primary": "Login Info",
+        "secondary": "Setup your login details.",
+        "divider": true
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "Display"
+          },
+          "attrs": {
+            "name": "id",
+            "label": "Login ID"
+          },
+          "grid": {
+            "xs": 8
+          }
+        },
+        {
+          "settings": {
+            "widget": "Password"
+          },
+          "attrs": {
+            "name": "password",
+            "label": "Password"
+          },
+          "grid": {
+            "xs": 8
+          }
+        }
+      ]
+    },
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container"
+      },
+      "attrs": {
         "name": "socialGrid",
         "spacing": 4,
         "primary": "Extra Info",
