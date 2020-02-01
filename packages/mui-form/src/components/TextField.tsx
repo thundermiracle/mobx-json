@@ -1,5 +1,7 @@
 import React from 'react';
 
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   TextField as MUITextField,
   TextFieldProps as MUITextFieldProps,
@@ -10,6 +12,12 @@ import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 import IconWrapper from './internal/IconWrapper';
 
 import { FieldProps } from './ComponentTypes';
+
+const useStyles = makeStyles({
+  root: {
+    width: '100%',
+  },
+});
 
 const TypesNeedHover = ['date', 'time', 'week', 'month', 'datetime-local'];
 
@@ -36,6 +44,7 @@ const TextField: React.FC<TextFieldProps> = ({
   adornmentPosition = AdornmentPosition.end,
   ...restProps
 }) => {
+  const classes = useStyles();
   const labelSpaceClass = useKeepLabelSpace({ className, keepLabelSpace });
 
   let extraLabelProps = {};
@@ -78,7 +87,7 @@ const TextField: React.FC<TextFieldProps> = ({
       <MUITextField
         {...restProps}
         label={label}
-        className={labelSpaceClass}
+        className={clsx(labelSpaceClass, classes.root)}
         type={type}
         InputLabelProps={newInputLabelProps}
         {...inputPropsPart}

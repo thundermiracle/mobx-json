@@ -83,7 +83,8 @@
         {
           "settings": {
             "widget": "Select",
-            "valueType": "string"
+            "valueType": "string",
+            "rule": "required"
           },
           "attrs": {
             "name": "location",
