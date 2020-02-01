@@ -40,6 +40,7 @@ class JsonFormStore implements JsonFormStoreClass {
    *  @param {any} fieldsProp
    *  @param {any} extraMustHaveKeys
    */
+  @action
   initFieldsByJsonBlueprint = (
     fieldsProp: Blueprint,
     extraMustHaveKeys: string[] = [],

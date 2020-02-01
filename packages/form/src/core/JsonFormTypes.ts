@@ -6,6 +6,11 @@ interface OnChange {
   (eventOrName: any, value?: any): void;
 }
 
+interface Item {
+  label?: string;
+  value: string | boolean | number;
+}
+
 interface Settings {
   widget: string;
   valueType: string;
@@ -18,6 +23,8 @@ interface Attrs {
   value?: any;
   defaultValue?: any;
   disabled?: boolean;
+  itemsSource?: string;
+  items?: Item[];
   [key: string]: any;
 }
 

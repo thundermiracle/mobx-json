@@ -85,14 +85,16 @@ class GetHelper {
         this._isRequired(settingsFlatten) || attrsFlatten.required;
 
       // itemsSource -> items, remove unnecessary items
-      if (attrsFlatten.itemsSource) {
-        attrsFlatten.items = itemsSource[attrsFlatten.itemsSource] || [];
+      if (attrsFlatten.items == null) {
+        if (attrsFlatten.itemsSource) {
+          attrsFlatten.items = itemsSource[attrsFlatten.itemsSource] || [];
+        }
         Reflect.deleteProperty(attrsFlatten, 'itemsSource');
       }
 
       // nested fields
       const fieldsFlatten = childFields
-        ? this.initObservableFields(childFields, extraMustHaveKeys)
+        ? this.initObservableFields(childFields, itemsSource, extraMustHaveKeys)
         : null;
 
       // contents
