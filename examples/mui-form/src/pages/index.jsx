@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 
 import BasicFormJson from 'blueprints/basic-form.json';
 import BasicDetailJson from 'blueprints/basic-detail.json';
+import { Card, CardContent, CardActions } from '@material-ui/core';
 
 const dataFromDb = {
   id: 'userid12345',
@@ -54,15 +55,19 @@ const IndexPage = props => {
 
   return (
     <Container maxWidth="sm">
-      {modifyForm}
-      {detailForm}
-      {modifyForm2}
-      <Button color="primary" onClick={handleSubmit}>
-        Login
-      </Button>
-      <Button color="primary" onClick={handleSubmit2}>
+      <Card>
+        <CardContent>{modifyForm}</CardContent>
+        <CardActions>
+          <Button color="primary" onClick={handleSubmit}>
+            Confirm
+          </Button>
+        </CardActions>
+      </Card>
+      {/* {detailForm}
+      {modifyForm2} */}
+      {/* <Button color="primary" onClick={handleSubmit2}>
         Login2
-      </Button>
+      </Button> */}
     </Container>
   );
 };

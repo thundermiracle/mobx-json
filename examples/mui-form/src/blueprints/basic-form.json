@@ -15,36 +15,127 @@
       },
       "attrs": {
         "name": "grid1",
-        "spacing": 4
+        "spacing": 4,
+        "primary": "Basic Info",
+        "secondary": "Setup your general profile details.",
+        "divider": true
       },
       "fields": [
         {
           "settings": {
             "widget": "TextField",
-            "rule": "required|min:5"
+            "rule": "required|min:3"
           },
           "attrs": {
-            "name": "sub1",
-            "label": "sub1",
-            "placeholder": "Input your user id",
+            "name": "firstName",
+            "label": "First Name",
+            "placeholder": "input your first name",
+            "icon": "AccountCircle",
             "grid": {
-              "xs": 6,
-              "md": 3
+              "xs": 6
             }
           }
         },
         {
           "settings": {
             "widget": "TextField",
-            "rule": "required|min:5"
+            "rule": "required|min:3"
           },
           "attrs": {
-            "name": "sub2",
-            "label": "sub2",
-            "placeholder": "Input your user id",
+            "name": "lastName",
+            "label": "Last Name",
+            "placeholder": "input your last name",
+            "icon": "AccountCircle",
             "grid": {
-              "xs": 6,
-              "md": 3
+              "xs": 6
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextField"
+          },
+          "attrs": {
+            "name": "birthday",
+            "label": "Birthday",
+            "icon": "Today",
+            "type": "date",
+            "fullWidth": false,
+            "grid": {
+              "xs": 5
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextField",
+            "rule": "email"
+          },
+          "attrs": {
+            "name": "email",
+            "label": "Email",
+            "icon": "ContactMail",
+            "grid": {
+              "xs": 7
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "Select",
+            "valueType": "string"
+          },
+          "attrs": {
+            "name": "location",
+            "label": "Location",
+            "icon": "LocationCity",
+            "defaultValue": "",
+            "emptyItem": true,
+            "itemsSource": "City",
+            "grid": {
+              "xs": 5
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextField",
+            "valueType": "string"
+          },
+          "attrs": {
+            "name": "phone",
+            "icon": "Phone",
+            "label": "Phone Number",
+            "grid": {
+              "xs": 7
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "Radio",
+            "valueType": "number",
+            "rule": "required"
+          },
+          "attrs": {
+            "name": "sex",
+            "label": "Sex",
+            "defaultValue": null,
+            "itemsSource": "Sex"
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextField"
+          },
+          "attrs": {
+            "name": "bio",
+            "label": "Bio",
+            "icon": "Description",
+            "multiline": true,
+            "rows": "3",
+            "grid": {
+              "xs": 8
             }
           }
         }
@@ -52,145 +143,83 @@
     },
     {
       "settings": {
-        "widget": "TextField",
-        "rule": "required|min:5"
+        "widget": "GridItemContainer",
+        "valueType": "container"
       },
       "attrs": {
-        "name": "name",
-        "label": "ID",
-        "placeholder": "Input your user id",
-        "grid": {
-          "xs": 12,
-          "md": 6
-        }
-      }
-    },
-    {
-      "settings": {
-        "widget": "TextField",
-        "rule": "required|min:6"
+        "name": "socialGrid",
+        "spacing": 4,
+        "primary": "Extra Info",
+        "secondary": "Setup your extra profile details.",
+        "divider": true
       },
-      "attrs": {
-        "name": "password",
-        "type": "password",
-        "label": "Password",
-        "placeholder": "Input your password",
-        "grid": {
-          "xs": 12,
-          "md": 6
-        }
-      }
-    },
-    {
-      "settings": {
-        "widget": "TextField",
-        "rule": "required"
-      },
-      "attrs": {
-        "name": "birthday",
-        "label": "Birthday",
-        "type": "date",
-        "grid": {
-          "xs": 4,
-          "md": 3
-        }
-      }
-    },
-    {
-      "settings": {
-        "widget": "TextField",
-        "rule": "required"
-      },
-      "attrs": {
-        "name": "birthtime",
-        "type": "time",
-        "keepLabelSpace": true,
-        "grid": {
-          "xs": 4,
-          "md": 3
-        }
-      }
-    },
-    {
-      "settings": {
-        "widget": "Select",
-        "valueType": "string"
-      },
-      "attrs": {
-        "name": "city",
-        "label": "City",
-        "defaultValue": "",
-        "emptyItem": true,
-        "itemsSource": "City",
-        "grid": {
-          "xs": 4,
-          "md": 2
-        }
-      }
-    },
-    {
-      "settings": {
-        "widget": "Checkbox",
-        "valueType": "boolean",
-        "rule": "required"
-      },
-      "attrs": {
-        "name": "agreement",
-        "label": "I Agree!"
-      }
-    },
-    {
-      "settings": {
-        "widget": "Radio",
-        "valueType": "number",
-        "rule": "required"
-      },
-      "attrs": {
-        "name": "sex",
-        "label": "Sex",
-        "defaultValue": null,
-        "itemsSource": "Sex",
-        "grid": {
-          "xs": 12,
-          "md": 6
-        }
-      }
-    },
-    {
-      "settings": {
-        "widget": "Checkboxes",
-        "valueType": "array",
-        "rule": "required"
-      },
-      "attrs": {
-        "name": "interest",
-        "label": "Interest",
-        "items": [
-          {
-            "label": "Movie",
-            "value": 1
+      "fields": [
+        {
+          "settings": {
+            "widget": "Checkboxes",
+            "valueType": "array",
+            "rule": "required"
           },
-          {
-            "label": "Gaming",
-            "value": 2
-          },
-          {
-            "label": "Coding",
-            "value": 3
+          "attrs": {
+            "name": "interest",
+            "label": "Your Interests",
+            "items": [
+              {
+                "label": "Movie",
+                "value": 1
+              },
+              {
+                "label": "Gaming",
+                "value": 2
+              },
+              {
+                "label": "Coding",
+                "value": 3
+              }
+            ]
           }
-        ]
-      }
-    },
-    {
-      "settings": {
-        "widget": "Switch",
-        "valueType": "boolean"
-      },
-      "attrs": {
-        "name": "airplane",
-        "label": "Airplane",
-        "fullWidth": false
-      }
+        },
+        {
+          "settings": {
+            "widget": "TextField"
+          },
+          "attrs": {
+            "name": "facebook",
+            "label": "Facebook Link",
+            "icon": "Facebook"
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextField"
+          },
+          "attrs": {
+            "name": "twitter",
+            "label": "Twitter Link",
+            "icon": "Twitter"
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextField"
+          },
+          "attrs": {
+            "name": "medium",
+            "label": "Medium Link",
+            "icon": "MenuBook"
+          }
+        },
+        {
+          "settings": {
+            "widget": "Checkbox",
+            "valueType": "boolean"
+          },
+          "attrs": {
+            "name": "subscription",
+            "label": "Subscribe the news letter!"
+          }
+        }
+      ]
     }
   ]
 }

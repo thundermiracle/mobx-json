@@ -25,6 +25,7 @@ interface Attrs {
   disabled?: boolean;
   itemsSource?: string;
   items?: Item[];
+  icon?: string;
   [key: string]: any;
 }
 

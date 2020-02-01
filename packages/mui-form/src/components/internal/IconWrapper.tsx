@@ -3,7 +3,6 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { Grid, GridProps } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { AccountCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   icon: {
@@ -11,6 +10,7 @@ const useStyles = makeStyles({
   },
   content: {
     flex: 1,
+    width: 10, // add with to make flex:1 effect Input,type=date
   },
 });
 

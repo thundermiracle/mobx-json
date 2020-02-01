@@ -7,7 +7,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { initialize } from '@mobx-json/mui-form';
 
 import theme from '../theme';
-import itemsSource from '../settings/itemsSource.json';
+import itemsSource from '../settings/itemsSource';
+import iconsMap from '../settings/iconsMap';
 
 export default class MyApp extends App {
   constructor() {
@@ -15,6 +16,7 @@ export default class MyApp extends App {
     initialize({
       locale: 'zh',
       itemsSource,
+      iconsMap,
     });
   }
 

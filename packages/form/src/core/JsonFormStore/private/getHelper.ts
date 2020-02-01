@@ -36,6 +36,7 @@ class GetHelper {
   initObservableFields = (
     fieldsJson: JsonField[],
     itemsSource: AnyObject,
+    iconsMap: AnyObject,
     extraMustHaveKeys: string[] = [],
   ): Fields => {
     if (!fieldsJson) {
@@ -92,9 +93,21 @@ class GetHelper {
         Reflect.deleteProperty(attrsFlatten, 'itemsSource');
       }
 
+      // icon -> IconComponent, remove unnecessary icon
+      if (attrsFlatten.icon) {
+        attrsFlatten.IconComponent = iconsMap[attrsFlatten.icon];
+
+        Reflect.deleteProperty(attrsFlatten, 'icon');
+      }
+
       // nested fields
       const fieldsFlatten = childFields
-        ? this.initObservableFields(childFields, itemsSource, extraMustHaveKeys)
+        ? this.initObservableFields(
+            childFields,
+            itemsSource,
+            iconsMap,
+            extraMustHaveKeys,
+          )
         : null;
 
       // contents

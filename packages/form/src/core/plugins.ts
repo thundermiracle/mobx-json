@@ -11,6 +11,9 @@ class Plugins {
   // JsonForm will use widgetMap here if widget is not passed as prop
   private _widgetMap: AnyObject = {};
 
+  // JsonForm will use iconsMap here if icon is set in json definition
+  private _iconsMap: AnyObject = {};
+
   /*
    * itemsSource in Json definition
    * exp: JSON:  "itemsSource": "Sex"
@@ -42,6 +45,14 @@ class Plugins {
 
   set itemsSource(itemsSource) {
     this._itemsSource = itemsSource;
+  }
+
+  get iconsMap(): AnyObject {
+    return this._iconsMap;
+  }
+
+  set iconsMap(iconsMap) {
+    this._iconsMap = iconsMap;
   }
 }
 

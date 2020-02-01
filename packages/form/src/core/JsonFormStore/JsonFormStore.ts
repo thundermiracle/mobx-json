@@ -48,6 +48,7 @@ class JsonFormStore implements JsonFormStoreClass {
     this.fields = getHelper.initObservableFields(
       fieldsProp.fields,
       plugins.itemsSource,
+      plugins.iconsMap,
       extraMustHaveKeys,
     );
   };
