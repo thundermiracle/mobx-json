@@ -1,0 +1,266 @@
+{
+  "fields": [
+    {
+      "settings": {
+        "widget": "Data"
+      },
+      "attrs": {
+        "name": "id"
+      }
+    },
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container"
+      },
+      "attrs": {
+        "name": "generalGrid",
+        "spacing": 4,
+        "primary": "Basic Info",
+        "secondary": "Setup your general profile details.",
+        "divider": true
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "TextFieldOutlined",
+            "rule": "required|min:3"
+          },
+          "attrs": {
+            "name": "firstName",
+            "label": "First Name",
+            "placeholder": "input your first name",
+            "icon": "AccountCircle",
+            "grid": {
+              "xs": 6
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined",
+            "rule": "required|min:3"
+          },
+          "attrs": {
+            "name": "lastName",
+            "label": "Last Name",
+            "placeholder": "input your last name",
+            "icon": "AccountCircle",
+            "grid": {
+              "xs": 6
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined"
+          },
+          "attrs": {
+            "name": "birthday",
+            "label": "Birthday",
+            "icon": "Today",
+            "type": "date",
+            "fullWidth": false,
+            "grid": {
+              "xs": 5
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined",
+            "rule": "email"
+          },
+          "attrs": {
+            "name": "email",
+            "label": "Email",
+            "icon": "ContactMail",
+            "grid": {
+              "xs": 7
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "SelectOutlined",
+            "valueType": "string",
+            "rule": "required"
+          },
+          "attrs": {
+            "name": "location",
+            "label": "Location",
+            "icon": "LocationCity",
+            "defaultValue": "",
+            "emptyItem": true,
+            "itemsSource": "City",
+            "grid": {
+              "xs": 5
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined",
+            "valueType": "string"
+          },
+          "attrs": {
+            "name": "phone",
+            "icon": "Phone",
+            "label": "Phone Number",
+            "grid": {
+              "xs": 7
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "Radio",
+            "valueType": "number",
+            "rule": "required"
+          },
+          "attrs": {
+            "name": "sex",
+            "label": "Sex",
+            "defaultValue": null,
+            "itemsSource": "Sex"
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined"
+          },
+          "attrs": {
+            "name": "bio",
+            "label": "Bio",
+            "icon": "Description",
+            "multiline": true,
+            "rows": "3",
+            "grid": {
+              "xs": 8
+            }
+          }
+        }
+      ]
+    },
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container"
+      },
+      "attrs": {
+        "name": "idGrid",
+        "spacing": 4,
+        "primary": "Login Info",
+        "secondary": "Setup your login details.",
+        "divider": true
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "Display"
+          },
+          "attrs": {
+            "name": "id",
+            "label": "Login ID"
+          },
+          "grid": {
+            "xs": 8
+          }
+        },
+        {
+          "settings": {
+            "widget": "PasswordOutlined",
+            "rule": "required"
+          },
+          "attrs": {
+            "name": "password",
+            "label": "Password"
+          },
+          "grid": {
+            "xs": 8
+          }
+        }
+      ]
+    },
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container"
+      },
+      "attrs": {
+        "name": "socialGrid",
+        "spacing": 4,
+        "primary": "Extra Info",
+        "secondary": "Setup your extra profile details.",
+        "divider": true
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "Checkboxes",
+            "valueType": "array",
+            "rule": "required"
+          },
+          "attrs": {
+            "name": "interest",
+            "label": "Your Interests",
+            "items": [
+              {
+                "label": "Movie",
+                "value": 1
+              },
+              {
+                "label": "Gaming",
+                "value": 2
+              },
+              {
+                "label": "Coding",
+                "value": 3
+              }
+            ]
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined"
+          },
+          "attrs": {
+            "name": "facebook",
+            "label": "Facebook Link",
+            "icon": "Facebook"
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined"
+          },
+          "attrs": {
+            "name": "twitter",
+            "label": "Twitter Link",
+            "icon": "Twitter"
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextFieldOutlined"
+          },
+          "attrs": {
+            "name": "medium",
+            "label": "Medium Link",
+            "icon": "MenuBook"
+          }
+        },
+        {
+          "settings": {
+            "widget": "Checkbox",
+            "valueType": "boolean"
+          },
+          "attrs": {
+            "name": "subscription",
+            "label": "Subscribe the news letter!"
+          }
+        }
+      ]
+    }
+  ]
+}

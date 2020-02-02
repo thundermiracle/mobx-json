@@ -6,6 +6,7 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
 import BasicFormJson from 'blueprints/basic-form.json';
+import BasicFormOutlinedJson from 'blueprints/basic-form-outlined.json';
 import BasicDetailJson from 'blueprints/basic-detail.json';
 import { Card, CardContent, CardActions } from '@material-ui/core';
 
@@ -31,7 +32,8 @@ const IndexPage = props => {
   });
 
   const { form: modifyForm, submitWithCheck } = useMuiJsonForm({
-    blueprint: BasicFormJson,
+    // blueprint: BasicFormJson,
+    blueprint: BasicFormOutlinedJson,
     data: dataFromDb,
   });
 

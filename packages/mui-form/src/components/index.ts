@@ -8,3 +8,4 @@ export { default as Display } from './Display';
 export { default as Password } from './Password';
 export { default as TextFieldOutlined } from './TextFieldOutlined';
 export { default as SelectOutlined } from './SelectOutlined';
+export { default as PasswordOutlined } from './PasswordOutlined';

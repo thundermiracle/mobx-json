@@ -9,7 +9,11 @@ import { FieldProps } from './ComponentTypes';
 
 type PasswordProps = FieldProps & TextFieldProps;
 
-const Password: React.FC<PasswordProps> = ({ type, ...restProps }) => {
+const Password: React.FC<PasswordProps> = ({
+  type,
+  InputProps,
+  ...restProps
+}) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = React.useCallback(() => {
@@ -26,8 +30,10 @@ const Password: React.FC<PasswordProps> = ({ type, ...restProps }) => {
   return (
     <TextField
       {...restProps}
+      variant="outlined"
       type={showPassword ? 'text' : 'password'}
       InputProps={{
+        ...InputProps,
         endAdornment: (
           <InputAdornment position="end">
             <IconButton
