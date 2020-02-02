@@ -30,7 +30,6 @@ const Password: React.FC<PasswordProps> = ({
   return (
     <TextField
       {...restProps}
-      variant="outlined"
       type={showPassword ? 'text' : 'password'}
       InputProps={{
         ...InputProps,

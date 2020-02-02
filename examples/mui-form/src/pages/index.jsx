@@ -56,7 +56,7 @@ const IndexPage = props => {
   }, [submitWithCheck2]);
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="md">
       <Card>
         <CardContent>{modifyForm}</CardContent>
         <CardActions>
