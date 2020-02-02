@@ -23,11 +23,15 @@ const renderAllFields = (
       // set WrapperComponet to widget if it is not defined in mapper
       if (isNativeWidget(widget)) {
         ObservableComponent = NativeHtmlWidget;
-      } else if (innerFields) {
-        // no need mobx attrs for Container(Grid, Group?)
-        ObservableComponent = withFieldAttrs(widgetMap[widget]);
+      } else if (widgetMap[widget]) {
+        if (innerFields) {
+          // no need mobx attrs for Container(Grid, Group?)
+          ObservableComponent = withFieldAttrs(widgetMap[widget]);
+        } else {
+          ObservableComponent = withMobxAttrs(widgetMap[widget]);
+        }
       } else {
-        ObservableComponent = withMobxAttrs(widgetMap[widget]);
+        throw new Error(`widget: [${widget}] is not exist in widgetMap.`);
       }
 
       let innerComponents;

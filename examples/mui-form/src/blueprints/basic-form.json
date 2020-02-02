@@ -169,7 +169,8 @@
         },
         {
           "settings": {
-            "widget": "Password"
+            "widget": "Password",
+            "rule": "required"
           },
           "attrs": {
             "name": "password",
