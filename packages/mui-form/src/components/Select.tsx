@@ -5,10 +5,10 @@ import {
   FormHelperText,
   InputLabel,
   Select as MUISelect,
-  MenuItem,
   SelectProps as MUISelectProps,
 } from '@material-ui/core';
 
+import useSelectItems from './hooks/useSelectItems';
 import IconWrapper from './internal/IconWrapper';
 import { FieldProps } from './ComponentTypes';
 
@@ -29,11 +29,11 @@ const Select: React.FC<SelectProps> = ({
   IconComponent,
   ...restProps
 }) => {
+  const menuItems = useSelectItems({ emptyItem, items });
+
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
   ) : null;
-
-  const emptyItemPart = emptyItem ? <MenuItem value="" /> : null;
 
   const labelPart =
     label || keepLabelSpace ? <InputLabel>{label}</InputLabel> : null;
@@ -42,14 +42,7 @@ const Select: React.FC<SelectProps> = ({
     <IconWrapper IconComponent={IconComponent}>
       <FormControl required={required} error={error} fullWidth={fullWidth}>
         {labelPart}
-        <MUISelect {...restProps}>
-          {emptyItemPart}
-          {items.map(({ value: itemValue, label: itemLabel }: any) => (
-            <MenuItem key={itemValue} value={itemValue}>
-              {itemLabel || itemValue}
-            </MenuItem>
-          ))}
-        </MUISelect>
+        <MUISelect {...restProps}>{menuItems}</MUISelect>
         {helperTextPart}
       </FormControl>
     </IconWrapper>

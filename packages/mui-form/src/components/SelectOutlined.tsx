@@ -1,13 +1,11 @@
 import React from 'react';
 
-import {
-  MenuItem,
-  TextFieldProps as MUITextFieldProps,
-} from '@material-ui/core';
-
-import { FieldProps } from './ComponentTypes';
+import { TextFieldProps as MUITextFieldProps } from '@material-ui/core';
 
 import TextFieldOutlined from './TextFieldOutlined';
+import useSelectItems from './hooks/useSelectItems';
+
+import { FieldProps } from './ComponentTypes';
 
 type SelectProps = {
   emptyItem?: boolean;
@@ -19,16 +17,11 @@ const SelectOutlined: React.FC<SelectProps> = ({
   emptyItem = false,
   ...restProps
 }) => {
-  const emptyItemPart = emptyItem ? <MenuItem value="" /> : null;
+  const menuItems = useSelectItems({ emptyItem, items });
 
   return (
     <TextFieldOutlined {...restProps} select>
-      {emptyItemPart}
-      {items.map(({ value: itemValue, label: itemLabel }: any) => (
-        <MenuItem key={itemValue} value={itemValue}>
-          {itemLabel || itemValue}
-        </MenuItem>
-      ))}
+      {menuItems}
     </TextFieldOutlined>
   );
 };

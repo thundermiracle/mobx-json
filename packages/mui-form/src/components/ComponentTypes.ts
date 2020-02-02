@@ -10,7 +10,7 @@ interface Format {
 
 interface Item {
   label?: string;
-  value: string | boolean | number;
+  value: string | number;
 }
 
 interface NativeOnChange {
