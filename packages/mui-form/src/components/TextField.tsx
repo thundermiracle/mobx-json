@@ -21,12 +21,12 @@ const useStyles = makeStyles({
 
 const TypesNeedHover = ['date', 'time', 'week', 'month', 'datetime-local'];
 
-enum AdornmentPosition {
+export enum AdornmentPosition {
   start = 'start',
   end = 'end',
 }
 
-type TextFieldProps = {
+export type TextFieldProps = {
   InputLabelProps?: any;
   adornment?: string;
   adornmentPosition?: AdornmentPosition;

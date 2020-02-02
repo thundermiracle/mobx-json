@@ -6,3 +6,5 @@ export { default as Select } from './Select';
 export { default as Switch } from './Switch';
 export { default as Display } from './Display';
 export { default as Password } from './Password';
+export { default as TextFieldOutlined } from './TextFieldOutlined';
+export { default as SelectOutlined } from './SelectOutlined';
