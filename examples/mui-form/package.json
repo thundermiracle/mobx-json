@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "eslint:src": "eslint ./src",
-    "dev": "next ./src"
+    "dev": "next ./src",
+    "build": "next build",
+    "export": "next build ./src && next export ./src -o dist/"
   },
   "dependencies": {
     "@material-ui/core": "^4.8.3",
