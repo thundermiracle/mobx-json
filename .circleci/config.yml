@@ -21,6 +21,9 @@ aliases:
       key: yarn-cache-netlify-0.1.0-{{ checksum "yarn.lock" }}
       paths:
         - ./node_modules
+        - ./packages/form/node_modules
+        - ./packages/mui-form/node_modules
+        - ./examples/mui-form/node_modules
 
 version: 2.1
 
