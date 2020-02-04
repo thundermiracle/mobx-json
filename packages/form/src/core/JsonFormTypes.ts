@@ -67,7 +67,6 @@ interface JsonFormComponent {
 
 interface JsonFormStore {
   fields: Fields;
-  FormId: string;
   initFieldsByJsonBlueprint: (
     fieldsProp: Blueprint,
     extraMustHaveKeys?: string[],

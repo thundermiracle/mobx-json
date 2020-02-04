@@ -9,7 +9,10 @@ interface UseSelectItems {
   items?: Item[];
 }
 
-const useSelectItems = ({ emptyItem, items = [] }: UseSelectItems) => {
+const useSelectItems = ({
+  emptyItem,
+  items = [],
+}: UseSelectItems): JSX.Element[] => {
   const menuItems = items.map(
     ({ value: itemValue, label: itemLabel }: Item) => (
       <MenuItem key={itemValue.toString()} value={itemValue}>
@@ -19,7 +22,12 @@ const useSelectItems = ({ emptyItem, items = [] }: UseSelectItems) => {
   );
 
   if (emptyItem) {
-    menuItems.unshift(<MenuItem value="">　</MenuItem>);
+    menuItems.unshift(
+      // eslint-disable-next-line react/self-closing-comp
+      <MenuItem key="emptyValue" value="">
+        　
+      </MenuItem>,
+    );
   }
 
   return menuItems;

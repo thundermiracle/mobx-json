@@ -13,6 +13,7 @@ interface MuiJsonFormInputOptions {
 
 export interface MuiJsonFormInputProps {
   blueprint: any;
+  formUniqName?: string;
   data?: any;
   options?: MuiJsonFormInputOptions;
 }
@@ -24,22 +25,30 @@ export interface MuiJsonFormProps {
 
 function useMuiJsonForm({
   blueprint,
+  formUniqName,
   data,
   options = {},
 }: MuiJsonFormInputProps): MuiJsonFormProps {
   const { smoothScroll = true, gridProps } = options;
 
+  // if (!formUniqName) {
+  //   throw new Error('formUniqName must be defined.');
+  // }
+
   // initilize mobx store
   const store = React.useMemo(() => {
     return new JsonFormStore(blueprint);
-  }, [blueprint]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formUniqName || blueprint]);
   store.setData(data);
 
   const form = (
     <>
       {smoothScroll ? <SmoothScroll /> : null}
       <Grid container spacing={2} {...gridProps}>
-        <JsonForm store={store} />
+        <form name={formUniqName} noValidate>
+          <JsonForm store={store} />
+        </form>
       </Grid>
     </>
   );
@@ -51,12 +60,12 @@ function useMuiJsonForm({
 
     const errFieldName = store.getFirstErrFieldName();
     if (errFieldName != null) {
-      // domFocusByName(errFieldName, store.FormId);
-      domFocusByName(errFieldName);
+      domFocusByName(errFieldName, formUniqName);
+      // domFocusByName(errFieldName);
     }
 
     return false;
-  }, [store]);
+  }, [formUniqName, store]);
 
   return {
     form,

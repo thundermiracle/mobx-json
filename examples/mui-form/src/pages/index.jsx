@@ -32,16 +32,8 @@ const IndexPage = props => {
   });
 
   const { form: modifyForm, submitWithCheck } = useMuiJsonForm({
-    // blueprint: BasicFormJson,
-    blueprint: BasicFormOutlinedJson,
-    data: dataFromDb,
-  });
-
-  const {
-    form: modifyForm2,
-    submitWithCheck: submitWithCheck2,
-  } = useMuiJsonForm({
     blueprint: BasicFormJson,
+    formUniqName: 'modifyForm',
     data: dataFromDb,
   });
 
@@ -50,26 +42,38 @@ const IndexPage = props => {
     console.log(data);
   }, [submitWithCheck]);
 
-  const handleSubmit2 = React.useCallback(() => {
-    const data = submitWithCheck2();
+  const {
+    form: modifyFormOutlined,
+    submitWithCheck: submitWithCheckOutlined,
+  } = useMuiJsonForm({
+    blueprint: BasicFormOutlinedJson,
+    formUniqName: 'modifyFormOutlined',
+    data: dataFromDb,
+  });
+
+  const handleSubmitOutlined = React.useCallback(() => {
+    const data = submitWithCheckOutlined();
     console.log(data);
-  }, [submitWithCheck2]);
+  }, [submitWithCheckOutlined]);
 
   return (
     <Container maxWidth="md">
       <Card>
         <CardContent>{modifyForm}</CardContent>
-        <CardActions>
+        {/* <CardActions>
           <Button color="primary" onClick={handleSubmit}>
             Confirm
           </Button>
-        </CardActions>
+        </CardActions> */}
       </Card>
-      {/* {detailForm}
-      {modifyForm2} */}
-      {/* <Button color="primary" onClick={handleSubmit2}>
-        Login2
-      </Button> */}
+      {detailForm}
+      {modifyFormOutlined}
+      <Button color="primary" onClick={handleSubmit}>
+        Confirm
+      </Button>
+      <Button color="primary" onClick={handleSubmitOutlined} variant="outlined">
+        ConfirmOutlined
+      </Button>
     </Container>
   );
 };
