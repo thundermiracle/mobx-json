@@ -58,6 +58,8 @@ jobs:
       - persist_to_workspace:
           root: ./
           paths:
+            - ./packages/form/dist
+            - ./packages/mui-form/dist
             - ./examples/mui-form/dist
 
   deploy:
@@ -65,7 +67,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ./examples/mui-form/dist
+          at: ./
       - <<: *restore_cache
       - <<: *install_node_modules
       - run:
@@ -73,7 +75,7 @@ jobs:
           command: sudo npm install -g --silent netlify-cli
       - run:
           name: Deploy to Netlify
-          command: netlify deploy --dir=examples/mui-form/dist -p
+          command: netlify deploy --dir=./examples/mui-form/dist -p
 
 workflows:
   version: 2
