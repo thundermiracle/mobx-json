@@ -4,8 +4,9 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import { initialize } from '@mobx-json/mui-form';
+import { initialize, GlobalSmoothScroll } from '@mobx-json/mui-form';
 
+import Layout from 'views/Layout/Layout';
 import theme from '../theme';
 import itemsSource from '../settings/itemsSource';
 import iconsMap from '../settings/iconsMap';
@@ -42,7 +43,10 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          <GlobalSmoothScroll />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </ThemeProvider>
       </>
     );

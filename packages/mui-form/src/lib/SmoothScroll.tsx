@@ -1,17 +1,5 @@
 import React from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(
-  {
-    '@global': {
-      html: {
-        scrollBehavior: 'smooth',
-      },
-    },
-  },
-  { name: 'MuiFormSmoothScroll' },
-);
+import getNearestScrollableDom from './getNearestScrollableDom';
 
 interface SmoothScrollProps {
   children?: React.ReactElement;
@@ -20,9 +8,16 @@ interface SmoothScrollProps {
 const SmoothScroll: React.ComponentType<SmoothScrollProps> = ({
   children = null,
 }) => {
-  useStyles();
+  const ref = React.useRef(null);
 
-  return <>{children}</>;
+  React.useEffect(() => {
+    const scrollableDom = getNearestScrollableDom(ref.current);
+    if (scrollableDom != null) {
+      scrollableDom.style.scrollBehavior = 'smooth';
+    }
+  }, []);
+
+  return <span ref={ref}>{children}</span>;
 };
 
 export default SmoothScroll;
