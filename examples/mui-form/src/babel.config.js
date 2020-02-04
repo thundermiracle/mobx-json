@@ -7,6 +7,7 @@ module.exports = {
         root: ['./'],
         alias: {
           blueprints: './src/blueprints',
+          views: './src/views',
         },
       },
     ],

@@ -4,7 +4,8 @@
     "baseUrl": ".",
     "paths": {
       "*": ["src/*"],
-      "blueprints": ["src/blueprints/*"]
+      "blueprints": ["src/blueprints/*"],
+      "views": ["src/views/*"]
     }
   },
   "exclude": ["node_modules"]

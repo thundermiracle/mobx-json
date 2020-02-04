@@ -38,6 +38,11 @@ jobs:
       - run:
           name: Test
           command: yarn test
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - ./packages/form/dist
+            - ./packages/mui-form/dist
 
   build:
     executor: node
@@ -45,6 +50,8 @@ jobs:
       - checkout
       - <<: *restore_cache
       - <<: *install_node_modules
+      - attach_workspace:
+          at: ./
       - run:
           name: Build
           command: yarn export:muiform:exp
