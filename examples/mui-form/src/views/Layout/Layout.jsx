@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useRouter } from 'next/router';
+
 import ResponsiveLayout from './ResponsiveLayout';
 import LayoutDrawerHeader from './LayoutDrawerHeader';
 import LayoutDrawerMenu from './LayoutDrawerMenu';
 
 const Layout = props => {
-  const { title, children } = props;
+  const { children } = props;
+  const router = useRouter();
 
   const packageInfo = {
     version: '1.0.0',
@@ -19,7 +22,7 @@ const Layout = props => {
       packageInfo={packageInfo}
       drawerHeader={layoutdrawerHeader}
       drawerMenu={<LayoutDrawerMenu />}
-      title={title}
+      title={router.pathname.replace('/', '')}
     >
       {children}
     </ResponsiveLayout>
@@ -27,12 +30,10 @@ const Layout = props => {
 };
 
 Layout.propTypes = {
-  title: PropTypes.string,
   children: PropTypes.node,
 };
 
 Layout.defaultProps = {
-  title: '',
   children: null,
 };
 

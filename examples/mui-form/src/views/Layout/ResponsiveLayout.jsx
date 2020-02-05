@@ -106,14 +106,17 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
       );
 
       const drawer = (
-        <div>
+        <>
           {/* <div className={classes.drawerHeader}>{drawerHeader}</div> */}
           {/* <List>{drawerMenu}</List> */}
           <div className={classes.drawerHeader}>{layoutdrawerHeader}</div>
           <List>
-            <LayoutDrawerMenu closeDrawer={this.handleDrawerToggle} />
+            <LayoutDrawerMenu
+              closeDrawer={this.handleDrawerToggle}
+              path={title}
+            />
           </List>
-        </div>
+        </>
       );
 
       return (
@@ -139,7 +142,7 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
                   noWrap
                   className={classes.title}
                 >
-                  {title}
+                  {title || 'top'}
                 </Typography>
               </Toolbar>
             </AppBar>

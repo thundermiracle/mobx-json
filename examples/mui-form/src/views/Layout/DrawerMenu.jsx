@@ -23,12 +23,12 @@ const styles = {
   },
   selected: {
     color: grey[800],
-    backgroundColor: grey[200],
+    backgroundColor: grey[300],
   },
 };
 
-const createListItems1Layer = (baseUri, LinkComponent, linkProps) => {
-  let selectedStyle;
+const createListItems1Layer = (baseUri, LinkComponent, linkProps, path) => {
+  const selectedStyle = baseUri === path ? styles.selected : null;
 
   return (
     <div key={baseUri}>
@@ -42,11 +42,18 @@ const createListItems1Layer = (baseUri, LinkComponent, linkProps) => {
   );
 };
 
-const createListItems2Layer = (baseUri, nameList, LinkComponent, linkProps) => {
+const createListItems2Layer = (
+  baseUri,
+  nameList,
+  LinkComponent,
+  linkProps,
+  path,
+) => {
   const listTitle = <div style={styles.listTitle}>{baseUri}</div>;
 
   const listItems = nameList.map(name => {
-    let selectedStyle;
+    const selectedStyle =
+      `${baseUri} ${name}` === path ? styles.selected : null;
 
     return (
       <LinkComponent href={`/${baseUri}/${name}`} key={name} {...linkProps}>
@@ -67,15 +74,21 @@ const createListItems2Layer = (baseUri, nameList, LinkComponent, linkProps) => {
 };
 
 const DrawerMenu = props => {
-  const { pathMap, linkComponent, linkProps, closeDrawer } = props;
+  const { path, pathMap, linkComponent, linkProps, closeDrawer } = props;
   const menuListItems = pathMap.map(onePathMap => {
     const baseUri = onePathMap.pathname;
     const nameList = onePathMap.children;
 
     if (nameList) {
-      return createListItems2Layer(baseUri, nameList, linkComponent, linkProps);
+      return createListItems2Layer(
+        baseUri,
+        nameList,
+        linkComponent,
+        linkProps,
+        path,
+      );
     }
-    return createListItems1Layer(baseUri, linkComponent, linkProps);
+    return createListItems1Layer(baseUri, linkComponent, linkProps, path);
   });
 
   return (
@@ -91,6 +104,7 @@ const DrawerMenu = props => {
 };
 
 DrawerMenu.propTypes = {
+  path: PropTypes.string,
   pathMap: PropTypes.array,
   linkComponent: PropTypes.any,
   linkProps: PropTypes.object,
@@ -98,6 +112,7 @@ DrawerMenu.propTypes = {
 };
 
 DrawerMenu.defaultProps = {
+  path: '',
   pathMap: [],
   linkComponent: 'a',
   linkProps: null,
