@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { initialize, GlobalSmoothScroll } from '@mobx-json/mui-form';
 
 import Layout from 'views/Layout/Layout';
+import NextGlobalProgressBar from 'views/NextGlobalProgressBar';
 import theme from '../theme';
 import itemsSource from '../settings/itemsSource';
 import iconsMap from '../settings/iconsMap';
@@ -44,6 +45,7 @@ export default class MyApp extends App {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <GlobalSmoothScroll />
+          <NextGlobalProgressBar />
           <Layout>
             <Component {...pageProps} />
           </Layout>
