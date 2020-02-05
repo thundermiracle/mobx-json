@@ -37,7 +37,7 @@ export default (
       [onChange],
     );
 
-    const { defaultValue, hidden, grid, ...restAttrs } = attrs;
+    const { defaultValue, hidden, ...restAttrs } = attrs;
     let valueProps;
     if (!attrs.value) {
       // show defaultValue if value is null
