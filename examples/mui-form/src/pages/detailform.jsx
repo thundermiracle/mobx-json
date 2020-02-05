@@ -1,12 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-import { useMuiJsonForm } from '@mobx-json/mui-form';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
 
 import BasicDetailJson from 'blueprints/basic-detail.json';
+import useSampleForm from 'views/hooks/useSampleForm';
 
 const dataFromDb = {
   id: 'userid12345',
@@ -25,18 +20,13 @@ const dataFromDb = {
 
 // TODO: load data by click button
 const DetailFormPage = () => {
-  const { form: detailForm } = useMuiJsonForm({
+  const form = useSampleForm({
     blueprint: BasicDetailJson,
     data: dataFromDb,
+    showSubmit: false,
   });
 
-  return (
-    <Container maxWidth="md">
-      <Card>{detailForm}</Card>
-    </Container>
-  );
+  return form;
 };
-
-DetailFormPage.propTypes = {};
 
 export default DetailFormPage;

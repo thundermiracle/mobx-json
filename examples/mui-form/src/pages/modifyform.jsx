@@ -1,14 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-import { useMuiJsonForm } from '@mobx-json/mui-form';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 
 import BasicFormJson from 'blueprints/basic-form.json';
+import useSampleForm from 'views/hooks/useSampleForm';
 
 const dataFromDb = {
   id: 'userid12345',
@@ -27,31 +20,13 @@ const dataFromDb = {
 
 // TODO: load data by click button
 const ModifyFormPage = () => {
-  const { form: modifyForm, submitWithCheck } = useMuiJsonForm({
+  const contents = useSampleForm({
     blueprint: BasicFormJson,
     formUniqName: 'modifyForm',
-    data: dataFromDb,
+    // data: dataFromDb,
   });
 
-  const handleSubmit = React.useCallback(() => {
-    const data = submitWithCheck();
-    console.log(data);
-  }, [submitWithCheck]);
-
-  return (
-    <Container maxWidth="md">
-      <Card>
-        <CardContent>{modifyForm}</CardContent>
-        <CardActions>
-          <Button color="primary" onClick={handleSubmit}>
-            Confirm
-          </Button>
-        </CardActions>
-      </Card>
-    </Container>
-  );
+  return contents;
 };
-
-ModifyFormPage.propTypes = {};
 
 export default ModifyFormPage;
