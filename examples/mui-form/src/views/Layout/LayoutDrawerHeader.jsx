@@ -24,11 +24,16 @@ const useStyles = makeStyles({
   },
 });
 
-const LayoutDrawerHeader = ({ packageInfo }) => {
+const LayoutDrawerHeader = ({ packageInfo, closeDrawer }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.menuTitle}>
+    <div
+      className={classes.menuTitle}
+      role="presentation"
+      onClick={closeDrawer}
+      onKeyDown={closeDrawer}
+    >
       <Link href="/">
         <div>
           <div className={classes.logo}>
@@ -45,6 +50,11 @@ const LayoutDrawerHeader = ({ packageInfo }) => {
 
 LayoutDrawerHeader.propTypes = {
   packageInfo: PropTypes.object.isRequired,
+  closeDrawer: PropTypes.func,
+};
+
+LayoutDrawerHeader.defaultProps = {
+  closeDrawer: null,
 };
 
 export default LayoutDrawerHeader;

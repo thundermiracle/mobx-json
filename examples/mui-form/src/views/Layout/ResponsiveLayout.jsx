@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import { grey } from '@material-ui/core/colors';
 import MenuIcon from '@material-ui/icons/Menu';
+import LayoutDrawerMenu from './LayoutDrawerMenu';
+import LayoutDrawerHeader from './LayoutDrawerHeader';
 
 export const makeResponsiveLayout = (drawerWidth = 240) => {
   const styles = theme => ({
@@ -90,15 +92,27 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
         drawerHeader,
         drawerMenu,
         appbarProps,
+        packageInfo,
         children,
         ...restProps
       } = this.props;
       const { mobileOpen } = this.state;
 
+      const layoutdrawerHeader = (
+        <LayoutDrawerHeader
+          packageInfo={packageInfo}
+          closeDrawer={this.handleDrawerToggle}
+        />
+      );
+
       const drawer = (
         <div>
-          <div className={classes.drawerHeader}>{drawerHeader}</div>
-          <List>{drawerMenu}</List>
+          {/* <div className={classes.drawerHeader}>{drawerHeader}</div> */}
+          {/* <List>{drawerMenu}</List> */}
+          <div className={classes.drawerHeader}>{layoutdrawerHeader}</div>
+          <List>
+            <LayoutDrawerMenu closeDrawer={this.handleDrawerToggle} />
+          </List>
         </div>
       );
 
@@ -171,6 +185,7 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
     children: PropTypes.node,
     title: PropTypes.string,
     appbarProps: PropTypes.object,
+    packageInfo: PropTypes.object,
   };
 
   LayoutWithMenu.defaultProps = {
@@ -179,6 +194,7 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
     children: null,
     title: '',
     appbarProps: null,
+    packageInfo: {},
   };
 
   const layoutWithMenu = withStyles(styles)(LayoutWithMenu);

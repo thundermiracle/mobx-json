@@ -67,7 +67,7 @@ const createListItems2Layer = (baseUri, nameList, LinkComponent, linkProps) => {
 };
 
 const DrawerMenu = props => {
-  const { pathMap, linkComponent, linkProps } = props;
+  const { pathMap, linkComponent, linkProps, closeDrawer } = props;
   const menuListItems = pathMap.map(onePathMap => {
     const baseUri = onePathMap.pathname;
     const nameList = onePathMap.children;
@@ -78,19 +78,30 @@ const DrawerMenu = props => {
     return createListItems1Layer(baseUri, linkComponent, linkProps);
   });
 
-  return <div style={styles.menuRoot}>{menuListItems}</div>;
+  return (
+    <div
+      style={styles.menuRoot}
+      role="presentation"
+      onClick={closeDrawer}
+      onKeyDown={closeDrawer}
+    >
+      {menuListItems}
+    </div>
+  );
 };
 
 DrawerMenu.propTypes = {
   pathMap: PropTypes.array,
   linkComponent: PropTypes.any,
   linkProps: PropTypes.object,
+  closeDrawer: PropTypes.func,
 };
 
 DrawerMenu.defaultProps = {
   pathMap: [],
   linkComponent: 'a',
   linkProps: null,
+  closeDrawer: null,
 };
 
 export default DrawerMenu;

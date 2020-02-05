@@ -16,6 +16,7 @@ const Layout = props => {
 
   return (
     <ResponsiveLayout
+      packageInfo={packageInfo}
       drawerHeader={layoutdrawerHeader}
       drawerMenu={<LayoutDrawerMenu />}
       title={title}
