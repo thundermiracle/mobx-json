@@ -83,7 +83,7 @@ const TextField: React.FC<TextFieldProps> = ({
   }
 
   return (
-    <IconWrapper IconComponent={IconComponent}>
+    <IconWrapper IconComponent={IconComponent} disabled={restProps.disabled}>
       <MUITextField
         label={label}
         className={clsx(labelSpaceClass, classes.root)}

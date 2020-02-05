@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: 18,
     padding: theme.spacing(0.5),
   },
+  iconDisabled: {
+    opacity: 0.65,
+  },
   content: {
     paddingLeft: 32 + theme.spacing(1),
     flex: 1,
@@ -24,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 type IconWrapperProps = {
   IconComponent?: any;
   iconClassName?: string;
+  disabled?: boolean;
 } & GridProps;
 
 const IconWrapper: React.FC<IconWrapperProps> = ({
@@ -31,6 +35,7 @@ const IconWrapper: React.FC<IconWrapperProps> = ({
   IconComponent,
   iconClassName,
   className,
+  disabled = false,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -40,7 +45,11 @@ const IconWrapper: React.FC<IconWrapperProps> = ({
   }
 
   const iconPart = (
-    <div className={clsx(classes.icon, iconClassName)}>
+    <div
+      className={clsx(classes.icon, iconClassName, {
+        [classes.iconDisabled]: disabled,
+      })}
+    >
       <IconComponent />
     </div>
   );

@@ -167,11 +167,12 @@
             "widget": "Display"
           },
           "attrs": {
-            "name": "id",
+            "name": "loginid",
             "label": "Login ID"
           },
           "grid": {
-            "xs": 8
+            "xs": 12,
+            "md": 8
           }
         },
         {

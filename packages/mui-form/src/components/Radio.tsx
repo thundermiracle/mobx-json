@@ -41,7 +41,11 @@ const Radio: React.FC<RadioProps> = ({
   ) : null;
 
   return (
-    <IconWrapper IconComponent={IconComponent} iconClassName={classes.icon}>
+    <IconWrapper
+      IconComponent={IconComponent}
+      iconClassName={classes.icon}
+      disabled={restProps.disabled}
+    >
       <FormControl
         fullWidth={fullWidth}
         error={error}

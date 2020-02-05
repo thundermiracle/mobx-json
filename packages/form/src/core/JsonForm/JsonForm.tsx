@@ -38,9 +38,13 @@ const renderAllFields = (
       if (innerFields) {
         // propagate props from parent's attrs to all children
         const { disabled } = attrs;
+        let disabledProp;
+        if (disabled != null) {
+          disabledProp = { disabled };
+        }
         innerComponents = renderAllFields(innerFields, widgetMap, {
           ...factoryProps,
-          disabled,
+          ...disabledProp,
         });
       }
 

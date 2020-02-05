@@ -39,7 +39,7 @@ const Select: React.FC<SelectProps> = ({
     label || keepLabelSpace ? <InputLabel>{label}</InputLabel> : null;
 
   return (
-    <IconWrapper IconComponent={IconComponent}>
+    <IconWrapper IconComponent={IconComponent} disabled={restProps.disabled}>
       <FormControl required={required} error={error} fullWidth={fullWidth}>
         {labelPart}
         <MUISelect {...restProps}>{menuItems}</MUISelect>

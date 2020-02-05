@@ -9,8 +9,9 @@ import { findByPropVal } from 'lib/utils';
 import MyFormLabel from './internal/MyFormLabel';
 
 import { FieldProps } from './ComponentTypes';
+import IconWrapper from './internal/IconWrapper';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     height: '100%',
     display: 'flex',
@@ -22,12 +23,15 @@ const useStyles = makeStyles({
     left: 0,
   },
   content: {
-    marginTop: 24,
+    marginTop: theme.spacing(3),
   },
   disabled: {
     color: 'rgba(0, 0, 0, 0.38)',
   },
-});
+  icon: {
+    top: theme.spacing(3),
+  },
+}));
 
 const Display: React.FC<FieldProps> = ({
   label,
@@ -37,6 +41,7 @@ const Display: React.FC<FieldProps> = ({
   format,
   keepLabelSpace = false,
   items,
+  IconComponent,
 }) => {
   const classes = useStyles();
 
@@ -56,17 +61,23 @@ const Display: React.FC<FieldProps> = ({
   ) : null;
 
   return (
-    <FormControl fullWidth={fullWidth} className={classes.root}>
-      {labelPart}
-      <Typography
-        className={clsx({
-          [classes.disabled]: disabled,
-          [classes.content]: displayLabel,
-        })}
-      >
-        {displayValue}
-      </Typography>
-    </FormControl>
+    <IconWrapper
+      IconComponent={IconComponent}
+      iconClassName={classes.icon}
+      disabled
+    >
+      <FormControl fullWidth={fullWidth} className={classes.root}>
+        {labelPart}
+        <Typography
+          className={clsx({
+            [classes.disabled]: disabled,
+            [classes.content]: displayLabel,
+          })}
+        >
+          {displayValue || '-'}
+        </Typography>
+      </FormControl>
+    </IconWrapper>
   );
 };
 

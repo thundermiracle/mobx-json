@@ -26,6 +26,7 @@ interface Attrs {
   itemsSource?: string;
   items?: Item[];
   icon?: string;
+  grid?: AnyObject;
   [key: string]: any;
 }
 
