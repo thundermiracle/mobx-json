@@ -8,6 +8,7 @@ module.exports = {
         alias: {
           blueprints: './src/blueprints',
           views: './src/views',
+          services: './src/services',
         },
       },
     ],

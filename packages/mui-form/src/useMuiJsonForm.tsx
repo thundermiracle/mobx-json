@@ -12,15 +12,16 @@ interface MuiJsonFormInputOptions {
 }
 
 export interface MuiJsonFormInputProps {
-  blueprint: any;
+  blueprint: JsonFormTypes.Blueprint;
   formUniqName?: string;
-  data?: any;
+  data?: AnyObject;
   options?: MuiJsonFormInputOptions;
 }
 
 export interface MuiJsonFormProps {
   form: JSX.Element;
   submitWithCheck: () => false | JsonFormTypes.AnyObject;
+  setData: (data: AnyObject) => void;
 }
 
 function useMuiJsonForm({
@@ -40,7 +41,12 @@ function useMuiJsonForm({
     return new JsonFormStore(blueprint);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formUniqName || blueprint]);
-  store.setData(data);
+
+  // load default data only once
+  React.useEffect(() => {
+    store.setData(data);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const form = (
     <>
@@ -51,6 +57,13 @@ function useMuiJsonForm({
         </form>
       </Grid>
     </>
+  );
+
+  const setData = React.useCallback(
+    (dt: AnyObject) => {
+      store.setData(dt);
+    },
+    [store],
   );
 
   const submitWithCheck = React.useCallback(() => {
@@ -70,6 +83,7 @@ function useMuiJsonForm({
   return {
     form,
     submitWithCheck,
+    setData,
   };
 }
 

@@ -99,7 +99,6 @@
             "label": "Location",
             "icon": "LocationCity",
             "itemsSource": "City",
-            "disabled": true,
             "grid": {
               "xs": 12,
               "md": 6

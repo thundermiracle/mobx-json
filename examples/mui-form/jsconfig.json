@@ -5,7 +5,8 @@
     "paths": {
       "*": ["src/*"],
       "blueprints": ["src/blueprints/*"],
-      "views": ["src/views/*"]
+      "views": ["src/views/*"],
+      "services": ["src/services/*"]
     }
   },
   "exclude": ["node_modules"]
