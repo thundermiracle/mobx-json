@@ -17,12 +17,12 @@ const useStyles = makeStyles(theme => ({
   },
   fabReload: {
     position: 'absolute',
-    bottom: theme.spacing(2),
+    bottom: theme.spacing(4),
     right: theme.spacing(4),
   },
   fabSave: {
     position: 'absolute',
-    bottom: theme.spacing(8),
+    bottom: theme.spacing(10),
     right: theme.spacing(4),
   },
   textIcon: {

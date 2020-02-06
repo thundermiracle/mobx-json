@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { JsonForm, JsonFormStore, JsonFormTypes } from '@mobx-json/form';
 import domFocusByName from 'lib/domFocusByName';
-import SmoothScroll from 'lib/SmoothScroll';
+import SmoothScroll from './common/SmoothScroll';
 import { AnyObject } from './components/ComponentTypes';
 
 interface MuiJsonFormInputOptions {

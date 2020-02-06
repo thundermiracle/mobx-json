@@ -62,6 +62,29 @@ const findByPropVal = (
   return find(propEq(propKey, propVal), objArr);
 };
 
+/**
+ * line1\nline2\r\nline3 -> line1<br />line2<br />line3
+ */
+const nl2br = (str: string | number | boolean = '', br = '<br />'): string => {
+  if (typeof str !== 'string') {
+    str = str.toString();
+  }
+
+  let result = str.replace(/\r\n/g, br);
+  result = result.replace(/(\n|\r)/g, br);
+  return result;
+};
+
+/**
+ * line1\nline2\r\nline3 -> ['line1', 'line2', 'line3']
+ * line1 -> ['line1']
+ */
+const nl2Arr = (str?: string | number | boolean): string[] => {
+  const tagName = `<tag_json_form_mui_form_special_key_1>`;
+  const result = nl2br(str, tagName).split(tagName);
+
+  return result;
+};
 export {
   propAll,
   valsToString,
@@ -69,4 +92,6 @@ export {
   isNilOrEmpty,
   isDateStr,
   findByPropVal,
+  nl2br,
+  nl2Arr,
 };

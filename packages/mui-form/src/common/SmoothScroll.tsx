@@ -1,5 +1,5 @@
 import React from 'react';
-import getNearestScrollableDom from './getNearestScrollableDom';
+import getNearestScrollableDom from 'lib/getNearestScrollableDom';
 
 interface SmoothScrollProps {
   children?: React.ReactElement;

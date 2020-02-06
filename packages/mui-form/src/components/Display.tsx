@@ -1,10 +1,10 @@
 import React from 'react';
 
 import clsx from 'clsx';
-import { FormControl, Typography } from '@material-ui/core';
+import { FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import formatter from 'lib/formatter';
-import { findByPropVal } from 'lib/utils';
+import { findByPropVal, nl2Arr, isNilOrEmpty } from 'lib/utils';
 
 import MyFormLabel from './internal/MyFormLabel';
 
@@ -16,6 +16,11 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
+  },
+  typo: {
+    fontSize: '1rem',
+    lineHeight: 1.5,
+    letterSpacing: '0.00938em',
   },
   label: {
     position: 'absolute',
@@ -30,6 +35,11 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     top: theme.spacing(3),
+  },
+  ul: {
+    padding: 0,
+    margin: 0,
+    listStyle: 'none',
   },
 }));
 
@@ -54,6 +64,8 @@ const Display: React.FC<FieldProps> = ({
     // format value for display
     displayValue = formatter(value, format.type, format.template);
   }
+  // value to array value
+  const displayValueArr = nl2Arr(displayValue);
 
   const displayLabel = label || keepLabelSpace;
   const labelPart = displayLabel ? (
@@ -68,14 +80,23 @@ const Display: React.FC<FieldProps> = ({
     >
       <FormControl fullWidth={fullWidth} className={classes.root}>
         {labelPart}
-        <Typography
-          className={clsx({
+        <div
+          className={clsx(classes.typo, {
             [classes.disabled]: disabled,
             [classes.content]: displayLabel,
           })}
         >
-          {displayValue || '-'}
-        </Typography>
+          {isNilOrEmpty(displayValue) ? (
+            '-'
+          ) : (
+            <ul className={classes.ul}>
+              {displayValueArr.map((val, ind) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <li key={ind}>{val || '　'}</li>
+              ))}
+            </ul>
+          )}
+        </div>
       </FormControl>
     </IconWrapper>
   );
