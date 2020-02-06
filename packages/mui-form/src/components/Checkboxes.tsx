@@ -17,14 +17,20 @@ import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 
 import { FieldProps } from './ComponentTypes';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   hidden: {
     display: 'none',
   },
   icon: {
     paddingBottom: 7,
   },
-});
+  groupRoot: {
+    height: theme.spacing(4), // change the default height of checkboxes
+  },
+  helperText: {
+    marginTop: theme.spacing(1),
+  },
+}));
 
 type CheckboxesProps = {
   selectAll?: boolean;
@@ -89,7 +95,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
   const labelPart = label ? <FormLabel>{label}</FormLabel> : null;
 
   const helperTextPart = helperText ? (
-    <FormHelperText>{helperText}</FormHelperText>
+    <FormHelperText className={classes.helperText}>{helperText}</FormHelperText>
   ) : null;
 
   return (
@@ -106,7 +112,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
       >
         {labelPart}
         {selectAllPart}
-        <FormGroup row={row}>
+        <FormGroup row={row} className={classes.groupRoot}>
           {items.map(
             ({
               value: itemValue,
