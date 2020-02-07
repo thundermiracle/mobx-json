@@ -70,6 +70,9 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
       marginTop: 64,
       overflow: 'auto',
       '-webkit-overflow-scrolling': 'touch',
+      [theme.breakpoints.up('md')]: {
+        marginLeft: drawerWidth,
+      },
     },
   });
 
@@ -166,7 +169,7 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
             <Hidden smDown implementation="css">
               <Drawer
                 variant="permanent"
-                style={{ height: '100%' }}
+                style={{ height: '100vh', position: 'fixed' }}
                 open
                 classes={{
                   paper: classes.drawerPaper,

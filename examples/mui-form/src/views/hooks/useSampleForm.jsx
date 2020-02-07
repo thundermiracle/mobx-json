@@ -1,23 +1,24 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import { useMuiJsonForm, LoadingOverlay } from '@mobx-json/mui-form';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Fab from '@material-ui/core/Fab';
-import ReplayIcon from '@material-ui/icons/Replay';
-import SaveIcon from '@material-ui/icons/Save';
 
-import { makeStyles } from '@material-ui/core/styles';
-import profileService from 'services/profileService';
+import ExpandJsonEditor from './ExpandJsonEditor';
+import SubmitFab from './SubmitFab';
+import ReloadFab from './ReloadFab';
 
 const useStyles = makeStyles(theme => ({
   root: {
     marginBottom: theme.spacing(4),
+    boxShadow:
+      '0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(0, 0, 0,.4)',
   },
-  fabReload: {
+  fabJson: {
     position: 'fixed',
-    bottom: theme.spacing(4),
+    bottom: theme.spacing(16),
     right: theme.spacing(4),
   },
   fabSave: {
@@ -25,8 +26,10 @@ const useStyles = makeStyles(theme => ({
     bottom: theme.spacing(10),
     right: theme.spacing(4),
   },
-  textIcon: {
-    marginRight: theme.spacing(1),
+  fabReload: {
+    position: 'fixed',
+    bottom: theme.spacing(4),
+    right: theme.spacing(4),
   },
 }));
 
@@ -41,83 +44,46 @@ const useSampleForm = ({
     loading: false,
     saving: false,
   });
-  const { form, submitWithCheck, setData } = useMuiJsonForm({
+  const { form, submitWithCheck, setData, setBlueprint } = useMuiJsonForm({
     blueprint,
     formUniqName,
     data,
   });
 
-  const handleSubmit = React.useCallback(async () => {
-    const submitData = submitWithCheck();
-    if (submitData) {
-      setStatus({ ...status, saving: true });
-      await profileService.update(submitData.id, submitData);
-      setStatus({ ...status, saving: false });
-    }
-  }, [status, submitWithCheck]);
+  const expandJsonEditorPart = (
+    <ExpandJsonEditor blueprint={blueprint} setBlueprint={setBlueprint} />
+  );
 
-  const handleReload = React.useCallback(async () => {
-    setStatus({ ...status, loading: true });
-    const dataFromDB = await profileService.select('user12345');
-    setData(dataFromDB);
+  // submit part
+  const submitFabPart = (
+    <SubmitFab
+      showSubmit={showSubmit}
+      status={status}
+      setStatus={setStatus}
+      submitWithCheck={submitWithCheck}
+      className={classes.fabSave}
+    />
+  );
 
-    // rerun validation
-    submitWithCheck();
-
-    setStatus({ ...status, loading: false });
-  }, [setData, status, submitWithCheck]);
-
-  React.useEffect(() => {
-    handleReload();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  let submitPart;
-  if (showSubmit) {
-    submitPart = (
-      <Fab
-        variant="extended"
-        size="small"
-        color="secondary"
-        aria-label="reload"
-        className={classes.fabSave}
-        onClick={handleSubmit}
-      >
-        {status.saving ? (
-          'Saving...'
-        ) : (
-          <>
-            <SaveIcon className={classes.textIcon} />
-            Save Data
-          </>
-        )}
-      </Fab>
-    );
-  }
+  // reload part
+  const reloadFabPart = (
+    <ReloadFab
+      status={status}
+      setStatus={setStatus}
+      setData={setData}
+      submitWithCheck={submitWithCheck}
+      className={classes.fabReload}
+    />
+  );
 
   return (
     <LoadingOverlay loading={status.loading || status.saving}>
+      {expandJsonEditorPart}
       <Card className={classes.root}>
         <CardContent>{form}</CardContent>
       </Card>
-      {submitPart}
-      <Fab
-        variant="extended"
-        size="small"
-        color="secondary"
-        aria-label="reload"
-        className={classes.fabReload}
-        onClick={handleReload}
-      >
-        {status.loading ? (
-          'Loading...'
-        ) : (
-          <>
-            <ReplayIcon className={classes.textIcon} />
-            Load Data
-          </>
-        )}
-      </Fab>
+      {submitFabPart}
+      {reloadFabPart}
     </LoadingOverlay>
   );
 };

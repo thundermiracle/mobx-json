@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import { JsonForm, JsonFormStore, JsonFormTypes } from '@mobx-json/form';
 import domFocusByName from 'lib/domFocusByName';
 import SmoothScroll from './common/SmoothScroll';
+import MsgErrorBoundary from './common/MsgErrorBoundary';
 import { AnyObject } from './components/ComponentTypes';
 
 interface MuiJsonFormInputOptions {
@@ -22,6 +23,7 @@ export interface MuiJsonFormProps {
   form: JSX.Element;
   submitWithCheck: () => false | JsonFormTypes.AnyObject;
   setData: (data: AnyObject) => void;
+  setBlueprint: (blueprint: JsonFormTypes.Blueprint) => void;
 }
 
 function useMuiJsonForm({
@@ -48,15 +50,21 @@ function useMuiJsonForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const form = (
-    <>
-      {smoothScroll ? <SmoothScroll /> : null}
-      <Grid container spacing={2} {...gridProps}>
-        <form name={formUniqName} noValidate>
-          <JsonForm store={store} />
-        </form>
-      </Grid>
-    </>
+  const form = React.useMemo(
+    () => (
+      <>
+        {smoothScroll ? <SmoothScroll /> : null}
+        <MsgErrorBoundary>
+          <Grid container spacing={2} {...gridProps}>
+            <form name={formUniqName} noValidate>
+              <JsonForm store={store} />
+            </form>
+          </Grid>
+        </MsgErrorBoundary>
+      </>
+    ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [formUniqName, gridProps, smoothScroll, blueprint, store.fields],
   );
 
   const setData = React.useCallback(
@@ -80,10 +88,18 @@ function useMuiJsonForm({
     return false;
   }, [formUniqName, store]);
 
+  const setBlueprint = React.useCallback(
+    (blueprintObj: JsonFormTypes.Blueprint) => {
+      store.initFieldsByJsonBlueprint(blueprintObj);
+    },
+    [store],
+  );
+
   return {
     form,
     submitWithCheck,
     setData,
+    setBlueprint,
   };
 }
 
