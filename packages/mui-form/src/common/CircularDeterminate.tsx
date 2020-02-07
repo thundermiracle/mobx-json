@@ -7,7 +7,7 @@ import CircularProgress, {
 
 const useStyles = makeStyles({
   progress: {
-    position: 'absolute',
+    position: 'fixed',
     left: 'calc(50% - 20px)',
     top: 'calc(50% - 20px)',
   },

@@ -18,7 +18,8 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
   const styles = theme => ({
     root: {
       width: '100%',
-      height: '100vh',
+      // height: '100vh',
+      // height: 'calc(var(--vh, 1vh) * 100)',
       zIndex: 1,
       overflow: 'hidden',
     },
@@ -29,7 +30,7 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
       height: '100%',
     },
     appBar: {
-      position: 'absolute',
+      // position: 'absolute',
       transition: theme.transitions.create('width'),
       // marginLeft: drawerWidth,
       [theme.breakpoints.up('md')]: {
@@ -124,7 +125,7 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
           <div className={classes.appFrame}>
             <AppBar
               className={classes.appBar}
-              position="absolute"
+              position="fixed"
               {...appbarProps}
             >
               <Toolbar>

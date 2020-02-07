@@ -16,12 +16,12 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(4),
   },
   fabReload: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(4),
     right: theme.spacing(4),
   },
   fabSave: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(10),
     right: theme.spacing(4),
   },
