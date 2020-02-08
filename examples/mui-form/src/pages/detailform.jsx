@@ -1,15 +1,10 @@
 import React from 'react';
 
 import BasicDetailJson from 'blueprints/basic-detail.json';
-import useSampleForm from 'views/hooks/useSampleForm';
+import SampleForm from 'views/SampleForm';
 
 const DetailFormPage = () => {
-  const form = useSampleForm({
-    blueprint: BasicDetailJson,
-    showSubmit: false,
-  });
-
-  return form;
+  return <SampleForm blueprint={BasicDetailJson} showSubmit={false} />;
 };
 
 export default DetailFormPage;

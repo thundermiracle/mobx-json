@@ -1,16 +1,15 @@
 import React from 'react';
 
 import BasicFormOutlinedJson from 'blueprints/basic-form-outlined.json';
-import useSampleForm from 'views/hooks/useSampleForm';
+import SampleForm from 'views/SampleForm/SampleForm';
 
-// TODO: load data by clicking button
 const ModifyFormOutlinedPage = () => {
-  const form = useSampleForm({
-    blueprint: BasicFormOutlinedJson,
-    formUniqName: 'modifyFormOutlined',
-  });
-
-  return form;
+  return (
+    <SampleForm
+      blueprint={BasicFormOutlinedJson}
+      formUniqName="modifyFormOutlined"
+    />
+  );
 };
 
 export default ModifyFormOutlinedPage;

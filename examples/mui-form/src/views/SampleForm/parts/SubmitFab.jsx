@@ -30,7 +30,7 @@ const SubmitFab = ({
     }
   }, [setStatus, status, submitWithCheck]);
 
-  let submitFabPart;
+  let submitFabPart = <span />;
   if (showSubmit) {
     submitFabPart = (
       <Fab
@@ -56,4 +56,4 @@ const SubmitFab = ({
   return submitFabPart;
 };
 
-export default SubmitFab;
+export default React.memo(SubmitFab);

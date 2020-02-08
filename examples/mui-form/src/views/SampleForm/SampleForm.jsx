@@ -1,14 +1,14 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { useMuiJsonForm, LoadingOverlay } from '@mobx-json/mui-form';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import ExpandJsonEditor from './ExpandJsonEditor';
-import SubmitFab from './SubmitFab';
-import ReloadFab from './ReloadFab';
+import ExpandJsonEditor from './parts/ExpandJsonEditor';
+import SubmitFab from './parts/SubmitFab';
+import ReloadFab from './parts/ReloadFab';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,12 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const useSampleForm = ({
-  blueprint,
-  formUniqName,
-  data,
-  showSubmit = true,
-}) => {
+const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
   const classes = useStyles();
   const [status, setStatus] = React.useState({
     loading: false,
@@ -88,4 +83,17 @@ const useSampleForm = ({
   );
 };
 
-export default useSampleForm;
+SampleForm.propTypes = {
+  blueprint: PropTypes.object.isRequired,
+  formUniqName: PropTypes.string,
+  data: PropTypes.object,
+  showSubmit: PropTypes.bool,
+};
+
+SampleForm.defaultProps = {
+  formUniqName: null,
+  data: null,
+  showSubmit: true,
+};
+
+export default React.memo(SampleForm);

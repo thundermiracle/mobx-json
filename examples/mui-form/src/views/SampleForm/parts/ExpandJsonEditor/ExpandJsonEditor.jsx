@@ -57,4 +57,4 @@ ExpandJsonEditor.propTypes = {
   setBlueprint: PropTypes.func.isRequired,
 };
 
-export default ExpandJsonEditor;
+export default React.memo(ExpandJsonEditor);

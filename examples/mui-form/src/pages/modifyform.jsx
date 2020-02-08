@@ -1,15 +1,10 @@
 import React from 'react';
 
 import BasicFormJson from 'blueprints/basic-form.json';
-import useSampleForm from 'views/hooks/useSampleForm';
+import SampleForm from 'views/SampleForm/SampleForm';
 
 const ModifyFormPage = () => {
-  const contents = useSampleForm({
-    blueprint: BasicFormJson,
-    formUniqName: 'modifyForm',
-  });
-
-  return contents;
+  return <SampleForm blueprint={BasicFormJson} formUniqName="modifyForm" />;
 };
 
 export default ModifyFormPage;

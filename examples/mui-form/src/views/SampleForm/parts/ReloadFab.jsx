@@ -71,4 +71,4 @@ ReloadFab.defaultProps = {
   className: null,
 };
 
-export default ReloadFab;
+export default React.memo(ReloadFab);
