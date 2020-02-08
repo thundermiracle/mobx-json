@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import JsonEditor from './JsonEditor';
@@ -13,6 +14,14 @@ const useStyles = makeStyles({
   root: {
     marginBottom: 8,
     background: '#ddd',
+  },
+  collapse: {
+    flexDirection: 'column',
+  },
+  divider: {
+    width: '100%',
+    marginTop: -24,
+    marginBottom: 16,
   },
 });
 
@@ -25,6 +34,7 @@ const ExpandJsonEditor = ({ blueprint, setBlueprint }) => {
     e => {
       const newJsonStr = e.target.value;
       setJson(newJsonStr);
+      setErrMsg('');
       try {
         const result = JSON.parse(newJsonStr);
 
@@ -45,7 +55,8 @@ const ExpandJsonEditor = ({ blueprint, setBlueprint }) => {
       >
         <Typography variant="h5">JsonEditor</Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      <ExpansionPanelDetails className={classes.collapse}>
+        <Divider className={classes.divider} />
         <JsonEditor onChange={handleChange} json={json} errMsg={errMsg} />
       </ExpansionPanelDetails>
     </ExpansionPanel>

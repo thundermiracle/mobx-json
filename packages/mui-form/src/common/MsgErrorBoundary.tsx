@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
+import { JsonFormTypes } from '@mobx-json/form';
 import { AnyObject } from '../components/ComponentTypes';
 
 const styles = {
@@ -14,6 +15,7 @@ const styles = {
 
 interface MsgErrorBoundaryProps {
   classes: AnyObject;
+  store: JsonFormTypes.JsonFormStore;
 }
 
 interface MsgErrorBoundaryState {
@@ -31,6 +33,19 @@ class MsgErrorBoundary extends React.PureComponent<
       hasError: false,
       msg: '',
     };
+  }
+
+  /**
+   * reset error status if store changed
+   */
+  componentDidUpdate(prevProps: MsgErrorBoundaryProps): void {
+    // eslint-disable-next-line react/destructuring-assignment
+    if (prevProps.store !== this.props.store) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        hasError: false,
+      });
+    }
   }
 
   static getDerivedStateFromError(error: Error): MsgErrorBoundaryState {

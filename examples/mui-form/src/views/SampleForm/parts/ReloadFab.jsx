@@ -21,20 +21,26 @@ const ReloadFab = ({
   className,
 }) => {
   const classes = useStyles();
+  const [unmount, setUnmount] = React.useState(false);
 
   const handleReload = React.useCallback(async () => {
     setStatus({ ...status, loading: true });
     const dataFromDB = await profileService.select('user12345');
-    setData(dataFromDB);
+    if (!unmount) {
+      setData(dataFromDB);
 
-    // rerun validation
-    submitWithCheck();
+      // rerun validation
+      submitWithCheck();
+    }
 
     setStatus({ ...status, loading: false });
-  }, [setData, setStatus, status, submitWithCheck]);
+  }, [setData, setStatus, status, submitWithCheck, unmount]);
 
   React.useEffect(() => {
     handleReload();
+    return () => {
+      setUnmount(true);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

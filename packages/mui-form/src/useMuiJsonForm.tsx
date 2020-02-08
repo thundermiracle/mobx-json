@@ -19,11 +19,13 @@ export interface MuiJsonFormInputProps {
   options?: MuiJsonFormInputOptions;
 }
 
+type NullableBlueprint = null | JsonFormTypes.Blueprint;
+
 export interface MuiJsonFormProps {
   form: JSX.Element;
   submitWithCheck: () => false | JsonFormTypes.AnyObject;
   setData: (data: AnyObject) => void;
-  setBlueprint: (blueprint: JsonFormTypes.Blueprint) => void;
+  setBlueprint: (blueprint: NullableBlueprint) => void;
 }
 
 function useMuiJsonForm({
@@ -34,15 +36,20 @@ function useMuiJsonForm({
 }: MuiJsonFormInputProps): MuiJsonFormProps {
   const { smoothScroll = true, gridProps } = options;
 
+  // change of innerBlueprint will re-render all components
+  const [innerBlueprint, setBlueprint] = React.useState<NullableBlueprint>(
+    null,
+  );
+
   // if (!formUniqName) {
   //   throw new Error('formUniqName must be defined.');
   // }
 
   // initilize mobx store
   const store = React.useMemo(() => {
-    return new JsonFormStore(blueprint);
+    return new JsonFormStore(innerBlueprint || blueprint);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formUniqName || blueprint]);
+  }, [innerBlueprint, formUniqName || blueprint]);
 
   // load default data only once
   React.useEffect(() => {
@@ -54,7 +61,7 @@ function useMuiJsonForm({
     () => (
       <>
         {smoothScroll ? <SmoothScroll /> : null}
-        <MsgErrorBoundary>
+        <MsgErrorBoundary store={store}>
           <Grid container spacing={2} {...gridProps}>
             <form name={formUniqName} noValidate>
               <JsonForm store={store} />
@@ -64,7 +71,7 @@ function useMuiJsonForm({
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formUniqName, gridProps, smoothScroll, blueprint, store.fields],
+    [formUniqName, gridProps, smoothScroll, blueprint, innerBlueprint, store],
   );
 
   const setData = React.useCallback(
@@ -87,13 +94,6 @@ function useMuiJsonForm({
 
     return false;
   }, [formUniqName, store]);
-
-  const setBlueprint = React.useCallback(
-    (blueprintObj: JsonFormTypes.Blueprint) => {
-      store.initFieldsByJsonBlueprint(blueprintObj);
-    },
-    [store],
-  );
 
   return {
     form,

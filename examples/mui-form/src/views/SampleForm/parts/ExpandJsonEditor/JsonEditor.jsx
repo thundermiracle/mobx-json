@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   jsonMessage: {
-    padding: 10,
     color: 'red',
     fontWeight: 'bold',
     flex: 1,
+    marginBottom: 8,
   },
   jsonPart: {
     width: '100%',
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-const JsonEditor = ({ json, onChange, onBlur }) => {
+const JsonEditor = ({ json, onChange, onBlur, errMsg }) => {
   const classes = useStyles();
 
   const handleJsonTextAreaKeyDown = e => {
@@ -43,12 +43,9 @@ const JsonEditor = ({ json, onChange, onBlur }) => {
 
   let messagePart;
   let textAreaStyle;
-  const errorMessage = '';
-  if (errorMessage != null && errorMessage !== '') {
+  if (errMsg != null && errMsg !== '') {
     messagePart = (
-      <span
-        className={classes.jsonMessage}
-      >{`ErrorMessage:${errorMessage}`}</span>
+      <div className={classes.jsonMessage}>{`ErrorMessage:${errMsg}`}</div>
     );
     textAreaStyle = {
       height: 'calc(100% - 50px)',
@@ -67,7 +64,6 @@ const JsonEditor = ({ json, onChange, onBlur }) => {
         onChange={onChange}
         onBlur={onBlur}
         placeholder="Input your JSON"
-        readOnly
       />
     </div>
   );
@@ -77,12 +73,14 @@ JsonEditor.propTypes = {
   json: PropTypes.string,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  errMsg: PropTypes.string,
 };
 
 JsonEditor.defaultProps = {
   json: '',
   onChange: null,
   onBlur: null,
+  errMsg: null,
 };
 
 export default React.memo(JsonEditor);

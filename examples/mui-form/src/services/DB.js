@@ -15,6 +15,8 @@ class DB {
       password: 'my-passWord!',
       interest: [2, 1],
       facebook: 'https://facebook.com/follow/gegou',
+      twitter: '',
+      medium: '',
       subscription: true,
     },
   ];
