@@ -104,8 +104,12 @@ class JsonFormStore implements JsonFormStoreClass {
     const field = getHelper.getFieldByName(this.fields, fieldName);
     if (!field) return;
 
+    // apply value
     const { attrs, settings } = field;
     attrs.value = getHelper.getTypedValue(value, settings.valueType);
+
+    // refresh fields' props by propRule
+    setHelper.applyAllFieldsPropRule(this.fields, fieldName, attrs.value);
 
     const key = attrs.name;
 

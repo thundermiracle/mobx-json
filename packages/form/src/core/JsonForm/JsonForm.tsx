@@ -17,12 +17,19 @@ const renderAllFields = (
 ): JSX.Element[] => {
   const allComponents = filterFields(Object.values(fields))
     .map(field => {
-      const { attrs, settings, fields: innerFields } = field;
+      const {
+        attrs: { extraProps, ...restAttrs },
+        settings,
+        fields: innerFields,
+      } = field;
+      // combine extraProps to attrs
+      const attrs = { ...restAttrs, ...extraProps };
+
       const widget = settings.widget;
       let ObservableComponent;
       // set WrapperComponet to widget if it is not defined in mapper
       if (isNativeWidget(widget)) {
-        ObservableComponent = NativeHtmlWidget;
+        ObservableComponent = withFieldAttrs(NativeHtmlWidget as any);
       } else if (widgetMap[widget]) {
         if (innerFields) {
           // no need mobx attrs for Container(Grid, Group?)
