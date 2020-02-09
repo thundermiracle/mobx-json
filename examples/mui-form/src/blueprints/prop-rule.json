@@ -14,7 +14,8 @@
     {
       "settings": {
         "widget": "GridItemContainer",
-        "valueType": "container"
+        "valueType": "container",
+        "propRule": "hidden,true,boolean:sex1,0"
       },
       "attrs": {
         "name": "maleGrid",
@@ -27,8 +28,7 @@
         {
           "settings": {
             "widget": "TextField",
-            "valueType": "string",
-            "propRule": "disabled,true,boolean:sex1,0"
+            "valueType": "string"
           },
           "attrs": {
             "name": "maleName1",

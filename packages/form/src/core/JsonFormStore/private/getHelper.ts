@@ -9,6 +9,7 @@ import {
   AnyObject,
   SinglePropRule,
   Attrs,
+  InitAttrs,
 } from '../../JsonFormTypes';
 
 /**
@@ -37,7 +38,7 @@ class GetHelper {
     fieldsJson: JsonField[],
     itemsSource: AnyObject,
     iconsMap: AnyObject,
-    extraMustHaveKeys: string[] = [],
+    parentInitAttrs: InitAttrs = {},
   ): Fields => {
     if (!fieldsJson) {
       throw new Error('[JSON file error] JSON file is not defined.');
@@ -49,10 +50,7 @@ class GetHelper {
       const { attrs, settings, fields: childFields, ...restProperties } = field;
 
       // MUST have attrs and settings
-      const errMsg = this._checkParams(field, [
-        ...this._MustHaveKeys,
-        ...extraMustHaveKeys,
-      ]);
+      const errMsg = this._checkParams(field, this._MustHaveKeys);
       if (errMsg.trim().length > 0) {
         throw new Error(`[JSON file error] ${errMsg}`);
       }
@@ -101,16 +99,18 @@ class GetHelper {
       }
 
       // init attrs by propRule, make these props observable
+      let initAttrs;
       if (settingsFlatten.propRule) {
-        const extraAttrs = this._getExtraAttrsByPropRule(
-          settingsFlatten.propRule,
-        );
-
-        attrsFlatten = {
-          ...extraAttrs,
-          ...attrsFlatten,
-        };
+        initAttrs = this._getInitAttrsByPropRule(settingsFlatten.propRule);
       }
+      const allInitAttrs = {
+        ...parentInitAttrs,
+        ...initAttrs,
+      };
+      attrsFlatten = {
+        ...allInitAttrs,
+        ...attrsFlatten,
+      };
 
       // nested fields
       const fieldsFlatten = childFields
@@ -118,7 +118,7 @@ class GetHelper {
             childFields,
             itemsSource,
             iconsMap,
-            extraMustHaveKeys,
+            allInitAttrs,
           )
         : null;
 
@@ -394,7 +394,7 @@ class GetHelper {
    * extract extra props from propRule and add to field.attrs
    * in order to make them observable by mobx
    */
-  private _getExtraAttrsByPropRule = (
+  private _getInitAttrsByPropRule = (
     propRule: string,
   ): { [key: string]: null } => {
     const allPropRules = this._flattenPropRule(propRule);

@@ -1,4 +1,4 @@
-import { action } from 'mobx';
+import { action, toJS } from 'mobx';
 import getHelper from './getHelper';
 import { Fields, Field, AnyObject } from '../../JsonFormTypes';
 
@@ -45,17 +45,25 @@ class SetHelper {
    * change { propName: propValue } in field.attrs directly
    */
   @action
-  applyAllFieldsPropRule = (
-    fields: Fields,
-    changedFieldName: string,
-    changedFieldValue: any,
+  applyAllFieldsPropRule = (fields: Fields, changedFieldName: string): void => {
+    const changedField = getHelper.getFieldByName(fields, changedFieldName);
+
+    this._invokeFuncToAllFields(this._applyPropRule, fields, changedField);
+  };
+
+  @action
+  propagatePropValue = (
+    field: Field,
+    propName: string,
+    propValue: any,
   ): void => {
-    this._invokeFuncToAllFields(
-      this._applyPropRule,
-      fields,
-      changedFieldName,
-      changedFieldValue,
-    );
+    field.attrs[propName] = propValue;
+
+    if (field.fields) {
+      Object.values(field.fields).forEach(fd => {
+        this.propagatePropValue(fd, propName, propValue);
+      });
+    }
   };
 
   /**
@@ -100,16 +108,16 @@ class SetHelper {
   };
 
   @action
-  private _applyPropRule = (
-    field: Field,
-    changedFieldName: string,
-    changedFieldValue: any,
-  ): void => {
+  private _applyPropRule = (field: Field, changedField: Field): void => {
     const { propRule } = field.settings;
     if (propRule == null) {
       return;
     }
 
+    const {
+      name: changedFieldName,
+      value: changedFieldValue,
+    } = changedField.attrs;
     const extraProps = getHelper.getExtraPropsByPropRule(
       propRule,
       changedFieldName,
@@ -119,7 +127,7 @@ class SetHelper {
 
     // mutate field to trigger rendering
     Object.keys(extraProps).forEach(key => {
-      field.attrs[key] = extraProps[key];
+      this.propagatePropValue(field, key, extraProps[key]);
     });
   };
 }

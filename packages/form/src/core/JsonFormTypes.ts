@@ -71,10 +71,7 @@ interface JsonFormComponent {
 
 interface JsonFormStore {
   fields: Fields;
-  initFieldsByJsonBlueprint: (
-    fieldsProp: Blueprint,
-    extraMustHaveKeys?: string[],
-  ) => void;
+  initFieldsByJsonBlueprint: (fieldsProp: Blueprint) => void;
   setData: (dataObj: null | undefined | any) => void;
   getData: () => AnyObject;
   getErrors: () => AnyObject;
@@ -84,6 +81,10 @@ interface JsonFormStore {
   checkAllOnSubmit: () => boolean;
   resetAllFields: () => void;
   clearAllErrors: () => void;
+}
+
+interface InitAttrs {
+  [key: string]: null;
 }
 
 interface SinglePropRule {
@@ -121,4 +122,5 @@ export {
   SinglePropRule,
   ValidatorRule,
   ValidatorJSManager,
+  InitAttrs,
 };

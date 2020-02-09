@@ -43,6 +43,7 @@ const renderAllFields = (
 
       let innerComponents;
       if (innerFields) {
+        // TODO: propagate GridItemContainer's props in JsonFormStore
         // propagate props from parent's attrs to all children
         const { disabled } = attrs;
         let disabledProp;

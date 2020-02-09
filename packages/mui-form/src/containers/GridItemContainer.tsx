@@ -1,5 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
+import clsx from 'clsx';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Typography, Grid, GridProps, Divider } from '@material-ui/core';
 import { AnyObject } from '../components/ComponentTypes';
@@ -17,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     divider: {
       margin: theme.spacing(3, 0, 3),
+    },
+    hidden: {
+      display: 'none',
     },
   }),
 );
@@ -42,6 +47,7 @@ const GridItemContainer: React.FC<GridItemContainerProps> = ({
   secondary,
   secondaryProps,
   children,
+  hidden,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -91,7 +97,7 @@ const GridItemContainer: React.FC<GridItemContainerProps> = ({
   }
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, { [classes.hidden]: hidden })}>
       <div className={classes.contents}>
         {textPart}
         <Grid item container spacing={2} {...restProps}>
@@ -103,4 +109,4 @@ const GridItemContainer: React.FC<GridItemContainerProps> = ({
   );
 };
 
-export default GridItemContainer;
+export default observer(GridItemContainer);

@@ -10,9 +10,7 @@ export default (Component: React.Component & React.FC): React.FC<Field> => {
     fields,
     ...restProps
   }) => {
-    const { hidden, ...restAttrs } = attrs;
-
-    return <Component {...restAttrs} {...restProps} />;
+    return <Component {...attrs} {...restProps} />;
   };
 
   return observer(WithFieldAttrs);
