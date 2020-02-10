@@ -15,7 +15,7 @@ export default (
     onChange,
     settings,
     attrs = {},
-    ...extraProps
+    ...restProps
   }) => {
     const innerOnChange = React.useCallback(
       (eventOrName, value) => {
@@ -37,7 +37,7 @@ export default (
       [onChange],
     );
 
-    const { defaultValue, hidden, ...restAttrs } = attrs;
+    const { defaultValue, ...restAttrs } = attrs;
     let valueProps;
     if (!attrs.value) {
       // show defaultValue if value is null
@@ -48,7 +48,7 @@ export default (
       <ObserveMUIComponent
         {...valueProps}
         {...restAttrs}
-        {...extraProps}
+        {...restProps}
         onChange={innerOnChange}
       />
     );

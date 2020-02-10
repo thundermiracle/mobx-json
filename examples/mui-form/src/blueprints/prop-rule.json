@@ -1,0 +1,58 @@
+{
+  "fields": [
+    {
+      "settings": {
+        "widget": "Radio",
+        "valueType": "number"
+      },
+      "attrs": {
+        "name": "sex1",
+        "label": "Sex",
+        "itemsSource": "Sex"
+      }
+    },
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container",
+        "propRule": "required,false,boolean:sex1,0"
+      },
+      "attrs": {
+        "name": "maleGrid",
+        "spacing": 4,
+        "primary": "Male Info",
+        "secondary": "Displayed if male is checked.",
+        "required": true,
+        "divider": true
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "TextField",
+            "valueType": "string"
+          },
+          "attrs": {
+            "name": "maleName1",
+            "label": "FullName",
+            "grid": {
+              "xs": 6
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "TextField",
+            "valueType": "string"
+          },
+          "attrs": {
+            "name": "etc1",
+            "label": "etc.",
+            "grid": {
+              "xs": 4
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

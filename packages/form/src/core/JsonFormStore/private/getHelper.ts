@@ -1,10 +1,14 @@
 import { toJS, observable, isObservableObject } from 'mobx';
+import { trim, pick } from 'ramda';
+
 import {
   Fields,
   JsonField,
   Field,
-  Settings,
   AnyObject,
+  SinglePropRule,
+  Attrs,
+  InitAttrs,
 } from '../../JsonFormTypes';
 
 /**
@@ -17,13 +21,11 @@ class GetHelper {
 
   private _CreateIfNotExistKeys = ['attrs.error'];
 
+  private _PropagatableAttrs = ['disabled', 'hidden', 'required'];
+
   private _defaultValueType = 'string';
 
   private _containerValueType = 'container';
-
-  // constructor() {
-  //   this.initObservableFields = this.initObservableFields.bind(this);
-  // }
 
   /**
    * [Read JSON fields to JsonForm(append to rootFields)]
@@ -37,7 +39,7 @@ class GetHelper {
     fieldsJson: JsonField[],
     itemsSource: AnyObject,
     iconsMap: AnyObject,
-    extraMustHaveKeys: string[] = [],
+    parentInitAttrs: InitAttrs = {},
   ): Fields => {
     if (!fieldsJson) {
       throw new Error('[JSON file error] JSON file is not defined.');
@@ -49,10 +51,7 @@ class GetHelper {
       const { attrs, settings, fields: childFields, ...restProperties } = field;
 
       // MUST have attrs and settings
-      const errMsg = this._checkParams(field, [
-        ...this._MustHaveKeys,
-        ...extraMustHaveKeys,
-      ]);
+      const errMsg = this._checkParams(field, this._MustHaveKeys);
       if (errMsg.trim().length > 0) {
         throw new Error(`[JSON file error] ${errMsg}`);
       }
@@ -65,7 +64,22 @@ class GetHelper {
       // copy from json
       const settingsFlatten = { ...settings };
 
-      const attrsFlatten = { ...attrs };
+      let attrsFlatten = { ...attrs };
+
+      // init attrs by propRule, make these props observable
+      let initAttrs;
+      if (settingsFlatten.propRule) {
+        initAttrs = this._getInitAttrsByPropRule(settingsFlatten.propRule);
+      }
+      const allInitAttrs = {
+        ...parentInitAttrs,
+        ...initAttrs,
+      };
+      attrsFlatten = {
+        ...allInitAttrs,
+        ...attrsFlatten,
+      };
+
       // set value to defaultValue if exist, otherwise set it by settings.valueType
       if (
         attrsFlatten.value == null &&
@@ -83,7 +97,7 @@ class GetHelper {
       }
       // required property
       attrsFlatten.required =
-        this._isRequired(settingsFlatten) || attrsFlatten.required;
+        this._isRequired(settingsFlatten.rule) || attrsFlatten.required;
 
       // itemsSource -> items, remove unnecessary items
       if (attrsFlatten.items == null) {
@@ -101,14 +115,18 @@ class GetHelper {
       }
 
       // nested fields
-      const fieldsFlatten = childFields
-        ? this.initObservableFields(
-            childFields,
-            itemsSource,
-            iconsMap,
-            extraMustHaveKeys,
-          )
-        : null;
+      let fieldsFlatten;
+      if (childFields) {
+        // propagate disabled, hidden... to children
+        const propagateAttrs = this._getPropagatableAttrs(attrsFlatten);
+
+        fieldsFlatten = this.initObservableFields(
+          childFields,
+          itemsSource,
+          iconsMap,
+          { ...allInitAttrs, ...propagateAttrs },
+        );
+      }
 
       // contents
       const contents: any = {
@@ -121,6 +139,8 @@ class GetHelper {
       }
 
       resultFields[fieldKey] = observable(contents);
+      // save the init status
+      resultFields[fieldKey].init = attrsFlatten;
     });
 
     return resultFields;
@@ -190,9 +210,8 @@ class GetHelper {
     return data;
   };
 
-  // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓Internal Functions↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ //
   /**
-   * Do not check if rule was empty
+   * Get {value, rule} for validation if rule was not empty
    */
   getAvailableValueRulesKeyLabel = (
     fields: Fields,
@@ -216,28 +235,6 @@ class GetHelper {
   };
 
   /**
-   * Do not check if rule was empty
-   */
-  getAvailableValueRulesKeyField = (
-    fields: Fields,
-  ): { value: object; rule: object } => {
-    const pureFields = toJS(fields);
-    const allvals = this.getFlattenedValues(pureFields, 'attrs.value');
-    const allrules = this.getFlattenedValues(pureFields, 'settings.rule');
-    const vals: any = {};
-    const rules: any = {};
-
-    Object.keys(allvals).forEach(key => {
-      if (allrules[key] != null && allrules[key] !== '') {
-        vals[key] = allvals[key];
-        rules[key] = allrules[key];
-      }
-    });
-
-    return { value: vals, rule: rules };
-  };
-
-  /**
    * format value for onChange or submit
    */
   getTypedValue = (value: any, type = 'string'): any => {
@@ -251,12 +248,69 @@ class GetHelper {
         return +value;
       case 'boolean':
         // eslint-disable-next-line eqeqeq
-        return value == true;
+        return value == 'true';
       case 'string':
         return value.toString();
       default:
         return value;
     }
+  };
+
+  /**
+   * propRule MUST be 'propName,propValue:targetColName,targetColValue | ...'
+   *
+   * which means if (targetColName's value === targetColValue),
+   * change { propName: propValue } in field.attrs,
+   * and  if (targetColName's value !== targetColValue),
+   * copy init.{ propName: propValue } in field.attrs
+   */
+  getExtraPropsByPropRule = (
+    propRule: string,
+    changedFieldName: string,
+    changedFieldValue: any,
+    initAttrs: Attrs,
+  ): AnyObject => {
+    const allPropRules: SinglePropRule[] = this.flattenPropRule(propRule);
+
+    const extraProps = allPropRules.reduce(
+      (
+        prevExtraProps: AnyObject,
+        { prop, targetColName, targetColValue }: SinglePropRule,
+      ) => {
+        // apply only if targetCol.value == changedValue
+        if (targetColName === changedFieldName) {
+          const [propKey, propValue] = prop;
+          if (targetColValue.toString() === changedFieldValue.toString()) {
+            prevExtraProps[propKey] = propValue;
+          } else {
+            prevExtraProps[propKey] = initAttrs[propKey];
+          }
+        }
+
+        return prevExtraProps;
+      },
+      {},
+    );
+
+    return extraProps;
+  };
+
+  flattenPropRule = (propRule: string): SinglePropRule[] => {
+    const allPropRules: SinglePropRule[] = propRule.split('|').map(ruleStr => {
+      const [propPart, targetPart] = ruleStr.split(':');
+      const [propName, propValue, propValueType] = propPart
+        .split(',')
+        .map(trim);
+      const [targetColName, targetColValue] = targetPart.split(',').map(trim);
+
+      return {
+        prop: [propName, this.getTypedValue(propValue, propValueType)],
+        targetColName,
+        targetColValue,
+      };
+    });
+
+    return allPropRules;
   };
 
   private _isKeyInObj = (key: string, obj: object): boolean => {
@@ -275,9 +329,8 @@ class GetHelper {
     return defaultVal;
   };
 
-  private _isRequired = (settings: Settings): boolean => {
+  private _isRequired = (rule = ''): boolean => {
     // required string in rule
-    const { rule = '' } = settings;
     const allRules = rule.split('|');
 
     return allRules.includes('required');
@@ -340,6 +393,31 @@ class GetHelper {
 
       return null;
     }, obj);
+  };
+
+  /**
+   * extract extra props from propRule and add to field.attrs
+   * in order to make them observable by mobx
+   */
+  private _getInitAttrsByPropRule = (
+    propRule: string,
+  ): { [key: string]: null } => {
+    const allPropRules = this.flattenPropRule(propRule);
+
+    return allPropRules.reduce(
+      (prevObj: AnyObject, { prop }: SinglePropRule) => {
+        const [propName] = prop;
+        prevObj[propName] = null;
+        return prevObj;
+      },
+      {},
+    );
+  };
+
+  private _getPropagatableAttrs = (attrsFlatten: Attrs): AnyObject => {
+    const result = pick(this._PropagatableAttrs, attrsFlatten);
+
+    return result;
   };
 }
 

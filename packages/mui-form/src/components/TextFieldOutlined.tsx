@@ -1,5 +1,6 @@
 import React from 'react';
 
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField as MUITextField } from '@material-ui/core';
 
@@ -10,6 +11,9 @@ import { TextFieldProps, AdornmentPosition } from './TextField';
 const useStyles = makeStyles({
   root: {
     width: '100%',
+  },
+  hidden: {
+    display: 'none',
   },
 });
 
@@ -22,6 +26,7 @@ const TextFieldOutlined: React.FC<TextFieldProps> = ({
   adornment,
   adornmentPosition = AdornmentPosition.end,
   variant,
+  hidden,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -39,7 +44,7 @@ const TextFieldOutlined: React.FC<TextFieldProps> = ({
   return (
     <MUITextField
       label={label}
-      className={classes.root}
+      className={clsx(classes.root, { [classes.hidden]: hidden })}
       type={type}
       variant="outlined"
       InputLabelProps={newInputLabelProps}

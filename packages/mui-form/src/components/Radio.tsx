@@ -38,6 +38,7 @@ const Radio: React.FC<RadioProps> = ({
   onChange,
   domFocusRipple = true,
   IconComponent,
+  hidden = false,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -51,6 +52,7 @@ const Radio: React.FC<RadioProps> = ({
       IconComponent={IconComponent}
       iconClassName={classes.icon}
       disabled={restProps.disabled}
+      hidden={hidden}
     >
       <FormControl
         fullWidth={fullWidth}

@@ -103,6 +103,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
       IconComponent={IconComponent}
       iconClassName={classes.icon}
       disabled={disabled}
+      hidden={hidden}
     >
       <FormControl
         fullWidth={fullWidth}

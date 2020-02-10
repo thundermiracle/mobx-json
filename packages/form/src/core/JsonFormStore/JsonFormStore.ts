@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, observable, toJS } from 'mobx';
 
 import { pickBy } from 'ramda';
 import {
@@ -18,11 +18,10 @@ class JsonFormStore implements JsonFormStoreClass {
   /**
    *
    * @param fieldsProps
-   * @param extraMustHaveKeys
    */
-  constructor(fieldsProps?: any, extraMustHaveKeys = undefined) {
+  constructor(fieldsProps?: any) {
     if (fieldsProps != null) {
-      this.initFieldsByJsonBlueprint(fieldsProps, extraMustHaveKeys);
+      this.initFieldsByJsonBlueprint(fieldsProps);
     }
   }
 
@@ -30,19 +29,17 @@ class JsonFormStore implements JsonFormStoreClass {
    * Analyze json blueprint and apply settings to this.fields
    *
    *  @param {any} fieldsProp
-   *  @param {any} extraMustHaveKeys
    */
   @action
-  initFieldsByJsonBlueprint = (
-    fieldsProp: Blueprint,
-    extraMustHaveKeys: string[] = [],
-  ): void => {
+  initFieldsByJsonBlueprint = (fieldsProp: Blueprint): void => {
     this.fields = getHelper.initObservableFields(
       fieldsProp.fields,
       plugins.itemsSource,
       plugins.iconsMap,
-      extraMustHaveKeys,
     );
+
+    // analyze propRule & set props if the init data meet the condition
+    setHelper.initAllFieldsAttrsByPropRule(this.fields);
   };
 
   /**
@@ -54,6 +51,9 @@ class JsonFormStore implements JsonFormStoreClass {
     }
 
     setHelper.setDataToAllFields(this.fields, dataObj);
+
+    // analyze propRule & set props if the init data meet the condition
+    setHelper.initAllFieldsAttrsByPropRule(this.fields);
   };
 
   /**
@@ -104,8 +104,16 @@ class JsonFormStore implements JsonFormStoreClass {
     const field = getHelper.getFieldByName(this.fields, fieldName);
     if (!field) return;
 
+    // apply value
     const { attrs, settings } = field;
     attrs.value = getHelper.getTypedValue(value, settings.valueType);
+
+    /*
+      applyAllFieldsPropRule will get value from field
+      MUST be placed after attrs.value was set
+      refresh fields' props by propRule
+    */
+    setHelper.applyAllFieldsPropRuleForChangedField(this.fields, fieldName);
 
     const key = attrs.name;
 

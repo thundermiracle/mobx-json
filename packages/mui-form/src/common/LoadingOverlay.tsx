@@ -5,11 +5,11 @@ import CircularDeterminate from './CircularDeterminate';
 
 const useStyles = makeStyles({
   spinnerWrapper: {
-    position: 'absolute',
+    position: 'fixed',
     top: 0,
     left: 0,
-    height: '100%',
-    width: '100%',
+    height: '100vh',
+    width: '100vw',
     zIndex: 1000,
     background: '#ddd',
     opacity: 0.8,

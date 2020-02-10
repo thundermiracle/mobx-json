@@ -55,7 +55,7 @@ class MsgErrorBoundary extends React.PureComponent<
 
   componentDidCatch(error: Error) {
     // You can also log the error to an error reporting service
-    console.error('MsgErrorBoundary.error:', error);
+    // console.error('MsgErrorBoundary.error:', error);
   }
 
   render() {

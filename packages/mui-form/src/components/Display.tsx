@@ -51,6 +51,7 @@ const Display: React.FC<FieldProps> = ({
   format,
   keepLabelSpace = false,
   items,
+  hidden = false,
   IconComponent,
 }) => {
   const classes = useStyles();
@@ -76,7 +77,8 @@ const Display: React.FC<FieldProps> = ({
     <IconWrapper
       IconComponent={IconComponent}
       iconClassName={classes.icon}
-      disabled
+      disabled={disabled}
+      hidden={hidden}
     >
       <FormControl fullWidth={fullWidth} className={classes.root}>
         {labelPart}

@@ -8,4 +8,7 @@ module.exports = [
   {
     pathname: 'modifyformoutlined',
   },
+  {
+    pathname: 'proprule',
+  },
 ];

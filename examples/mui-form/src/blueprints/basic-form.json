@@ -213,6 +213,7 @@
           "attrs": {
             "name": "interest",
             "label": "Your Interests",
+            "selectAll": true,
             "items": [
               {
                 "label": "Movie",

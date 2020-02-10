@@ -36,6 +36,7 @@ interface FieldProps {
   items?: Item[];
   onChange?: OnChange;
   IconComponent?: any;
+  hidden?: boolean;
   [key: string]: any;
 }
 

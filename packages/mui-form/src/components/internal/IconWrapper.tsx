@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
     // width: 10, // add with to make flex:1 effect Input,type=date
   },
+  hidden: {
+    display: 'none',
+  },
 }));
 
 type IconWrapperProps = {
@@ -36,12 +39,15 @@ const IconWrapper: React.FC<IconWrapperProps> = ({
   iconClassName,
   className,
   disabled = false,
+  hidden,
   ...restProps
 }) => {
   const classes = useStyles();
 
   if (!IconComponent) {
-    return <>{children}</>;
+    return (
+      <span className={clsx({ [classes.hidden]: hidden })}>{children}</span>
+    );
   }
 
   const iconPart = (
@@ -60,6 +66,7 @@ const IconWrapper: React.FC<IconWrapperProps> = ({
       spacing={1}
       alignItems="flex-end"
       className={clsx(className, classes.container)}
+      hidden={hidden}
       {...restProps}
     >
       {iconPart}

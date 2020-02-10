@@ -15,6 +15,7 @@ interface Settings {
   widget: string;
   valueType: string;
   rule?: string;
+  propRule?: string;
 }
 
 interface Attrs {
@@ -27,12 +28,14 @@ interface Attrs {
   items?: Item[];
   icon?: string;
   grid?: AnyObject;
+  extraProps?: AnyObject;
   [key: string]: any;
 }
 
 interface BaseField {
   settings: Settings;
   attrs: Attrs;
+  init: Attrs;
   [key: string]: any;
 }
 
@@ -68,10 +71,7 @@ interface JsonFormComponent {
 
 interface JsonFormStore {
   fields: Fields;
-  initFieldsByJsonBlueprint: (
-    fieldsProp: Blueprint,
-    extraMustHaveKeys?: string[],
-  ) => void;
+  initFieldsByJsonBlueprint: (fieldsProp: Blueprint) => void;
   setData: (dataObj: null | undefined | any) => void;
   getData: () => AnyObject;
   getErrors: () => AnyObject;
@@ -81,6 +81,16 @@ interface JsonFormStore {
   checkAllOnSubmit: () => boolean;
   resetAllFields: () => void;
   clearAllErrors: () => void;
+}
+
+interface InitAttrs {
+  [key: string]: null;
+}
+
+interface SinglePropRule {
+  prop: [string, any];
+  targetColName: string;
+  targetColValue: string;
 }
 
 interface ValidatorRule {
@@ -109,6 +119,8 @@ export {
   JsonForm,
   JsonFormComponent,
   JsonFormStore,
+  SinglePropRule,
   ValidatorRule,
   ValidatorJSManager,
+  InitAttrs,
 };
