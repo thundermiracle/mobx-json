@@ -19,10 +19,15 @@ class SetHelper {
   @action
   resetAllFields = (fields: Fields): void => {
     // clear errors
-    this._invokeFuncToAllFields(this._setFieldError, fields);
+    this.clearAllErrors(fields);
 
     // set default values
     this._invokeFuncToAllFields(this._resetDefaultValue, fields);
+  };
+
+  @action
+  clearAllErrors = (fields: Fields): void => {
+    this._invokeFuncToAllFields(this._setFieldError, fields);
   };
 
   /**
@@ -108,6 +113,8 @@ class SetHelper {
   private _setValToField = (field: Field, dataObj: AnyObject): void => {
     if (dataObj[field.attrs.name] != null) {
       field.attrs.value = dataObj[field.attrs.name];
+      // refresh saved init status
+      field.init.value = dataObj[field.attrs.name];
     }
   };
 

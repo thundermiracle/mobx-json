@@ -50,6 +50,8 @@ class JsonFormStore implements JsonFormStoreClass {
       return;
     }
 
+    setHelper.clearAllErrors(this.fields);
+
     setHelper.setDataToAllFields(this.fields, dataObj);
 
     // analyze propRule & set props if the init data meet the condition
