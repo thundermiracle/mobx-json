@@ -1,11 +1,10 @@
 import { toJS, observable, isObservableObject } from 'mobx';
-import { trim } from 'ramda';
+import { trim, pick } from 'ramda';
 
 import {
   Fields,
   JsonField,
   Field,
-  Settings,
   AnyObject,
   SinglePropRule,
   Attrs,
@@ -21,6 +20,8 @@ class GetHelper {
   private _MustHaveKeys = ['attrs.name', 'settings.widget'];
 
   private _CreateIfNotExistKeys = ['attrs.error'];
+
+  private _PropagatableAttrs = ['disabled', 'hidden', 'required'];
 
   private _defaultValueType = 'string';
 
@@ -64,6 +65,21 @@ class GetHelper {
       const settingsFlatten = { ...settings };
 
       let attrsFlatten = { ...attrs };
+
+      // init attrs by propRule, make these props observable
+      let initAttrs;
+      if (settingsFlatten.propRule) {
+        initAttrs = this._getInitAttrsByPropRule(settingsFlatten.propRule);
+      }
+      const allInitAttrs = {
+        ...parentInitAttrs,
+        ...initAttrs,
+      };
+      attrsFlatten = {
+        ...allInitAttrs,
+        ...attrsFlatten,
+      };
+
       // set value to defaultValue if exist, otherwise set it by settings.valueType
       if (
         attrsFlatten.value == null &&
@@ -81,7 +97,7 @@ class GetHelper {
       }
       // required property
       attrsFlatten.required =
-        this._isRequired(settingsFlatten) || attrsFlatten.required;
+        this._isRequired(settingsFlatten.rule) || attrsFlatten.required;
 
       // itemsSource -> items, remove unnecessary items
       if (attrsFlatten.items == null) {
@@ -98,29 +114,19 @@ class GetHelper {
         Reflect.deleteProperty(attrsFlatten, 'icon');
       }
 
-      // init attrs by propRule, make these props observable
-      let initAttrs;
-      if (settingsFlatten.propRule) {
-        initAttrs = this._getInitAttrsByPropRule(settingsFlatten.propRule);
-      }
-      const allInitAttrs = {
-        ...parentInitAttrs,
-        ...initAttrs,
-      };
-      attrsFlatten = {
-        ...allInitAttrs,
-        ...attrsFlatten,
-      };
-
       // nested fields
-      const fieldsFlatten = childFields
-        ? this.initObservableFields(
-            childFields,
-            itemsSource,
-            iconsMap,
-            allInitAttrs,
-          )
-        : null;
+      let fieldsFlatten;
+      if (childFields) {
+        // propagate disabled, hidden... to children
+        const propagateAttrs = this._getPropagatableAttrs(attrsFlatten);
+
+        fieldsFlatten = this.initObservableFields(
+          childFields,
+          itemsSource,
+          iconsMap,
+          { ...allInitAttrs, ...propagateAttrs },
+        );
+      }
 
       // contents
       const contents: any = {
@@ -305,9 +311,8 @@ class GetHelper {
     return defaultVal;
   };
 
-  private _isRequired = (settings: Settings): boolean => {
+  private _isRequired = (rule = ''): boolean => {
     // required string in rule
-    const { rule = '' } = settings;
     const allRules = rule.split('|');
 
     return allRules.includes('required');
@@ -407,6 +412,12 @@ class GetHelper {
       },
       {},
     );
+  };
+
+  private _getPropagatableAttrs = (attrsFlatten: Attrs): AnyObject => {
+    const result = pick(this._PropagatableAttrs, attrsFlatten);
+
+    return result;
   };
 }
 
