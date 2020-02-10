@@ -216,7 +216,8 @@ class GetHelper {
   getAvailableValueRulesKeyLabel = (
     fields: Fields,
   ): { value: object; rule: object } => {
-    const pureFields = toJS(fields);
+    const pureFields = this.getVisibleFields(fields);
+
     const allvals = this.getFlattenedValues(pureFields, 'attrs.value');
     const allrules = this.getFlattenedValues(pureFields, 'settings.rule');
     const allnames = this.getFlattenedValues(pureFields, 'attrs.name');
@@ -232,6 +233,27 @@ class GetHelper {
     });
 
     return { value: vals, rule: rules };
+  };
+
+  /**
+   * get fields which attrs.hidden != true
+   */
+  getVisibleFields = (inputFields: Fields): Fields => {
+    const fields = toJS(inputFields);
+
+    return Object.keys(fields).reduce((prevFields, fieldName: string) => {
+      if (!fields[fieldName].attrs.hidden) {
+        const subFields = fields[fieldName].fields;
+        if (subFields != null) {
+          // pure children fields
+          fields[fieldName].fields = this.getVisibleFields(subFields);
+        }
+
+        prevFields[fieldName] = fields[fieldName];
+      }
+
+      return prevFields;
+    }, {} as Fields);
   };
 
   /**

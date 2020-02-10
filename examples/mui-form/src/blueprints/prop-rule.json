@@ -15,14 +15,14 @@
       "settings": {
         "widget": "GridItemContainer",
         "valueType": "container",
-        "propRule": "required,false,boolean:sex1,0"
+        "propRule": "hidden,false,boolean:sex1,0"
       },
       "attrs": {
         "name": "maleGrid",
         "spacing": 4,
         "primary": "Male Info",
         "secondary": "Displayed if male is checked.",
-        "required": true,
+        "hidden": true,
         "divider": true
       },
       "fields": [
@@ -47,6 +47,37 @@
           "attrs": {
             "name": "etc1",
             "label": "etc.",
+            "grid": {
+              "xs": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container",
+        "propRule": "hidden,false,boolean:sex1,1"
+      },
+      "attrs": {
+        "name": "femaleGrid",
+        "spacing": 4,
+        "primary": "Female Info",
+        "secondary": "Displayed if female is checked.",
+        "hidden": true,
+        "divider": true
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "TextField",
+            "valueType": "string",
+            "rule": "required"
+          },
+          "attrs": {
+            "name": "etc-female",
+            "label": "etc female",
             "grid": {
               "xs": 4
             }
