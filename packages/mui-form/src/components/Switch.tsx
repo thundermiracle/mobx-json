@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 
 type SwitchProps = {
   domFocusRipple?: boolean;
+  value?: boolean;
 } & FieldProps &
   MUISwitchProps;
 
@@ -34,6 +35,7 @@ const Switch: React.FC<SwitchProps> = ({
   helperText,
   domFocusRipple = true,
   hidden = false,
+  value = false,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -47,7 +49,15 @@ const Switch: React.FC<SwitchProps> = ({
         [classes.hidden]: hidden,
       })}
       label={label}
-      control={<MUISwitch color="primary" {...extraProps} {...restProps} />}
+      control={
+        <MUISwitch
+          color="primary"
+          value={value}
+          checked={value}
+          {...extraProps}
+          {...restProps}
+        />
+      }
       labelPlacement={labelPlacement}
     />
   );

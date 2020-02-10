@@ -247,8 +247,7 @@ class GetHelper {
       case 'number':
         return +value;
       case 'boolean':
-        // eslint-disable-next-line eqeqeq
-        return value == 'true';
+        return value.toString() === 'true';
       case 'string':
         return value.toString();
       default:

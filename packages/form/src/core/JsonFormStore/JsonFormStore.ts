@@ -79,25 +79,6 @@ class JsonFormStore implements JsonFormStoreClass {
   };
 
   /**
-   * [Input checker]
-   *
-   * [ONLY affect field.error which is modified now]
-   */
-  @action
-  onFieldChangeCheckAll = (fieldName: string, value: any): void => {
-    const field = getHelper.getFieldByName(this.fields, fieldName);
-    if (!field) return;
-
-    const { attrs } = field;
-    attrs.value = value;
-
-    const checkData = getHelper.getAvailableValueRulesKeyLabel(this.fields);
-
-    const errors = plugins.validator.validate(checkData.value, checkData.rule);
-    setHelper.setAllFieldsErrors(this.fields, errors);
-  };
-
-  /**
    * [Input Check]
    * ONLY affect the field which is modified now.
    */
