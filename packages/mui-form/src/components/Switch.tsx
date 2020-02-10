@@ -16,6 +16,9 @@ const useStyles = makeStyles({
     width: '100%',
     justifyContent: 'space-between',
   },
+  hidden: {
+    display: 'none',
+  },
 });
 
 type SwitchProps = {
@@ -30,6 +33,7 @@ const Switch: React.FC<SwitchProps> = ({
   error,
   helperText,
   domFocusRipple = true,
+  hidden = false,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -38,7 +42,10 @@ const Switch: React.FC<SwitchProps> = ({
 
   return (
     <FormControlLabel
-      className={clsx({ [classes.fullWidth]: fullWidth })}
+      className={clsx({
+        [classes.fullWidth]: fullWidth,
+        [classes.hidden]: hidden,
+      })}
       label={label}
       control={<MUISwitch color="primary" {...extraProps} {...restProps} />}
       labelPlacement={labelPlacement}

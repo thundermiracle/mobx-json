@@ -15,13 +15,14 @@
       "settings": {
         "widget": "GridItemContainer",
         "valueType": "container",
-        "propRule": "hidden,true,boolean:sex1,0"
+        "propRule": "hidden,false,boolean:sex1,0"
       },
       "attrs": {
         "name": "maleGrid",
         "spacing": 4,
         "primary": "Male Info",
         "secondary": "Displayed if male is checked.",
+        "hidden": true,
         "divider": true
       },
       "fields": [

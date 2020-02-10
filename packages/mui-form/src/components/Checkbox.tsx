@@ -1,5 +1,7 @@
 import React from 'react';
 
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   FormControl,
   FormControlLabel,
@@ -11,6 +13,12 @@ import useKeepLabelSpace from './hooks/useKeepLabelSpace';
 import useMuiDomFocusRipple from './hooks/useMuiDomFocusRipple';
 
 import { FieldProps } from './ComponentTypes';
+
+const useStyles = makeStyles({
+  hidden: {
+    display: 'none',
+  },
+});
 
 type CheckboxProps = {
   value?: boolean;
@@ -28,8 +36,10 @@ const Checkbox: React.FC<CheckboxProps> = ({
   fullWidth = false,
   keepLabelSpace = false,
   domFocusRipple = true,
+  hidden = false,
   ...restProps
 }) => {
+  const classes = useStyles();
   const labelSpaceClass = useKeepLabelSpace({
     keepLabelSpace,
   });
@@ -45,7 +55,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
       fullWidth={fullWidth}
       required={required}
       error={error}
-      className={labelSpaceClass}
+      className={clsx(labelSpaceClass, { [classes.hidden]: hidden })}
     >
       <FormControlLabel
         control={

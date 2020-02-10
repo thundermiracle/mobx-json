@@ -42,6 +42,7 @@ const TextField: React.FC<TextFieldProps> = ({
   className,
   adornment,
   adornmentPosition = AdornmentPosition.end,
+  hidden,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -83,7 +84,11 @@ const TextField: React.FC<TextFieldProps> = ({
   }
 
   return (
-    <IconWrapper IconComponent={IconComponent} disabled={restProps.disabled}>
+    <IconWrapper
+      IconComponent={IconComponent}
+      disabled={restProps.disabled}
+      hidden={hidden}
+    >
       <MUITextField
         label={label}
         className={clsx(labelSpaceClass, classes.root)}
