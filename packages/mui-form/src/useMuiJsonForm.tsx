@@ -63,7 +63,7 @@ function useMuiJsonForm({
   React.useEffect(() => {
     store.setData(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [store]);
 
   const form = React.useMemo(
     () => (
@@ -80,7 +80,7 @@ function useMuiJsonForm({
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formUniqName, gridProps, smoothScroll, blueprint, innerBlueprint, store],
+    [formUniqName, gridProps, smoothScroll, blueprint, store],
   );
 
   const setData = React.useCallback(

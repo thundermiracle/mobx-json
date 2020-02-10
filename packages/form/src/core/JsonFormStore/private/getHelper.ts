@@ -270,7 +270,7 @@ class GetHelper {
     changedFieldValue: any,
     initAttrs: Attrs,
   ): AnyObject => {
-    const allPropRules: SinglePropRule[] = this._flattenPropRule(propRule);
+    const allPropRules: SinglePropRule[] = this.flattenPropRule(propRule);
 
     const extraProps = allPropRules.reduce(
       (
@@ -293,6 +293,24 @@ class GetHelper {
     );
 
     return extraProps;
+  };
+
+  flattenPropRule = (propRule: string): SinglePropRule[] => {
+    const allPropRules: SinglePropRule[] = propRule.split('|').map(ruleStr => {
+      const [propPart, targetPart] = ruleStr.split(':');
+      const [propName, propValue, propValueType] = propPart
+        .split(',')
+        .map(trim);
+      const [targetColName, targetColValue] = targetPart.split(',').map(trim);
+
+      return {
+        prop: [propName, this.getTypedValue(propValue, propValueType)],
+        targetColName,
+        targetColValue,
+      };
+    });
+
+    return allPropRules;
   };
 
   private _isKeyInObj = (key: string, obj: object): boolean => {
@@ -377,24 +395,6 @@ class GetHelper {
     }, obj);
   };
 
-  private _flattenPropRule = (propRule: string): SinglePropRule[] => {
-    const allPropRules: SinglePropRule[] = propRule.split('|').map(ruleStr => {
-      const [propPart, targetPart] = ruleStr.split(':');
-      const [propName, propValue, propValueType] = propPart
-        .split(',')
-        .map(trim);
-      const [targetColName, targetColValue] = targetPart.split(',').map(trim);
-
-      return {
-        prop: [propName, this.getTypedValue(propValue, propValueType)],
-        targetColName,
-        targetColValue,
-      };
-    });
-
-    return allPropRules;
-  };
-
   /**
    * extract extra props from propRule and add to field.attrs
    * in order to make them observable by mobx
@@ -402,7 +402,7 @@ class GetHelper {
   private _getInitAttrsByPropRule = (
     propRule: string,
   ): { [key: string]: null } => {
-    const allPropRules = this._flattenPropRule(propRule);
+    const allPropRules = this.flattenPropRule(propRule);
 
     return allPropRules.reduce(
       (prevObj: AnyObject, { prop }: SinglePropRule) => {

@@ -1,6 +1,6 @@
-import { action, toJS } from 'mobx';
+import { action } from 'mobx';
 import getHelper from './getHelper';
-import { Fields, Field, AnyObject } from '../../JsonFormTypes';
+import { Fields, Field, AnyObject, SinglePropRule } from '../../JsonFormTypes';
 
 /**
  * SIDE_EFFECT
@@ -45,10 +45,17 @@ class SetHelper {
    * change { propName: propValue } in field.attrs directly
    */
   @action
-  applyAllFieldsPropRule = (fields: Fields, changedFieldName: string): void => {
+  applyAllFieldsPropRuleForChangedField = (
+    fields: Fields,
+    changedFieldName: string,
+  ): void => {
     const changedField = getHelper.getFieldByName(fields, changedFieldName);
 
-    this._invokeFuncToAllFields(this._applyPropRule, fields, changedField);
+    this._invokeFuncToAllFields(
+      this._applyPropRuleForChangedField,
+      fields,
+      changedField,
+    );
   };
 
   @action
@@ -64,6 +71,14 @@ class SetHelper {
         this.propagatePropValue(fd, propName, propValue);
       });
     }
+  };
+
+  /**
+   * analyze every field's propRule and apply props to attrs
+   */
+  @action
+  initAllFieldsAttrsByPropRule = (fields: Fields): void => {
+    this._invokeFuncToAllFields(this._initFieldAttrsByPropRule, fields, fields);
   };
 
   /**
@@ -108,7 +123,10 @@ class SetHelper {
   };
 
   @action
-  private _applyPropRule = (field: Field, changedField: Field): void => {
+  private _applyPropRuleForChangedField = (
+    field: Field,
+    changedField: Field,
+  ): void => {
     const { propRule } = field.settings;
     if (propRule == null) {
       return;
@@ -129,6 +147,29 @@ class SetHelper {
     Object.keys(extraProps).forEach(key => {
       this.propagatePropValue(field, key, extraProps[key]);
     });
+  };
+
+  private _initFieldAttrsByPropRule = (field: Field, fields: Fields): void => {
+    const { propRule } = field.settings;
+
+    if (propRule == null) {
+      return;
+    }
+
+    const flattenPropRules = getHelper.flattenPropRule(propRule);
+    flattenPropRules.forEach(
+      ({ prop, targetColName, targetColValue }: SinglePropRule) => {
+        const targetField = getHelper.getFieldByName(fields, targetColName);
+
+        if (
+          targetField != null &&
+          targetField.attrs.value.toString() === targetColValue.toString()
+        ) {
+          const [propName, propValue] = prop;
+          this.propagatePropValue(field, propName, propValue);
+        }
+      },
+    );
   };
 }
 

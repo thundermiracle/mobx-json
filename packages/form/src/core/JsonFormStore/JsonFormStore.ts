@@ -37,6 +37,9 @@ class JsonFormStore implements JsonFormStoreClass {
       plugins.itemsSource,
       plugins.iconsMap,
     );
+
+    // analyze propRule & set props if the init data meet the condition
+    setHelper.initAllFieldsAttrsByPropRule(this.fields);
   };
 
   /**
@@ -48,6 +51,9 @@ class JsonFormStore implements JsonFormStoreClass {
     }
 
     setHelper.setDataToAllFields(this.fields, dataObj);
+
+    // analyze propRule & set props if the init data meet the condition
+    setHelper.initAllFieldsAttrsByPropRule(this.fields);
   };
 
   /**
@@ -102,9 +108,12 @@ class JsonFormStore implements JsonFormStoreClass {
     const { attrs, settings } = field;
     attrs.value = getHelper.getTypedValue(value, settings.valueType);
 
-    // applyAllFieldsPropRule will get value from field, it MUST be placed after attrs.value was set
-    // refresh fields' props by propRule
-    setHelper.applyAllFieldsPropRule(this.fields, fieldName);
+    /*
+      applyAllFieldsPropRule will get value from field
+      MUST be placed after attrs.value was set
+      refresh fields' props by propRule
+    */
+    setHelper.applyAllFieldsPropRuleForChangedField(this.fields, fieldName);
 
     const key = attrs.name;
 
