@@ -40,6 +40,8 @@ class JsonFormStore implements JsonFormStoreClass {
 
     // analyze propRule & set props if the init data meet the condition
     setHelper.initAllFieldsAttrsByPropRule(this.fields);
+    // analyze computeRule & compute value if the init data meet the condition
+    setHelper.initAllFieldsAttrsByComputeRule(this.fields);
   };
 
   /**
@@ -56,6 +58,8 @@ class JsonFormStore implements JsonFormStoreClass {
 
     // analyze propRule & set props if the init data meet the condition
     setHelper.initAllFieldsAttrsByPropRule(this.fields);
+    // analyze computeRule & compute value if the init data meet the condition
+    setHelper.initAllFieldsAttrsByComputeRule(this.fields);
   };
 
   /**

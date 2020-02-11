@@ -118,6 +118,18 @@ class SetHelper {
   };
 
   /**
+   * analyze every field's propRule and apply props to attrs
+   */
+  @action
+  initAllFieldsAttrsByComputeRule = (fields: Fields): void => {
+    this._invokeFuncToAllFields(
+      this._initFieldAttrsByComputeRule,
+      fields,
+      fields,
+    );
+  };
+
+  /**
    * Operation for all nested fields
    * @param {*} func
    * @param {*} fields
@@ -192,6 +204,7 @@ class SetHelper {
     field: Field,
     changedFieldName: string,
     fields: Fields,
+    forceApply = false,
   ): void => {
     const { computeRule } = field.settings;
     if (computeRule == null) {
@@ -201,7 +214,7 @@ class SetHelper {
     const allComputeRules = getHelper.flattenComputeRule(computeRule);
     allComputeRules.forEach(
       ({ method, targetCols, extra }: SingleComputeRule) => {
-        if (targetCols.includes(changedFieldName)) {
+        if (forceApply || targetCols.includes(changedFieldName)) {
           // target field is changed, re-compute
           const targetColsVal = getHelper.getTargetColsVal(fields, targetCols);
 
@@ -211,6 +224,7 @@ class SetHelper {
     );
   };
 
+  @action
   private _initFieldAttrsByPropRule = (field: Field, fields: Fields): void => {
     const { propRule } = field.settings;
 
@@ -232,6 +246,14 @@ class SetHelper {
         }
       },
     );
+  };
+
+  @action
+  private _initFieldAttrsByComputeRule = (
+    field: Field,
+    fields: Fields,
+  ): void => {
+    this._applyComputeRuleForChangedField(field, '', fields, true);
   };
 
   @action
