@@ -2,86 +2,247 @@
   "fields": [
     {
       "settings": {
-        "widget": "Radio",
-        "valueType": "number"
-      },
-      "attrs": {
-        "name": "sex1",
-        "label": "Sex",
-        "itemsSource": "Sex"
-      }
-    },
-    {
-      "settings": {
         "widget": "GridItemContainer",
-        "valueType": "container",
-        "propRule": "hidden,false,boolean:sex1,0"
+        "valueType": "container"
       },
       "attrs": {
-        "name": "maleGrid",
+        "name": "hiddenGrid",
         "spacing": 4,
-        "primary": "Male Info",
-        "secondary": "Displayed if male is checked.",
-        "hidden": true,
+        "primary": "propRule -- hidden",
+        "secondary": "Sample of how to use propRule -- hidden",
         "divider": true
       },
       "fields": [
         {
           "settings": {
-            "widget": "TextField",
-            "valueType": "string"
+            "widget": "Radio",
+            "valueType": "number"
           },
           "attrs": {
-            "name": "maleName1",
-            "label": "FullName",
-            "grid": {
-              "xs": 6
-            }
+            "name": "sex1",
+            "label": "Sex",
+            "itemsSource": "Sex"
           }
         },
         {
           "settings": {
-            "widget": "TextField",
-            "valueType": "string"
+            "widget": "GridItemContainer",
+            "valueType": "container",
+            "propRule": "hidden,false,boolean:sex1,0"
           },
           "attrs": {
-            "name": "etc1",
-            "label": "etc.",
-            "grid": {
-              "xs": 4
+            "name": "maleGrid",
+            "spacing": 4,
+            "primary": "Male Info",
+            "secondary": "Displayed if male is checked.",
+            "hidden": true
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "maleName1",
+                "label": "Male-name",
+                "grid": {
+                  "xs": 6
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "etc1",
+                "label": "Male-etc",
+                "grid": {
+                  "xs": 4
+                }
+              }
             }
-          }
+          ]
+        },
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container",
+            "propRule": "hidden,false,boolean:sex1,1"
+          },
+          "attrs": {
+            "name": "femaleGrid",
+            "spacing": 4,
+            "primary": "Female Info",
+            "secondary": "Displayed if female is checked.",
+            "hidden": true
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string",
+                "rule": "required"
+              },
+              "attrs": {
+                "name": "Female-etc",
+                "label": "Female-etc",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            }
+          ]
         }
       ]
     },
     {
       "settings": {
         "widget": "GridItemContainer",
-        "valueType": "container",
-        "propRule": "hidden,false,boolean:sex1,1"
+        "valueType": "container"
       },
       "attrs": {
-        "name": "femaleGrid",
+        "name": "requiredGrid",
         "spacing": 4,
-        "primary": "Female Info",
-        "secondary": "Displayed if female is checked.",
-        "hidden": true,
+        "primary": "propRule -- required",
+        "secondary": "Sample of how to use propRule -- required",
         "divider": true
       },
       "fields": [
         {
           "settings": {
-            "widget": "TextField",
-            "valueType": "string",
-            "rule": "required"
+            "widget": "Radio",
+            "valueType": "number"
           },
           "attrs": {
-            "name": "etc-female",
-            "label": "etc female",
-            "grid": {
-              "xs": 4
-            }
+            "name": "sex2",
+            "label": "Sex",
+            "itemsSource": "Sex"
           }
+        },
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container"
+          },
+          "attrs": {
+            "name": "maleGrid",
+            "spacing": 4,
+            "secondary": "required if male is checked."
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string",
+                "propRule": "required,true,boolean:sex2,0"
+              },
+              "attrs": {
+                "name": "maleName1-required",
+                "label": "Male-required",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string",
+                "propRule": "required,true,boolean:sex2,1"
+              },
+              "attrs": {
+                "name": "femalename-required",
+                "label": "Female-required",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string",
+                "propRule": "required,true,boolean:sex2,-1"
+              },
+              "attrs": {
+                "name": "othername-required",
+                "label": "other-required",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container"
+      },
+      "attrs": {
+        "name": "disabledGrid",
+        "spacing": 4,
+        "primary": "propRule -- disabled",
+        "secondary": "Sample of how to use propRule -- disabled",
+        "divider": true
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "Radio",
+            "valueType": "number"
+          },
+          "attrs": {
+            "name": "sex3",
+            "label": "Sex",
+            "itemsSource": "Sex"
+          }
+        },
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container",
+            "propRule": "disabled,false,boolean:sex3,0"
+          },
+          "attrs": {
+            "name": "maleGrid-disabled",
+            "spacing": 4,
+            "secondary": "Disabled off if male is checked.",
+            "disabled": true
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "maleName1-disabled",
+                "label": "Male-name",
+                "grid": {
+                  "xs": 6
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "etc1-disabled",
+                "label": "Male-etc",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            }
+          ]
         }
       ]
     }

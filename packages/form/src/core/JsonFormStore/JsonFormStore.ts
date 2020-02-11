@@ -50,7 +50,7 @@ class JsonFormStore implements JsonFormStoreClass {
       return;
     }
 
-    setHelper.clearAllErrors(this.fields);
+    this.clearAllErrors();
 
     setHelper.setDataToAllFields(this.fields, dataObj);
 
@@ -137,7 +137,7 @@ class JsonFormStore implements JsonFormStoreClass {
   };
 
   clearAllErrors = (): void => {
-    setHelper.setAllFieldsErrors(this.fields, null);
+    setHelper.clearAllErrors(this.fields);
   };
 }
 

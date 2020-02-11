@@ -1,4 +1,5 @@
 import { action } from 'mobx';
+import { without, append, uniq } from 'ramda';
 import getHelper from './getHelper';
 import { Fields, Field, AnyObject, SinglePropRule } from '../../JsonFormTypes';
 
@@ -70,6 +71,8 @@ class SetHelper {
     propValue: any,
   ): void => {
     field.attrs[propName] = propValue;
+    // add required to rule or remove required from rule
+    this._applyRequiredRule(field, propName, propValue);
 
     if (field.fields) {
       Object.values(field.fields).forEach(fd => {
@@ -177,6 +180,27 @@ class SetHelper {
         }
       },
     );
+  };
+
+  @action
+  private _applyRequiredRule = (
+    field: Field,
+    propName: string,
+    propValue: boolean,
+  ): void => {
+    if (propName === 'required') {
+      let rulesArr = (field.settings.rule || '').split('|');
+      if (propValue) {
+        // required:true add to rule
+        rulesArr = append('required', rulesArr);
+      } else {
+        rulesArr = without(['required'], rulesArr);
+      }
+
+      field.settings.rule = uniq(rulesArr)
+        .filter(x => x !== '')
+        .join('|');
+    }
   };
 }
 

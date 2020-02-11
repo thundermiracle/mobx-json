@@ -129,18 +129,17 @@ class GetHelper {
       }
 
       // contents
-      const contents: any = {
+      const contents: Field = {
+        init: attrsFlatten, // save the init status
         settings: settingsFlatten,
-        attrs: attrsFlatten,
+        attrs: observable(attrsFlatten),
         ...restProperties,
       };
       if (fieldsFlatten != null) {
         contents.fields = fieldsFlatten;
       }
 
-      resultFields[fieldKey] = observable(contents);
-      // save the init status
-      resultFields[fieldKey].init = attrsFlatten;
+      resultFields[fieldKey] = contents;
     });
 
     return resultFields;

@@ -13,13 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ReloadFab = ({
-  status,
-  setStatus,
-  setData,
-  submitWithCheck,
-  className,
-}) => {
+const ReloadFab = ({ status, setStatus, setData, className }) => {
   const classes = useStyles();
   const [unmount, setUnmount] = React.useState(false);
 
@@ -28,13 +22,10 @@ const ReloadFab = ({
     const dataFromDB = await profileService.select('user12345');
     if (!unmount) {
       setData(dataFromDB);
-
-      // rerun validation
-      submitWithCheck();
     }
 
     setStatus({ ...status, loading: false });
-  }, [setData, setStatus, status, submitWithCheck, unmount]);
+  }, [setData, setStatus, status, unmount]);
 
   React.useEffect(() => {
     handleReload();
@@ -69,7 +60,6 @@ ReloadFab.propTypes = {
   status: PropTypes.object.isRequired,
   setStatus: PropTypes.func.isRequired,
   setData: PropTypes.func.isRequired,
-  submitWithCheck: PropTypes.func.isRequired,
   className: PropTypes.string,
 };
 
