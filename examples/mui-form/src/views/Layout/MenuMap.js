@@ -11,4 +11,7 @@ module.exports = [
   {
     pathname: 'proprule',
   },
+  {
+    pathname: 'computerule',
+  },
 ];

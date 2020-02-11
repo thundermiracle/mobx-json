@@ -101,21 +101,23 @@ class JsonFormStore implements JsonFormStoreClass {
     const key = attrs.name;
 
     // check only if rule is exist
-    if (settings.rule == null || settings.rule === '') {
-      return;
+    if (settings.rule) {
+      const datas = { [key]: attrs.value };
+      const rules = { [key]: settings.rule };
+
+      const errors = plugins.validator.validate(datas, rules) || {};
+
+      const [errorMsg] = errors[key] || [];
+      attrs.error = errorMsg || '';
     }
 
-    const datas = {
-      [key]: attrs.value,
-    };
-    const rules = {
-      [key]: settings.rule,
-    };
-
-    const errors = plugins.validator.validate(datas, rules) || {};
-
-    const [errorMsg] = errors[key] || [];
-    attrs.error = errorMsg || '';
+    // re-compute the field.attrs.value if no error
+    if (!attrs.error) {
+      setHelper.applyAllFieldsComputeRuleForChangedField(
+        this.fields,
+        fieldName,
+      );
+    }
   };
 
   /**

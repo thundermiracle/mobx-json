@@ -2,15 +2,15 @@ import { format, differenceInYears } from 'date-fns';
 
 import { isDateStr, isNilOrEmpty } from './utils';
 
-interface Formatters {
+interface FormattersClass {
   [key: string]: any;
 }
 
 /**
  * return '' or -1 if parsing failed to keep Component in controlled
  */
-const formatters: Formatters = {
-  date(dateStr: string, template: string): string {
+class Formatters {
+  date = (dateStr: string, template: string): string => {
     if (!isDateStr(dateStr)) {
       return '';
     }
@@ -20,9 +20,9 @@ const formatters: Formatters = {
     }
 
     return format(new Date(dateStr), template);
-  },
+  };
 
-  time(timeStr: string, template: string): string {
+  time = (timeStr: string, template: string): string => {
     const dateStr = `2020-01-01 ${timeStr}`;
 
     if (!isDateStr(dateStr)) {
@@ -34,21 +34,21 @@ const formatters: Formatters = {
     }
 
     return format(new Date(dateStr), template);
-  },
+  };
 
-  age(birthdayStr: string): number {
+  age = (birthdayStr: string): number => {
     if (!isDateStr(birthdayStr)) {
-      return -1;
+      return 0;
     }
 
-    return differenceInYears(new Date(birthdayStr), new Date());
-  },
+    return differenceInYears(new Date(), new Date(birthdayStr));
+  };
 
-  number(numStr: string): number {
+  number = (numStr: string): number => {
     return isNaN(+numStr) ? -1 : +numStr;
-  },
+  };
 
-  digit(numStr: string): string {
+  digit = (numStr: string): string => {
     const parsed = this.number(numStr);
 
     if (parsed === -1) {
@@ -56,8 +56,10 @@ const formatters: Formatters = {
     }
 
     return parsed.toLocaleString();
-  },
-};
+  };
+}
+
+const formatters: FormattersClass = new Formatters();
 
 export default (
   strBef: string,

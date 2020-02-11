@@ -16,6 +16,7 @@ interface Settings {
   valueType: string;
   rule?: string;
   propRule?: string;
+  computeRule?: string;
 }
 
 interface Attrs {
@@ -29,6 +30,7 @@ interface Attrs {
   icon?: string;
   grid?: AnyObject;
   extraProps?: AnyObject;
+  error?: string;
   [key: string]: any;
 }
 
@@ -92,6 +94,12 @@ interface SinglePropRule {
   targetColValue: string;
 }
 
+interface SingleComputeRule {
+  method: string;
+  targetCols: string[];
+  extra?: string;
+}
+
 interface ValidatorRule {
   name: string;
   callback: Function;
@@ -119,6 +127,7 @@ export {
   JsonFormComponent,
   JsonFormStore,
   SinglePropRule,
+  SingleComputeRule,
   ValidatorRule,
   ValidatorJSManager,
   InitAttrs,

@@ -1,7 +1,15 @@
 import { action } from 'mobx';
 import { without, append, uniq } from 'ramda';
+import compute from 'lib/compute';
+
 import getHelper from './getHelper';
-import { Fields, Field, AnyObject, SinglePropRule } from '../../JsonFormTypes';
+import {
+  Fields,
+  Field,
+  AnyObject,
+  SinglePropRule,
+  SingleComputeRule,
+} from '../../JsonFormTypes';
 
 /**
  * SIDE_EFFECT
@@ -61,6 +69,26 @@ class SetHelper {
       this._applyPropRuleForChangedField,
       fields,
       changedField,
+    );
+  };
+
+  /**
+   * analyze settings.computeRule,
+   * re-compute the value if the changedFieldName is included in computeRule
+   *
+   * computeRule MUST be 'computeMethod:col1,col2...:extra | ...'
+   *
+   */
+  @action
+  applyAllFieldsComputeRuleForChangedField = (
+    fields: Fields,
+    changedFieldName: string,
+  ): void => {
+    this._invokeFuncToAllFields(
+      this._applyComputeRuleForChangedField,
+      fields,
+      changedFieldName,
+      fields,
     );
   };
 
@@ -157,6 +185,30 @@ class SetHelper {
     Object.keys(extraProps).forEach(key => {
       this.propagatePropValue(field, key, extraProps[key]);
     });
+  };
+
+  @action
+  private _applyComputeRuleForChangedField = (
+    field: Field,
+    changedFieldName: string,
+    fields: Fields,
+  ): void => {
+    const { computeRule } = field.settings;
+    if (computeRule == null) {
+      return;
+    }
+
+    const allComputeRules = getHelper.flattenComputeRule(computeRule);
+    allComputeRules.forEach(
+      ({ method, targetCols, extra }: SingleComputeRule) => {
+        if (targetCols.includes(changedFieldName)) {
+          // target field is changed, re-compute
+          const targetColsVal = getHelper.getTargetColsVal(fields, targetCols);
+
+          field.attrs.value = compute(method, targetColsVal, extra);
+        }
+      },
+    );
   };
 
   private _initFieldAttrsByPropRule = (field: Field, fields: Fields): void => {

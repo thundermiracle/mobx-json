@@ -1,0 +1,182 @@
+{
+  "fields": [
+    {
+      "settings": {
+        "widget": "GridItemContainer",
+        "valueType": "container"
+      },
+      "attrs": {
+        "name": "computeGrid",
+        "spacing": 4,
+        "primary": "computeRule",
+        "secondary": "Sample of how to use computeRule"
+      },
+      "fields": [
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container"
+          },
+          "attrs": {
+            "name": "concatGrid",
+            "spacing": 4,
+            "primary": "concat",
+            "secondary": "concat:col1,col2:join character"
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "firstName",
+                "label": "firstName",
+                "grid": {
+                  "xs": 6
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "lastName",
+                "label": "lastName",
+                "grid": {
+                  "xs": 6
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "Display",
+                "valueType": "string",
+                "computeRule": "concat:lastName,firstName: "
+              },
+              "attrs": {
+                "name": "fullName",
+                "label": "fullName"
+              }
+            }
+          ]
+        },
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container"
+          },
+          "attrs": {
+            "name": "sumGrid",
+            "spacing": 4,
+            "primary": "sum",
+            "secondary": "sum:col1,col2"
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "number"
+              },
+              "attrs": {
+                "name": "profits1",
+                "label": "first season profits",
+                "type": "number",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "number"
+              },
+              "attrs": {
+                "name": "profits2",
+                "label": "second season profits",
+                "type": "number",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "number"
+              },
+              "attrs": {
+                "name": "profits3",
+                "label": "third season profits",
+                "type": "number",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "Display",
+                "computeRule": "sum:profits1,profits2,profits3"
+              },
+              "attrs": {
+                "name": "total",
+                "label": "Total Profits",
+                "format": {
+                  "type": "digit"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container"
+          },
+          "attrs": {
+            "name": "ageGrid",
+            "spacing": 4,
+            "primary": "age",
+            "secondary": "concat:col1"
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "birthday",
+                "label": "Birthday",
+                "type": "date",
+                "grid": {
+                  "xs": 6
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "Display",
+                "computeRule": "concat:birthday"
+              },
+              "attrs": {
+                "name": "age",
+                "label": "Age",
+                "format": {
+                  "type": "age"
+                },
+                "grid": {
+                  "xs": 4
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

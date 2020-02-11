@@ -9,6 +9,7 @@ import {
   SinglePropRule,
   Attrs,
   InitAttrs,
+  SingleComputeRule,
 } from '../../JsonFormTypes';
 
 /**
@@ -192,7 +193,7 @@ class GetHelper {
       const valueType = fields[key].settings.valueType;
 
       if (valueType !== this._containerValueType) {
-        data[key] = value;
+        data[key] = this.getTypedValue(value, valueType);
       }
 
       if (fields[key].fields != null) {
@@ -205,7 +206,6 @@ class GetHelper {
         data = { ...data, ...subDataObj };
       }
     });
-    // console.log(fields)
     return data;
   };
 
@@ -331,6 +331,27 @@ class GetHelper {
     });
 
     return allPropRules;
+  };
+
+  flattenComputeRule = (computeRule: string): SingleComputeRule[] => {
+    const result: SingleComputeRule[] = computeRule.split('|').map(ruleStr => {
+      const [method, targetColStr, extra] = ruleStr.split(':');
+      const targetCols = targetColStr.split(',').map(trim);
+
+      return {
+        method,
+        targetCols,
+        extra,
+      } as SingleComputeRule;
+    });
+
+    return result;
+  };
+
+  getTargetColsVal = (fields: Fields, targetCols: string[]): AnyObject => {
+    const allFieldsVal = this.getFlattenedValues(fields);
+
+    return pick(targetCols, allFieldsVal);
   };
 
   private _isKeyInObj = (key: string, obj: object): boolean => {
