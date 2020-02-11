@@ -36,26 +36,34 @@ class Formatters {
     return format(new Date(dateStr), template);
   };
 
-  age = (birthdayStr: string): number => {
-    if (!isDateStr(birthdayStr)) {
-      return 0;
-    }
+  age = (birthdayStr: string, template?: string): number | string => {
+    const ageNum = isDateStr(birthdayStr)
+      ? differenceInYears(new Date(), new Date(birthdayStr))
+      : 0;
 
-    return differenceInYears(new Date(), new Date(birthdayStr));
+    return template ? this._tmpl(ageNum, template) : ageNum;
   };
 
-  number = (numStr: string): number => {
-    return isNaN(+numStr) ? -1 : +numStr;
+  number = (numStr: string, template?: string): number | string => {
+    const num = isNaN(+numStr) ? -1 : +numStr;
+
+    return template ? this._tmpl(num, template) : num;
   };
 
-  digit = (numStr: string): string => {
+  digit = (numStr: string, template?: string): string => {
     const parsed = this.number(numStr);
 
     if (parsed === -1) {
       return '';
     }
 
-    return parsed.toLocaleString();
+    const digitStr = parsed.toLocaleString();
+
+    return template ? this._tmpl(digitStr, template) : digitStr;
+  };
+
+  private _tmpl = (data: any, template: string): string => {
+    return template.replace(/{(.*?)}/g, data);
   };
 }
 

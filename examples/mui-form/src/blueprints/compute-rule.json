@@ -126,7 +126,8 @@
                 "name": "total",
                 "label": "Total Profits",
                 "format": {
-                  "type": "digit"
+                  "type": "digit",
+                  "template": "${repl}"
                 }
               }
             }
@@ -167,7 +168,8 @@
                 "name": "age",
                 "label": "Age",
                 "format": {
-                  "type": "age"
+                  "type": "age",
+                  "template": "{repl} years old"
                 },
                 "grid": {
                   "xs": 4
