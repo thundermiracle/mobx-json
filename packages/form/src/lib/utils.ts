@@ -15,7 +15,7 @@ function listCombiner(list: any[], val: any): any[] {
 function compose(...fns: Function[]) {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   return (...args: any[]) =>
-    fns.reduceRight((prevBC, fn) => {
+    fns.reduceRight((prevBC: any, fn: any) => {
       if (!Array.isArray(prevBC)) prevBC = [prevBC];
 
       return fn(...prevBC);
