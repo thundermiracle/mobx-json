@@ -1,7 +1,16 @@
 function domFocusByName(name: string, baseFormName?: string): void {
   const selectors = [`[name="${name}"]`];
+  const selectorsId = [`[id="muiform_${name}"]`]; // select by id (for mui-form's Select)
   if (baseFormName != null) {
     selectors.unshift(`form[name="${baseFormName}"]`);
+    selectorsId.unshift(`form[name="${baseFormName}"]`);
+  }
+
+  // if id=muiform_xxx exists
+  const firstElemId = document.querySelector(selectorsId.join(' '));
+  if (firstElemId) {
+    (firstElemId as HTMLElement).focus();
+    return;
   }
 
   const firstElem = document.querySelector(selectors.join(' '));

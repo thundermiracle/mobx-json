@@ -28,6 +28,7 @@ const Select: React.FC<SelectProps> = ({
   emptyItem = false,
   IconComponent,
   hidden = false,
+  name,
   ...restProps
 }) => {
   const menuItems = useSelectItems({ emptyItem, items });
@@ -47,7 +48,13 @@ const Select: React.FC<SelectProps> = ({
     >
       <FormControl required={required} error={error} fullWidth={fullWidth}>
         {labelPart}
-        <MUISelect {...restProps}>{menuItems}</MUISelect>
+        <MUISelect
+          name={name}
+          SelectDisplayProps={{ id: `muiform_${name}` }}
+          {...restProps}
+        >
+          {menuItems}
+        </MUISelect>
         {helperTextPart}
       </FormControl>
     </IconWrapper>

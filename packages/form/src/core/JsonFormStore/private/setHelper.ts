@@ -53,9 +53,9 @@ class SetHelper {
    * analyze settings.propRule,
    * add extraProps to field if it meets the requirement defined in propRule
    *
-   * propRule MUST be 'propName,propValue:targetColName,targetColVal | ...'
+   * propRule MUST be 'propName,propValue:targetFieldName,targetFieldVal | ...'
    *
-   * which means if (targetColName's value === targetColVal),
+   * which means if (targetFieldName's value === targetFieldVal),
    * change { propName: propValue } in field.attrs directly
    */
   @action
@@ -213,12 +213,15 @@ class SetHelper {
 
     const allComputeRules = getHelper.flattenComputeRule(computeRule);
     allComputeRules.forEach(
-      ({ method, targetCols, extra }: SingleComputeRule) => {
-        if (forceApply || targetCols.includes(changedFieldName)) {
+      ({ method, targetFields, extra }: SingleComputeRule) => {
+        if (forceApply || targetFields.includes(changedFieldName)) {
           // target field is changed, re-compute
-          const targetColsVal = getHelper.getTargetColsVal(fields, targetCols);
+          const targetFieldsVal = getHelper.getTargetFieldsVal(
+            fields,
+            targetFields,
+          );
 
-          field.attrs.value = compute(method, targetColsVal, extra);
+          field.attrs.value = compute(method, targetFieldsVal, extra);
         }
       },
     );
@@ -234,12 +237,12 @@ class SetHelper {
 
     const flattenPropRules = getHelper.flattenPropRule(propRule);
     flattenPropRules.forEach(
-      ({ prop, targetColName, targetColValue }: SinglePropRule) => {
-        const targetField = getHelper.getFieldByName(fields, targetColName);
+      ({ prop, targetFieldName, targetFieldValue }: SinglePropRule) => {
+        const targetField = getHelper.getFieldByName(fields, targetFieldName);
 
         if (
           targetField != null &&
-          targetField.attrs.value.toString() === targetColValue.toString()
+          targetField.attrs.value.toString() === targetFieldValue.toString()
         ) {
           const [propName, propValue] = prop;
           this.propagatePropValue(field, propName, propValue);

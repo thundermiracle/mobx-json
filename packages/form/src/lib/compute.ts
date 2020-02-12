@@ -3,16 +3,16 @@ import { AnyObject } from '../core/JsonFormTypes';
 
 const compute = (
   method: string,
-  targetColsVal: AnyObject,
+  targetFieldsVal: AnyObject,
   extra?: string,
 ): number | string => {
   switch (method) {
     case 'concat':
-      return Object.values(targetColsVal).join(extra || '');
+      return Object.values(targetFieldsVal).join(extra || '');
 
     case 'sum':
       // return 0 if sum result is NaN
-      return sum(Object.values(targetColsVal)) || 0;
+      return sum(Object.values(targetFieldsVal)) || 0;
 
     default:
       return '';

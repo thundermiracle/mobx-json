@@ -75,6 +75,7 @@ interface JsonForm {
 interface JsonFormComponent {
   attrs?: Attrs;
   settings?: Settings;
+  init?: InitAttrs;
   fields?: Fields;
   onChange?: OnChange;
 }
@@ -98,13 +99,13 @@ interface InitAttrs {
 
 interface SinglePropRule {
   prop: [string, any];
-  targetColName: string;
-  targetColValue: string;
+  targetFieldName: string;
+  targetFieldValue: string;
 }
 
 interface SingleComputeRule {
   method: string;
-  targetCols: string[];
+  targetFields: string[];
   extra?: string;
 }
 

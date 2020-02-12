@@ -16,7 +16,7 @@ export default class MyApp extends App {
   constructor() {
     super();
     initialize({
-      locale: 'zh',
+      // locale: 'zh',
       itemsSource,
       iconsMap,
     });

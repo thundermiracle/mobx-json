@@ -14,6 +14,7 @@ export default (
   const WithMobxAttrs: React.FC<JsonFormComponent> = ({
     onChange,
     settings,
+    init,
     attrs = {},
     ...restProps
   }) => {

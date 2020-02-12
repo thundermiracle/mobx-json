@@ -284,11 +284,11 @@ class GetHelper {
   };
 
   /**
-   * propRule MUST be 'propName,propValue:targetColName,targetColValue | ...'
+   * propRule MUST be 'propName,propValue:targetFieldName,targetFieldValue | ...'
    *
-   * which means if (targetColName's value === targetColValue),
+   * which means if (targetFieldName's value === targetFieldValue),
    * change { propName: propValue } in field.attrs,
-   * and  if (targetColName's value !== targetColValue),
+   * and  if (targetFieldName's value !== targetFieldValue),
    * copy init.{ propName: propValue } in field.attrs
    */
   getExtraPropsByPropRule = (
@@ -302,12 +302,12 @@ class GetHelper {
     const extraProps = allPropRules.reduce(
       (
         prevExtraProps: AnyObject,
-        { prop, targetColName, targetColValue }: SinglePropRule,
+        { prop, targetFieldName, targetFieldValue }: SinglePropRule,
       ) => {
-        // apply only if targetCol.value == changedValue
-        if (targetColName === changedFieldName) {
+        // apply only if targetField.value == changedValue
+        if (targetFieldName === changedFieldName) {
           const [propKey, propValue] = prop;
-          if (targetColValue.toString() === changedFieldValue.toString()) {
+          if (targetFieldValue.toString() === changedFieldValue.toString()) {
             prevExtraProps[propKey] = propValue;
           } else {
             prevExtraProps[propKey] = initAttrs[propKey];
@@ -328,12 +328,14 @@ class GetHelper {
       const [propName, propValue, propValueType] = propPart
         .split(',')
         .map(trim);
-      const [targetColName, targetColValue] = targetPart.split(',').map(trim);
+      const [targetFieldName, targetFieldValue] = targetPart
+        .split(',')
+        .map(trim);
 
       return {
         prop: [propName, this.getTypedValue(propValue, propValueType)],
-        targetColName,
-        targetColValue,
+        targetFieldName,
+        targetFieldValue,
       };
     });
 
@@ -342,12 +344,12 @@ class GetHelper {
 
   flattenComputeRule = (computeRule: string): SingleComputeRule[] => {
     const result: SingleComputeRule[] = computeRule.split('|').map(ruleStr => {
-      const [method, targetColStr, extra] = ruleStr.split(':');
-      const targetCols = targetColStr.split(',').map(trim);
+      const [method, targetFieldStr, extra] = ruleStr.split(':');
+      const targetFields = targetFieldStr.split(',').map(trim);
 
       return {
         method,
-        targetCols,
+        targetFields,
         extra,
       } as SingleComputeRule;
     });
@@ -355,10 +357,10 @@ class GetHelper {
     return result;
   };
 
-  getTargetColsVal = (fields: Fields, targetCols: string[]): AnyObject => {
+  getTargetFieldsVal = (fields: Fields, targetFields: string[]): AnyObject => {
     const allFieldsVal = this.flattenProps(fields);
 
-    return pick(targetCols, allFieldsVal);
+    return pick(targetFields, allFieldsVal);
   };
 
   /**
