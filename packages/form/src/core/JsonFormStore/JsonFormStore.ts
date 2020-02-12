@@ -1,6 +1,7 @@
 import { action, observable, toJS } from 'mobx';
 
 import { pickBy } from 'ramda';
+import { isNotNilOrEmpty } from 'lib/utils';
 import {
   Fields,
   AnyObject,
@@ -66,15 +67,12 @@ class JsonFormStore implements JsonFormStoreClass {
    * get data for submit
    */
   getData = (): AnyObject => {
-    return getHelper.getFlattenedValues(this.fields);
+    return getHelper.flattenProps(this.fields);
   };
 
   getErrors = (): AnyObject => {
-    const allColsErrs = getHelper.getFlattenedValues(
-      this.fields,
-      'attrs.error',
-    );
-    return pickBy(val => val !== '' && val != null, allColsErrs);
+    const allColsErrs = getHelper.flattenProps(this.fields, 'attrs.error');
+    return pickBy(isNotNilOrEmpty, allColsErrs);
   };
 
   getFirstErrFieldName = (): string | undefined => {
@@ -106,7 +104,9 @@ class JsonFormStore implements JsonFormStoreClass {
 
     // check only if rule is exist
     if (settings.rule) {
-      const datas = { [key]: attrs.value };
+      const datas = {
+        [key]: getHelper.getValForCheck(attrs.value, settings.valueType),
+      };
       const rules = { [key]: settings.rule };
 
       const errors = plugins.validator.validate(datas, rules) || {};

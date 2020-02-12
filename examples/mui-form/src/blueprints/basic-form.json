@@ -263,7 +263,8 @@
         {
           "settings": {
             "widget": "Checkbox",
-            "valueType": "boolean"
+            "valueType": "boolean",
+            "rule": "required"
           },
           "attrs": {
             "name": "subscription",

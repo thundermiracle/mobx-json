@@ -11,9 +11,17 @@ interface Item {
   value: string | boolean | number;
 }
 
+enum ValueType {
+  number = 'number',
+  string = 'string',
+  array = 'array',
+  container = 'container',
+  boolean = 'boolean',
+}
+
 interface Settings {
   widget: string;
-  valueType: string;
+  valueType: ValueType;
   rule?: string;
   propRule?: string;
   computeRule?: string;
@@ -117,6 +125,7 @@ interface ValidatorJSManager {
 
 export {
   AnyObject,
+  ValueType,
   Settings,
   Attrs,
   Field,

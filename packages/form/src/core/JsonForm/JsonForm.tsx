@@ -63,7 +63,7 @@ const renderAllFields = (
   return allComponents;
 };
 
-const ReacbMobxJsonForm: React.FC<JsonForm> = ({
+const ReactMobxJsonForm: React.FC<JsonForm> = ({
   store = {},
   fields,
   onChange,
@@ -85,4 +85,4 @@ const ReacbMobxJsonForm: React.FC<JsonForm> = ({
   return <>{allComponents}</>;
 };
 
-export default ReacbMobxJsonForm;
+export default ReactMobxJsonForm;

@@ -1,4 +1,4 @@
-import { transduce, filter, complement, isNil } from 'ramda';
+import { transduce, filter, complement, isNil, isEmpty, anyPass } from 'ramda';
 
 function isNativeWidget(widgetName: string): boolean {
   return /^[a-z]/.test(widgetName);
@@ -24,4 +24,17 @@ function compose(...fns: Function[]) {
 
 const isNotNil = complement(isNil);
 
-export { transduce, filter, compose, isNativeWidget, listCombiner, isNotNil };
+const isNilOrEmpty = anyPass([isNil, isEmpty]);
+
+const isNotNilOrEmpty = complement(isNilOrEmpty);
+
+export {
+  transduce,
+  filter,
+  compose,
+  isNativeWidget,
+  listCombiner,
+  isNotNil,
+  isNilOrEmpty,
+  isNotNilOrEmpty,
+};

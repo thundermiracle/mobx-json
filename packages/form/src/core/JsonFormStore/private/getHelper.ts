@@ -10,6 +10,7 @@ import {
   Attrs,
   InitAttrs,
   SingleComputeRule,
+  ValueType,
 } from '../../JsonFormTypes';
 
 /**
@@ -24,9 +25,9 @@ class GetHelper {
 
   private _PropagatableAttrs = ['disabled', 'hidden', 'required'];
 
-  private _defaultValueType = 'string';
+  private _defaultValueType = ValueType.string;
 
-  private _containerValueType = 'container';
+  private _containerValueType = ValueType.container;
 
   /**
    * [Read JSON fields to JsonForm(append to rootFields)]
@@ -177,10 +178,7 @@ class GetHelper {
    * @param {array} fields
    * @param {string} valueKey
    */
-  getFlattenedValues = (
-    fieldsMobx: Fields,
-    valueKey = 'attrs.value',
-  ): AnyObject => {
+  flattenProps = (fieldsMobx: Fields, valueKey = 'attrs.value'): AnyObject => {
     let data: AnyObject = {};
 
     // purify fields if it's Mobx Observable object
@@ -193,12 +191,17 @@ class GetHelper {
       const valueType = fields[key].settings.valueType;
 
       if (valueType !== this._containerValueType) {
+        data[key] = value;
+      }
+
+      // convert value if valueKey is attrs.value
+      if (valueKey === 'attrs.value') {
         data[key] = this.getTypedValue(value, valueType);
       }
 
       if (fields[key].fields != null) {
         // subfields
-        const subDataObj = this.getFlattenedValues(
+        const subDataObj = this.flattenProps(
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           fields[key].fields!,
           valueKey,
@@ -217,16 +220,20 @@ class GetHelper {
   ): { value: object; rule: object } => {
     const pureFields = this.getVisibleFields(fields);
 
-    const allvals = this.getFlattenedValues(pureFields, 'attrs.value');
-    const allrules = this.getFlattenedValues(pureFields, 'settings.rule');
-    const allnames = this.getFlattenedValues(pureFields, 'attrs.name');
+    const allvals = this.flattenProps(pureFields, 'attrs.value');
+    const allrules = this.flattenProps(pureFields, 'settings.rule');
+    const allnames = this.flattenProps(pureFields, 'attrs.name');
+    const allvaltypes = this.flattenProps(pureFields, 'settings.valueType');
 
     const vals: any = {};
     const rules: any = {};
 
     Object.keys(allvals).forEach(key => {
       if (allrules[key] != null && allrules[key] !== '') {
-        vals[allnames[key]] = allvals[key];
+        vals[allnames[key]] = this.getValForCheck(
+          allvals[key],
+          allvaltypes[key],
+        );
         rules[allnames[key]] = allrules[key];
       }
     });
@@ -349,9 +356,21 @@ class GetHelper {
   };
 
   getTargetColsVal = (fields: Fields, targetCols: string[]): AnyObject => {
-    const allFieldsVal = this.getFlattenedValues(fields);
+    const allFieldsVal = this.flattenProps(fields);
 
     return pick(targetCols, allFieldsVal);
+  };
+
+  /**
+   * valueType=boolean&value=false returns ''
+   */
+  getValForCheck = (value: any, valueType = ValueType.string): any => {
+    // convert false to '' if valueType is boolean to trigger 'required' rule check
+    if (valueType === ValueType.boolean && value === false) {
+      return '';
+    }
+
+    return value;
   };
 
   private _isKeyInObj = (key: string, obj: object): boolean => {
