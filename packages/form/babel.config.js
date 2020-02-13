@@ -13,6 +13,7 @@ const plugins = [
         core: './src/core',
         stores: './src/stores',
         lib: './src/lib',
+        mock: './__test__/mock',
       },
     },
   ],

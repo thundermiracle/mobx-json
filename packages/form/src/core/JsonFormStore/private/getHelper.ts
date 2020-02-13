@@ -152,10 +152,10 @@ class GetHelper {
    * @param {object} fields
    * @param {string} fieldName
    */
-  getFieldByName = (fields: Fields, fieldName: string): Field | null => {
+  getFieldByName = (fields: Fields | null, fieldName: string): Field | null => {
     if (!fields) return null;
 
-    let field: Field | null = fields[fieldName];
+    let field: Field | null = fields[fieldName] || null;
 
     // Found
     if (field) return field;

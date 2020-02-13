@@ -45,7 +45,7 @@ interface Attrs {
 interface BaseField {
   settings: Settings;
   attrs: Attrs;
-  init: Attrs;
+  init?: Attrs;
   [key: string]: any;
 }
 
