@@ -12,6 +12,9 @@ const fields: Fields = {
         xs: 6,
       },
     },
+    init: {
+      name: 'firstName',
+    },
   },
   lastName: {
     settings: {
@@ -19,6 +22,9 @@ const fields: Fields = {
       valueType: ValueType.string,
     },
     attrs: {
+      name: 'lastName',
+    },
+    init: {
       name: 'lastName',
     },
   },
@@ -30,6 +36,9 @@ const fields: Fields = {
     attrs: {
       name: 'grid1',
     },
+    init: {
+      name: 'grid1',
+    },
     fields: {
       sub1: {
         settings: {
@@ -39,6 +48,9 @@ const fields: Fields = {
         attrs: {
           name: 'sub1',
         },
+        init: {
+          name: 'sub1',
+        },
       },
       sub2: {
         settings: {
@@ -46,6 +58,9 @@ const fields: Fields = {
           valueType: ValueType.boolean,
         },
         attrs: {
+          name: 'sub2',
+        },
+        init: {
           name: 'sub2',
         },
       },
