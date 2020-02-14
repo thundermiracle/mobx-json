@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 interface MuiJsonFormInputOptions {
   smoothScroll?: boolean;
-  gridProps?: AnyObject;
+  gridContainerProps?: AnyObject;
 }
 
 export interface MuiJsonFormInputProps {
@@ -41,7 +41,7 @@ function useMuiJsonForm({
   data,
   options = {},
 }: MuiJsonFormInputProps): MuiJsonFormProps {
-  const { smoothScroll = true, gridProps } = options;
+  const { smoothScroll = true, gridContainerProps } = options;
   const classes = useStyles();
 
   // change of innerBlueprint will re-render all components
@@ -71,7 +71,7 @@ function useMuiJsonForm({
         {smoothScroll ? <SmoothScroll /> : null}
         {/* pass store to trigger re-render after store changed */}
         <MsgErrorBoundary store={store}>
-          <Grid container spacing={2} {...gridProps}>
+          <Grid container spacing={2} {...gridContainerProps}>
             <form name={formUniqName} noValidate className={classes.form}>
               <JsonForm store={store} />
             </form>
@@ -80,7 +80,7 @@ function useMuiJsonForm({
       </>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formUniqName, gridProps, smoothScroll, blueprint, store],
+    [formUniqName, gridContainerProps, smoothScroll, blueprint, store],
   );
 
   const setData = React.useCallback(

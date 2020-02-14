@@ -168,11 +168,11 @@
           },
           "attrs": {
             "name": "loginid",
-            "label": "Login ID"
-          },
-          "grid": {
-            "xs": 12,
-            "md": 8
+            "label": "Login ID",
+            "grid": {
+              "xs": 12,
+              "md": 8
+            }
           }
         },
         {
@@ -182,11 +182,11 @@
           },
           "attrs": {
             "name": "password",
-            "label": "Password"
-          },
-          "grid": {
-            "xs": 12,
-            "md": 8
+            "label": "Password",
+            "grid": {
+              "xs": 12,
+              "md": 8
+            }
           }
         }
       ]

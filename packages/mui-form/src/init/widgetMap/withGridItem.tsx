@@ -20,7 +20,7 @@ export default (
     hidden,
     ...restProps
   }) => {
-    if (noGrid) return <MUIComponent {...restProps} />;
+    if (noGrid) return <MUIComponent {...restProps} hidden={hidden} />;
 
     return (
       <GridItem {...grid} hidden={hidden}>
