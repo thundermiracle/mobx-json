@@ -14,7 +14,7 @@
   "dependencies": {
     "@material-ui/core": "^4.8.3",
     "@material-ui/icons": "^4.5.1",
-    "@mobx-json/mui-form": "0.1.0",
+    "@mobx-json/mui-form": "^0.1.0",
     "clsx": "1.1.0",
     "next": "^9.1.5",
     "nprogress": "^0.2.0",
