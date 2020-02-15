@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useMuiJsonForm, LoadingOverlay } from '@mobx-json/mui-form';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 
 import ExpandJsonEditor from './parts/ExpandJsonEditor';
 import SubmitFab from './parts/SubmitFab';
@@ -73,10 +74,16 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
 
   return (
     <LoadingOverlay loading={status.loading || status.saving}>
-      {expandJsonEditorPart}
-      <Card className={classes.root}>
-        <CardContent>{form}</CardContent>
-      </Card>
+      <Grid container spacing={4}>
+        <Grid item xs={3}>
+          {expandJsonEditorPart}
+        </Grid>
+        <Grid item xs={9}>
+          <Card className={classes.root}>
+            <CardContent>{form}</CardContent>
+          </Card>
+        </Grid>
+      </Grid>
       {submitFabPart}
       {reloadFabPart}
     </LoadingOverlay>

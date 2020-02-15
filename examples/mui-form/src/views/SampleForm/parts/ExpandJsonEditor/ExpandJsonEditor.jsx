@@ -46,6 +46,17 @@ const ExpandJsonEditor = ({ blueprint, setBlueprint }) => {
     [setBlueprint],
   );
 
+  const handleBlur = React.useCallback(
+    e => {
+      try {
+        const newJsonStr = e.target.value;
+        setJson(JSON.stringify(JSON.parse(newJsonStr), null, 2));
+        // eslint-disable-next-line no-empty
+      } catch {}
+    },
+    [setJson],
+  );
+
   return (
     <ExpansionPanel className={classes.root}>
       <ExpansionPanelSummary
@@ -57,7 +68,12 @@ const ExpandJsonEditor = ({ blueprint, setBlueprint }) => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.collapse}>
         <Divider className={classes.divider} />
-        <JsonEditor onChange={handleChange} json={json} errMsg={errMsg} />
+        <JsonEditor
+          onChange={handleChange}
+          onBlur={handleBlur}
+          json={json}
+          errMsg={errMsg}
+        />
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
