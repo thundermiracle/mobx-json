@@ -1,4 +1,4 @@
-# mobx-json (The package is under development and not published)
+# mobx-json
 
 [![npm version](https://badge.fury.io/js/%40mobx-json%2Fmui-form.svg)](https://badge.fury.io/js/%40mobx-json%2Fmui-form)
 [![dependencies Status](https://david-dm.org/thundermiracle/mobx-json/status.svg?path=packages/mobx-json-mui-form)](https://david-dm.org/thundermiracle/mobx-json?path=mobx-json-mui-form)
@@ -12,6 +12,10 @@ The simplest way to manage your form in React.
 State management is charged by mobx, but you can use the materia-ui wrapped one without any knowledge of it.
 
 You can check some examples here: [https://mobx-json.thundermiracle.com](https://mobx-json.thundermiracle.com)
+
+## Demo
+
+![realtime form](./screenshots/jsonform_realtime.gif)
 
 ## Table of Contents
 
