@@ -71,11 +71,11 @@ function useMuiJsonForm({
         {smoothScroll ? <SmoothScroll /> : null}
         {/* pass store to trigger re-render after store changed */}
         <MsgErrorBoundary store={store}>
-          <Grid container spacing={2} {...gridContainerProps}>
-            <form name={formUniqName} noValidate className={classes.form}>
+          <form name={formUniqName} noValidate className={classes.form}>
+            <Grid container spacing={2} {...gridContainerProps}>
               <JsonForm store={store} />
-            </form>
-          </Grid>
+            </Grid>
+          </form>
         </MsgErrorBoundary>
       </>
     ),
