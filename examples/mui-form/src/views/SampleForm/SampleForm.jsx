@@ -74,16 +74,10 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
 
   return (
     <LoadingOverlay loading={status.loading || status.saving}>
-      <Grid container spacing={4}>
-        <Grid item xs={3}>
-          {expandJsonEditorPart}
-        </Grid>
-        <Grid item xs={9}>
-          <Card className={classes.root}>
-            <CardContent>{form}</CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      {expandJsonEditorPart}
+      <Card className={classes.root}>
+        <CardContent>{form}</CardContent>
+      </Card>
       {submitFabPart}
       {reloadFabPart}
     </LoadingOverlay>
