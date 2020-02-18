@@ -2,10 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useMuiJsonForm, LoadingOverlay } from '@mobx-json/mui-form';
+import {
+  useMuiJsonForm,
+  LoadingOverlay,
+  SubmitForm,
+} from '@mobx-json/mui-form';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
+
+import profileService from 'services/profileService';
 
 import ExpandJsonEditor from './parts/ExpandJsonEditor';
 import SubmitFab from './parts/SubmitFab';
@@ -50,6 +55,15 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
     <ExpandJsonEditor blueprint={blueprint} setBlueprint={setBlueprint} />
   );
 
+  const handleSubmit = React.useCallback(async () => {
+    const submitData = submitWithCheck();
+    if (submitData) {
+      setStatus({ ...status, saving: true });
+      await profileService.update(submitData.id, submitData);
+      setStatus({ ...status, saving: false });
+    }
+  }, [setStatus, status, submitWithCheck]);
+
   // submit part
   const submitFabPart = (
     <SubmitFab
@@ -58,6 +72,7 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
       setStatus={setStatus}
       submitWithCheck={submitWithCheck}
       className={classes.fabSave}
+      handleSubmit={handleSubmit}
     />
   );
 
@@ -74,12 +89,14 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
 
   return (
     <LoadingOverlay loading={status.loading || status.saving}>
-      {expandJsonEditorPart}
-      <Card className={classes.root}>
-        <CardContent>{form}</CardContent>
-      </Card>
-      {submitFabPart}
-      {reloadFabPart}
+      <SubmitForm onSubmit={handleSubmit}>
+        {expandJsonEditorPart}
+        <Card className={classes.root}>
+          <CardContent>{form}</CardContent>
+        </Card>
+        {submitFabPart}
+        {reloadFabPart}
+      </SubmitForm>
     </LoadingOverlay>
   );
 };
