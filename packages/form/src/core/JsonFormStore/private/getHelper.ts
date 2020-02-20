@@ -176,9 +176,14 @@ class GetHelper {
   /**
    * Get values from nested-fields
    * @param {array} fields
-   * @param {string} valueKey
+   * @param {string} valueKey: 'attrs.value'
+   * @param {boolean} withContainer: false
    */
-  flattenProps = (fieldsMobx: Fields, valueKey = 'attrs.value'): AnyObject => {
+  flattenProps = (
+    fieldsMobx: Fields,
+    valueKey = 'attrs.value',
+    withContainer = false,
+  ): AnyObject => {
     let data: AnyObject = {};
 
     // purify fields if it's Mobx Observable object
@@ -190,13 +195,13 @@ class GetHelper {
       const value = this._getValueByNestedKey(fields[key], valueKey);
       const valueType = fields[key].settings.valueType;
 
-      if (valueType !== this._containerValueType) {
-        data[key] = value;
-      }
-
-      // convert value if valueKey is attrs.value
-      if (valueKey === 'attrs.value') {
-        data[key] = this.getTypedValue(value, valueType);
+      if (withContainer || valueType !== this._containerValueType) {
+        // convert value if valueKey is attrs.value
+        if (valueKey === 'attrs.value') {
+          data[key] = this.getTypedValue(value, valueType);
+        } else {
+          data[key] = value;
+        }
       }
 
       if (fields[key].fields != null) {
