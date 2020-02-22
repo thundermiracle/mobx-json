@@ -252,11 +252,14 @@
         },
         {
           "settings": {
-            "widget": "TextField"
+            "widget": "Autocomplete",
+            "rule": "required"
           },
           "attrs": {
-            "name": "medium",
-            "label": "Medium Link",
+            "name": "film",
+            "label": "FavoriteFilm",
+            "freeSolo": true,
+            "itemsSource": "Films",
             "icon": "MenuBook"
           }
         },

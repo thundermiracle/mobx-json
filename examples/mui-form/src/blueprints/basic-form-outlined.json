@@ -251,11 +251,12 @@
         },
         {
           "settings": {
-            "widget": "TextFieldOutlined"
+            "widget": "AutocompleteOutlined"
           },
           "attrs": {
-            "name": "medium",
-            "label": "Medium Link",
+            "name": "film",
+            "label": "FavoriteFilm",
+            "itemsSource": "Films",
             "icon": "MenuBook"
           }
         },

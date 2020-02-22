@@ -1,11 +1,13 @@
 export { default as Checkbox } from './Checkbox';
 export { default as Checkboxes } from './Checkboxes';
-export { default as TextField } from './TextField';
 export { default as Radio } from './Radio';
-export { default as Select } from './Select';
 export { default as Switch } from './Switch';
 export { default as Display } from './Display';
-export { default as Password } from './Password';
+export { default as TextField } from './TextField';
 export { default as TextFieldOutlined } from './TextFieldOutlined';
+export { default as Select } from './Select';
 export { default as SelectOutlined } from './SelectOutlined';
+export { default as Password } from './Password';
 export { default as PasswordOutlined } from './PasswordOutlined';
+export { default as Autocomplete } from './Autocomplete';
+export { default as AutocompleteOutlined } from './AutocompleteOutlined';

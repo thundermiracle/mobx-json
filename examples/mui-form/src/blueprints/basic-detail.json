@@ -242,8 +242,8 @@
             "widget": "Display"
           },
           "attrs": {
-            "name": "medium",
-            "label": "Medium Link",
+            "name": "film",
+            "label": "FavoriteFilm",
             "icon": "MenuBook"
           }
         },

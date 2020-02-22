@@ -41,6 +41,15 @@ const babelBaseConfig = {
     [
       'import',
       {
+        libraryName: '@material-ui/lab',
+        libraryDirectory: '',
+        camel2DashComponentName: false,
+      },
+      'tree-shaking-mui-lab',
+    ],
+    [
+      'import',
+      {
         libraryName: 'date-fns',
         libraryDirectory: '',
         camel2DashComponentName: false,

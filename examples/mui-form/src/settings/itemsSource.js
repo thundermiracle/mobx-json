@@ -41,4 +41,12 @@ export default {
       value: 3,
     },
   ],
+  Films: [
+    { value: 'The Shawshank Redemption', group: 1994 },
+    { value: 'The Godfather', group: 1972 },
+    { value: 'The Godfather: Part II', group: 1974 },
+    { value: 'The Dark Knight', group: 2008 },
+    { value: '12 Angry Men', group: 1957 },
+    { value: "Schindler's List", group: 1993 },
+  ],
 };
