@@ -31,7 +31,7 @@ class GetHelper {
 
   private _containerValueType = ValueType.container;
 
-  private _asyncLoadItemsFuncCache = new Map();
+  private _asyncLoadItemsFuncCache: { [key: string]: AsyncLoadItemsFunc } = {};
 
   /**
    * [Read JSON fields to JsonForm(append to rootFields)]
@@ -45,7 +45,7 @@ class GetHelper {
     fieldsJson: JsonField[],
     itemsSource: AnyObject,
     iconsMap: AnyObject,
-    serviceContainer: Map<string, any>,
+    serviceContainer: AnyObject,
     parentInitAttrs: InitAttrs = {},
   ): Fields => {
     if (!fieldsJson) {
@@ -511,12 +511,12 @@ class GetHelper {
    * @param serviceRouter
    */
   private _makeAsyncLoadItems = (
-    serviceContainer: Map<string, any>,
+    serviceContainer: AnyObject,
     service: string,
     serviceRouter = 'get',
   ): AsyncLoadItemsFunc => {
     const cacheKey = `${service}${serviceRouter}`;
-    const cacheFunc = this._asyncLoadItemsFuncCache.get(cacheKey);
+    const cacheFunc = this._asyncLoadItemsFuncCache[cacheKey];
     if (cacheFunc) {
       return cacheFunc;
     }
@@ -524,7 +524,7 @@ class GetHelper {
     const asyncLoadItems = async (
       inputValue?: string,
     ): Promise<Item[] | []> => {
-      const serviceInstance = serviceContainer.get(service);
+      const serviceInstance = serviceContainer[service];
 
       // TODO: check Blueprint before flatten it
       if (serviceInstance == null) {
@@ -543,7 +543,7 @@ class GetHelper {
       return result;
     };
 
-    this._asyncLoadItemsFuncCache.set(cacheKey, asyncLoadItems);
+    this._asyncLoadItemsFuncCache[cacheKey] = asyncLoadItems;
 
     return asyncLoadItems;
   };

@@ -16,7 +16,7 @@ function init({
   extraWidgetMap = {},
   itemsSource = {},
   iconsMap = {},
-  serviceContainer = new Map(),
+  serviceContainer = {},
 }: InitParams): void {
   plugins.widgetMap = { ...widgetMap, ...extraWidgetMap };
   plugins.validator.setMessages(messages, locale);

@@ -14,7 +14,8 @@ class Plugins {
   // JsonForm will use iconsMap here if icon is set in json definition
   private _iconsMap: AnyObject = {};
 
-  private _serviceContainer: Map<string, any> = new Map();
+  // key: serviceName, value: service instance
+  private _serviceContainer: AnyObject = {};
 
   /*
    * itemsSource in Json definition
@@ -57,11 +58,11 @@ class Plugins {
     this._iconsMap = iconsMap;
   }
 
-  set serviceContainer(serviceContainer: Map<string, any>) {
+  set serviceContainer(serviceContainer: AnyObject) {
     this._serviceContainer = serviceContainer;
   }
 
-  get serviceContainer(): Map<string, any> {
+  get serviceContainer(): AnyObject {
     return this._serviceContainer;
   }
 }
