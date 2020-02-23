@@ -13,22 +13,21 @@ import {
 
 import { MyAutocompleteProps } from './MyAutocompleteTypes';
 
-const loadingOption = [
-  {
-    value: 'Loading...',
-  },
-];
-
 const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   name,
   loading = false,
+  loaderSize = 24,
+  loaderText = 'Loading...',
   freeSolo = true,
   autoHighlight = false,
+  autoComplete = false,
+  autoSelect = false,
   items: initSuggestions,
   value,
   onChange,
   asyncLoadItems,
   TextFieldComponent,
+  extraAutocompleteProps = {},
   ...restProps
 }) => {
   const [suggestions, setSuggestions] = React.useState(initSuggestions);
@@ -86,8 +85,10 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
     <MuiAutocomplete
       freeSolo={freeSolo}
       autoHighlight={autoHighlight}
+      autoComplete={autoComplete}
+      autoSelect={autoSelect}
       loading={suggestionsLoading}
-      options={suggestionsLoading ? loadingOption : sortedSuggestions}
+      options={suggestionsLoading ? [{ value: loaderText }] : sortedSuggestions}
       getOptionLabel={getSuggestionLabel}
       inputValue={value}
       onInputChange={handleInputChange}
@@ -100,7 +101,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
             endAdornment: (
               <>
                 {suggestionsLoading ? (
-                  <CircularProgress color="secondary" size={32} />
+                  <CircularProgress color="secondary" size={loaderSize} />
                 ) : null}
                 {params.InputProps.endAdornment}
               </>
@@ -111,6 +112,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
       )}
       renderOption={highlightSuggestion}
       {...groupByProp}
+      {...extraAutocompleteProps}
     />
   );
 };

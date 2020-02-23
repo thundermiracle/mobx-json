@@ -251,12 +251,12 @@
         },
         {
           "settings": {
-            "widget": "AutocompleteOutlined"
+            "widget": "AutocompleteOutlined",
+            "service": "filmService"
           },
           "attrs": {
             "name": "film",
             "label": "FavoriteFilm",
-            "itemsSource": "Films",
             "icon": "MenuBook"
           }
         },
