@@ -23,6 +23,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   name,
   loading = false,
   freeSolo = true,
+  autoHighlight = false,
   items: initSuggestions,
   value,
   onChange,
@@ -84,6 +85,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   return (
     <MuiAutocomplete
       freeSolo={freeSolo}
+      autoHighlight={autoHighlight}
       loading={suggestionsLoading}
       options={suggestionsLoading ? loadingOption : sortedSuggestions}
       getOptionLabel={getSuggestionLabel}

@@ -11,6 +11,7 @@ import NextGlobalProgressBar from 'views/NextGlobalProgressBar';
 import theme from '../theme';
 import itemsSource from '../settings/itemsSource';
 import iconsMap from '../settings/iconsMap';
+import serviceContainer from '../settings/serviceContainer';
 
 export default class MyApp extends App {
   constructor() {
@@ -19,6 +20,7 @@ export default class MyApp extends App {
       // locale: 'zh',
       itemsSource,
       iconsMap,
+      serviceContainer,
     });
   }
 

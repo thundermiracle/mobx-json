@@ -7,6 +7,7 @@ interface InitParams {
   extraWidgetMap?: any;
   itemsSource?: any;
   iconsMap?: any;
+  serviceContainer?: any;
 }
 
 function init({
@@ -15,11 +16,13 @@ function init({
   extraWidgetMap = {},
   itemsSource = {},
   iconsMap = {},
+  serviceContainer = new Map(),
 }: InitParams): void {
   plugins.widgetMap = { ...widgetMap, ...extraWidgetMap };
   plugins.validator.setMessages(messages, locale);
   plugins.itemsSource = itemsSource;
   plugins.iconsMap = iconsMap;
+  plugins.serviceContainer = serviceContainer;
 }
 
 export default init;

@@ -11,6 +11,8 @@ import {
   InitAttrs,
   SingleComputeRule,
   ValueType,
+  AsyncLoadItemsFunc,
+  Item,
 } from '../../JsonFormTypes';
 
 /**
@@ -29,6 +31,8 @@ class GetHelper {
 
   private _containerValueType = ValueType.container;
 
+  private _asyncLoadItemsFuncCache = new Map();
+
   /**
    * [Read JSON fields to JsonForm(append to rootFields)]
    * fields -> array; rootFields -> expand position
@@ -41,6 +45,7 @@ class GetHelper {
     fieldsJson: JsonField[],
     itemsSource: AnyObject,
     iconsMap: AnyObject,
+    serviceContainer: Map<string, any>,
     parentInitAttrs: InitAttrs = {},
   ): Fields => {
     if (!fieldsJson) {
@@ -116,6 +121,16 @@ class GetHelper {
         Reflect.deleteProperty(attrsFlatten, 'icon');
       }
 
+      // set items=[] if service is defined to make component controlled
+      if (settingsFlatten.service) {
+        attrsFlatten.items = [];
+        attrsFlatten.asyncLoadItems = this._makeAsyncLoadItems(
+          serviceContainer,
+          settingsFlatten.service,
+          settingsFlatten.serviceRouter,
+        );
+      }
+
       // nested fields
       let fieldsFlatten;
       if (childFields) {
@@ -126,6 +141,7 @@ class GetHelper {
           childFields,
           itemsSource,
           iconsMap,
+          serviceContainer,
           { ...allInitAttrs, ...propagateAttrs },
         );
       }
@@ -485,6 +501,51 @@ class GetHelper {
     const result = pick(this._PropagatableAttrs, attrsFlatten);
 
     return result;
+  };
+
+  /**
+   * return asyncLoadItems function
+   *
+   * @param serviceContainer
+   * @param service
+   * @param serviceRouter
+   */
+  private _makeAsyncLoadItems = (
+    serviceContainer: Map<string, any>,
+    service: string,
+    serviceRouter = 'get',
+  ): AsyncLoadItemsFunc => {
+    const cacheKey = `${service}${serviceRouter}`;
+    const cacheFunc = this._asyncLoadItemsFuncCache.get(cacheKey);
+    if (cacheFunc) {
+      return cacheFunc;
+    }
+
+    const asyncLoadItems = async (
+      inputValue?: string,
+    ): Promise<Item[] | []> => {
+      const serviceInstance = serviceContainer.get(service);
+
+      // TODO: check Blueprint before flatten it
+      if (serviceInstance == null) {
+        throw new Error(
+          `service [${service}] is not exist in serviceContainer. Add your service to plugins.serviceContainer.`,
+        );
+      }
+      if (serviceInstance[serviceRouter] == null) {
+        throw new Error(
+          `function [${serviceRouter}] is not in service [${service}]`,
+        );
+      }
+
+      const result = await serviceInstance[serviceRouter](inputValue);
+
+      return result;
+    };
+
+    this._asyncLoadItemsFuncCache.set(cacheKey, asyncLoadItems);
+
+    return asyncLoadItems;
   };
 }
 

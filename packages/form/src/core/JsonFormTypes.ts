@@ -9,6 +9,7 @@ interface OnChange {
 interface Item {
   label?: string;
   value: string | boolean | number;
+  group?: string; // for Autocomplete
 }
 
 enum ValueType {
@@ -25,7 +26,11 @@ interface Settings {
   rule?: string;
   propRule?: string;
   computeRule?: string;
+  service?: string;
+  serviceRouter?: string;
 }
+
+type AsyncLoadItemsFunc = (inputValue?: string) => Promise<Item[] | []>;
 
 interface Attrs {
   name: string;
@@ -39,6 +44,7 @@ interface Attrs {
   grid?: AnyObject;
   extraProps?: AnyObject;
   error?: string;
+  asyncLoadItems?: AsyncLoadItemsFunc;
   [key: string]: any;
 }
 
@@ -141,4 +147,6 @@ export {
   ValidatorRule,
   ValidatorJSManager,
   InitAttrs,
+  AsyncLoadItemsFunc,
+  Item,
 };

@@ -15,4 +15,5 @@ export type MyAutocompleteProps = {
   onChange?: (name: string, value: string, inputValue?: string) => void;
   asyncLoadItems?: () => Promise<AutocompleteItem[]>;
   TextFieldComponent: any;
+  autoHighlight?: boolean;
 } & TextFieldProps;

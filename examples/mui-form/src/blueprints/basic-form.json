@@ -253,13 +253,13 @@
         {
           "settings": {
             "widget": "Autocomplete",
-            "rule": "required"
+            "rule": "required",
+            "service": "filmService"
           },
           "attrs": {
             "name": "film",
             "label": "FavoriteFilm",
             "freeSolo": true,
-            "itemsSource": "Films",
             "icon": "MenuBook"
           }
         },

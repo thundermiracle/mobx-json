@@ -20,7 +20,7 @@ class JsonFormStore implements JsonFormStoreClass {
    *
    * @param fieldsProps
    */
-  constructor(fieldsProps?: any) {
+  constructor(fieldsProps?: Blueprint) {
     if (fieldsProps != null) {
       this.initFieldsByJsonBlueprint(fieldsProps);
     }
@@ -37,6 +37,7 @@ class JsonFormStore implements JsonFormStoreClass {
       fieldsProp.fields,
       plugins.itemsSource,
       plugins.iconsMap,
+      plugins.serviceContainer,
     );
 
     // analyze propRule & set props if the init data meet the condition

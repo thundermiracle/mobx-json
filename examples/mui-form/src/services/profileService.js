@@ -1,8 +1,5 @@
+import sleep from './sleep';
 import DB from './DB';
-
-function sleep(milliseconds) {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
-}
 
 class ProfileService {
   select = async id => {
