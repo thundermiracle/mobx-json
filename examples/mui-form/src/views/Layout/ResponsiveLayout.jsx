@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import { grey } from '@material-ui/core/colors';
 import MenuIcon from '@material-ui/icons/Menu';
+import GitHub from '@material-ui/icons/GitHub';
 import LayoutDrawerMenu from './LayoutDrawerMenu';
 import LayoutDrawerHeader from './LayoutDrawerHeader';
 
@@ -148,6 +149,13 @@ export const makeResponsiveLayout = (drawerWidth = 240) => {
                 >
                   {title || 'top'}
                 </Typography>
+                <IconButton
+                  href="https://github.com/thundermiracle/mobx-json"
+                  color="inherit"
+                  target="_blank"
+                >
+                  <GitHub />
+                </IconButton>
               </Toolbar>
             </AppBar>
             <Hidden mdUp>

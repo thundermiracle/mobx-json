@@ -42,6 +42,19 @@ export default class MyApp extends App {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
           />
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=UA-119418003-4"
+          />
+          <script
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{
+              __html: `
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};
+gtag('js', new Date());gtag('config', 'UA-119418003-4');
+              `,
+            }}
+          />
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
