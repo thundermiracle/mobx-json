@@ -12,12 +12,14 @@ import {
 } from './internalFunctions';
 
 import { MyAutocompleteProps } from './MyAutocompleteTypes';
+import useLoadRealtime from './useLoadRealtime';
+import useLoadOnce from './useLoadOnce';
 
 const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   name,
-  loading = false,
   loaderSize = 24,
   loaderText = 'Loading...',
+  reloadOnInput = false,
   freeSolo = true,
   autoHighlight = false,
   autoComplete = false,
@@ -36,6 +38,15 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
     suggestions,
   ]);
 
+  const useLoadProps = reloadOnInput ? useLoadRealtime : useLoadOnce;
+  const { suggestionsLoading, ...realtimeProps } = useLoadProps({
+    name,
+    sortedSuggestions,
+    onChange,
+    asyncLoadItems,
+    setSuggestions,
+  });
+
   let groupByProp;
   if (needGroupBy(suggestions)) {
     groupByProp = {
@@ -43,43 +54,10 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
     };
   }
 
-  // show loading status if items are empty
-  const suggestionsLoading = loading || sortedSuggestions.length === 0;
-
   // reset the items by external params
   React.useEffect(() => {
     setSuggestions(initSuggestions);
   }, [initSuggestions]);
-
-  React.useEffect(() => {
-    let active = true;
-
-    // auto load only if it's in loading mode
-    if (!suggestionsLoading || !asyncLoadItems) {
-      return undefined;
-    }
-
-    (async (): Promise<void> => {
-      const remoteItems = await asyncLoadItems();
-
-      if (active) {
-        setSuggestions(remoteItems);
-      }
-    })();
-
-    return (): any => {
-      active = false;
-    };
-  }, [asyncLoadItems, suggestionsLoading]);
-
-  const handleInputChange = React.useCallback(
-    (_, newVal) => {
-      if (!suggestionsLoading && onChange) {
-        onChange(name, newVal);
-      }
-    },
-    [suggestionsLoading, name, onChange],
-  );
 
   return (
     <MuiAutocomplete
@@ -91,7 +69,6 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
       options={suggestionsLoading ? [{ value: loaderText }] : sortedSuggestions}
       getOptionLabel={getSuggestionLabel}
       inputValue={value}
-      onInputChange={handleInputChange}
       renderInput={params => (
         <TextFieldComponent
           {...params}
@@ -111,6 +88,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
         />
       )}
       renderOption={highlightSuggestion}
+      {...realtimeProps}
       {...groupByProp}
       {...extraAutocompleteProps}
     />

@@ -13,10 +13,11 @@ export type MyAutocompleteProps = {
   loading?: boolean;
   loaderSize?: number;
   loaderText?: string;
+  reloadOnInput?: boolean;
   items: AutocompleteItem[];
   value?: string;
   onChange?: (name: string, value: string, inputValue?: string) => void;
-  asyncLoadItems?: () => Promise<AutocompleteItem[]>;
+  asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
   TextFieldComponent: any;
   autoHighlight?: boolean;
   autoComplete?: boolean;

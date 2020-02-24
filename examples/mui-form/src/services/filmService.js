@@ -3,17 +3,21 @@ import DB from './DB';
 
 class FilmService {
   get = async word => {
-    if (word == null) {
+    if (!word) {
       console.info(`[film]getting all from DB...`);
 
       await sleep(Math.random() * 2000);
       return DB.films;
     }
 
-    console.info(`searching ${word} from DB...`);
+    console.info(`[film]searching [${word}] from DB...`);
     await sleep(Math.random() * 1000);
 
-    return DB.films.find(dt => dt.value.includes(word));
+    const result = DB.films
+      .filter(dt => dt.value.toLowerCase().includes(word.toLowerCase()))
+      .slice(0, 5);
+
+    return result;
   };
 }
 

@@ -6,7 +6,11 @@ import match from 'autosuggest-highlight/match';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 const needGroupBy = (suggestions?: AutocompleteItem[]): boolean => {
-  if (suggestions == null || suggestions.length === 0) {
+  if (
+    suggestions == null ||
+    suggestions.length === 0 ||
+    !Array.isArray(suggestions)
+  ) {
     return false;
   }
 

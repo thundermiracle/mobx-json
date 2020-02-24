@@ -260,7 +260,8 @@
             "name": "film",
             "label": "FavoriteFilm",
             "freeSolo": true,
-            "icon": "MenuBook"
+            "icon": "MenuBook",
+            "reloadOnInput": true
           }
         },
         {
