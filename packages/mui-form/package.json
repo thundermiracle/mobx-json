@@ -23,6 +23,14 @@
   },
   "author": "ThunderMiracle",
   "license": "MIT",
+  "homepage": "https://mobx-json.thundermiracle.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thundermiracle/mobx-json/tree/master/packages/mui-form"
+  },
+  "bugs": {
+    "url": "https://github.com/thundermiracle/mobx-json/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
