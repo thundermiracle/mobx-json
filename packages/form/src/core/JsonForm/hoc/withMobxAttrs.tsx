@@ -38,20 +38,15 @@ export default (
       [onChange],
     );
 
-    const { defaultValue, ...restAttrs } = attrs;
-    let valueProps;
-    if (!attrs.value) {
-      // show defaultValue if value is null
-      valueProps = { defaultValue };
-    }
+    // const { defaultValue, ...restAttrs } = attrs;
+    // let valueProps;
+    // if (!attrs.value) {
+    //   // show defaultValue if value is null
+    //   valueProps = { defaultValue };
+    // }
 
     return (
-      <ObserveMUIComponent
-        {...valueProps}
-        {...restAttrs}
-        {...restProps}
-        onChange={innerOnChange}
-      />
+      <ObserveMUIComponent {...attrs} {...restProps} onChange={innerOnChange} />
     );
   };
 
