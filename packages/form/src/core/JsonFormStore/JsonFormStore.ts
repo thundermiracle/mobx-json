@@ -1,4 +1,4 @@
-import { action, observable, toJS } from 'mobx';
+import { action, observable } from 'mobx';
 
 import { pickBy } from 'ramda';
 import { isNotNilOrEmpty } from 'lib/utils';

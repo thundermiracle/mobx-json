@@ -1,6 +1,7 @@
 import { toJS, observable, isObservableObject } from 'mobx';
 import { trim, pick } from 'ramda';
 
+import makeSingle from 'lib/makeSingle';
 import {
   Fields,
   JsonField,
@@ -521,27 +522,30 @@ class GetHelper {
       return cacheFunc;
     }
 
-    const asyncLoadItems = async (
-      inputValue?: string,
-    ): Promise<Item[] | []> => {
-      const serviceInstance = serviceContainer[service];
+    const serviceInstance = serviceContainer[service];
 
-      // TODO: check Blueprint before flatten it
-      if (serviceInstance == null) {
-        throw new Error(
-          `service [${service}] is not exist in serviceContainer. Add your service to plugins.serviceContainer.`,
-        );
-      }
-      if (serviceInstance[serviceRouter] == null) {
-        throw new Error(
-          `function [${serviceRouter}] is not in service [${service}]`,
-        );
-      }
+    // TODO: check Blueprint before flatten it
+    if (serviceInstance == null) {
+      throw new Error(
+        `service [${service}] is not exist in serviceContainer. Add your service to plugins.serviceContainer.`,
+      );
+    }
+    if (serviceInstance[serviceRouter] == null) {
+      throw new Error(
+        `function [${serviceRouter}] is not in service [${service}]`,
+      );
+    }
 
-      const result = await serviceInstance[serviceRouter](inputValue);
+    const serviceFunc = serviceInstance[serviceRouter];
+
+    function* _asyncLoadItemsGenerator(inputValue?: string): Generator<any> {
+      const result = yield serviceFunc(inputValue);
 
       return result;
-    };
+    }
+
+    // return Symbol('takeover') if new asyncLoadItems call is cancelled
+    const asyncLoadItems = makeSingle(_asyncLoadItemsGenerator);
 
     this._asyncLoadItemsFuncCache[cacheKey] = asyncLoadItems;
 

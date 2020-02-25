@@ -42,7 +42,11 @@ const useLoadRealtime = ({
       setFetching(true);
       const remoteItems = await asyncLoadItems(keyword);
 
-      if (active) {
+      if (
+        active &&
+        // proceed only if result is string or array
+        (typeof remoteItems === 'string' || Array.isArray(remoteItems))
+      ) {
         setSuggestions(
           Array.isArray(remoteItems) ? remoteItems : [remoteItems],
         );
