@@ -13,6 +13,7 @@ export type MyAutocompleteProps = {
   loading?: boolean;
   loaderSize?: number;
   loaderText?: string;
+  reloadDelay?: number;
   reloadOnInput?: boolean;
   items: AutocompleteItem[];
   value?: string;

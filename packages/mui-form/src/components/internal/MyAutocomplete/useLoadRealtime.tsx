@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { identity } from 'ramda';
+import { throttle } from 'throttle-debounce';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 interface UserLoadRealtimeInputProps {
   name: string;
+  reloadDelay?: number;
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
   onChange?: (name: string, value: string, inputValue?: string) => void;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
@@ -25,6 +27,7 @@ interface UserLoadRealtimeProps {
 
 const useLoadRealtime = ({
   name,
+  reloadDelay = 300,
   onChange,
   asyncLoadItems,
   setSuggestions,
@@ -57,17 +60,24 @@ const useLoadRealtime = ({
     [asyncLoadItems, setSuggestions],
   );
 
+  // add throttle to reduce unnecessary requests
+  const reloadItemsThrottle = React.useCallback(
+    throttle(reloadDelay, reloadItems),
+    [],
+  );
+
   const handleInputChange = React.useCallback(
     (_, newVal) => {
       if (newVal !== '') {
-        reloadItems(newVal);
+        // reloadItems(newVal);
+        reloadItemsThrottle(newVal);
       }
 
       if (onChange) {
         onChange(name, newVal);
       }
     },
-    [name, onChange, reloadItems],
+    [name, reloadItemsThrottle, onChange],
   );
 
   return {

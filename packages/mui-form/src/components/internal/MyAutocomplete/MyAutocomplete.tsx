@@ -20,6 +20,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   loaderSize = 24,
   loaderText = 'Loading...',
   reloadOnInput = false,
+  reloadDelay,
   freeSolo = true,
   autoHighlight = false,
   autoComplete = false,
@@ -41,6 +42,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   const useLoadProps = reloadOnInput ? useLoadRealtime : useLoadOnce;
   const { suggestionsLoading, ...realtimeProps } = useLoadProps({
     name,
+    reloadDelay,
     sortedSuggestions,
     onChange,
     asyncLoadItems,
