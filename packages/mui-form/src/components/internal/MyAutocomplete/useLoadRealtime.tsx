@@ -7,6 +7,7 @@ import { AutocompleteItem } from './MyAutocompleteTypes';
 interface UserLoadRealtimeInputProps {
   name: string;
   reloadDelay?: number;
+  reloadExcludeRegex?: string;
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
   onChange?: (name: string, value: string, inputValue?: string) => void;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
@@ -28,6 +29,7 @@ interface UserLoadRealtimeProps {
 const useLoadRealtime = ({
   name,
   reloadDelay = 300,
+  reloadExcludeRegex,
   onChange,
   asyncLoadItems,
   setSuggestions,
@@ -66,10 +68,25 @@ const useLoadRealtime = ({
     [],
   );
 
+  const needReload = React.useCallback(
+    (inputValue?: string) => {
+      if (
+        reloadExcludeRegex == null ||
+        inputValue == null ||
+        inputValue === ''
+      ) {
+        return true;
+      }
+
+      const regex = new RegExp(reloadExcludeRegex);
+      return !regex.test(inputValue);
+    },
+    [reloadExcludeRegex],
+  );
+
   const handleInputChange = React.useCallback(
     (_, newVal) => {
-      if (newVal !== '') {
-        // reloadItems(newVal);
+      if (newVal !== '' && needReload(newVal)) {
         reloadItemsThrottle(newVal);
       }
 
@@ -77,7 +94,7 @@ const useLoadRealtime = ({
         onChange(name, newVal);
       }
     },
-    [name, reloadItemsThrottle, onChange],
+    [needReload, onChange, reloadItemsThrottle, name],
   );
 
   return {

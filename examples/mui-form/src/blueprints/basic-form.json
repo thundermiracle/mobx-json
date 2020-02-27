@@ -261,7 +261,8 @@
             "label": "FavoriteFilm",
             "freeSolo": true,
             "icon": "MenuBook",
-            "reloadOnInput": true
+            "reloadOnInput": true,
+            "reloadExcludeRegex": "[0-9]"
           }
         },
         {

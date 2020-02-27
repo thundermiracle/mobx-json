@@ -15,6 +15,7 @@ export type MyAutocompleteProps = {
   loaderText?: string;
   reloadDelay?: number;
   reloadOnInput?: boolean;
+  reloadExcludeRegex?: string;
   items: AutocompleteItem[];
   value?: string;
   onChange?: (name: string, value: string, inputValue?: string) => void;
