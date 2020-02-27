@@ -1,9 +1,11 @@
 import React from 'react';
 
+import { filterData, SearchType } from 'filter-data';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 interface UserLoadOnceInputProps {
   name: string;
+  inputValue?: string;
   sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
   onChange?: (name: string, value: string, inputValue?: string) => void;
@@ -25,6 +27,7 @@ interface UserLoadOnceProps {
 
 const useLoadOnce = ({
   name,
+  inputValue = '',
   onChange,
   sortedSuggestions,
   asyncLoadItems,
@@ -64,8 +67,24 @@ const useLoadOnce = ({
     [suggestionsLoading, name, onChange],
   );
 
+  const filterOptions = React.useCallback(
+    (options: AutocompleteItem[]) => {
+      const result = filterData(options as any, [
+        {
+          key: 'value',
+          value: inputValue,
+          type: SearchType.LK,
+        },
+      ]);
+
+      return result;
+    },
+    [inputValue],
+  ) as any;
+
   return {
     suggestionsLoading,
+    filterOptions,
     onInputChange: handleInputChange,
   };
 };

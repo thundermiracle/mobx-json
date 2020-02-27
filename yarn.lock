@@ -2108,7 +2108,6 @@
 "@types/throttle-debounce@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/throttle-debounce/-/throttle-debounce-1.0.0.tgz#4a871d80fed83496916c8598abb361a2d2277d6f"
-  integrity sha512-XnePZKb07ioE2Jm9JfJqSz3UoOvJO6Vv2wLjCoF5E54PYGAu/H+9bMVRO8EUXj5BwLnyCc/elWgH6/KUn4LLBg==
 
 "@types/validatorjs@3.7.1":
   version "3.7.1"
@@ -4597,6 +4596,12 @@ fill-range@^7.0.1:
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
   dependencies:
     to-regex-range "^5.0.1"
+
+filter-data@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/filter-data/-/filter-data-0.1.1.tgz#19bace1e7a08cce0021be9bf45ee658ea4e1ed7d"
+  dependencies:
+    ramda "0.26.1"
 
 find-babel-config@^1.2.0:
   version "1.2.0"
@@ -9290,7 +9295,6 @@ throat@^4.0.0:
 throttle-debounce@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-2.1.0.tgz#257e648f0a56bd9e54fe0f132c4ab8611df4e1d5"
-  integrity sha512-AOvyNahXQuU7NN+VVvOOX+uW6FPaWdAOdRP5HfwYxAfCzXTFKRMoIMk+n+po318+ktcChx+F1Dd91G3YHeMKyg==
 
 through2@^2.0.0, through2@^2.0.2:
   version "2.0.5"

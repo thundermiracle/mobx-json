@@ -43,6 +43,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   const useLoadProps = reloadOnInput ? useLoadRealtime : useLoadOnce;
   const { suggestionsLoading, ...realtimeProps } = useLoadProps({
     name,
+    inputValue: value,
     reloadDelay,
     reloadExcludeRegex,
     sortedSuggestions,
