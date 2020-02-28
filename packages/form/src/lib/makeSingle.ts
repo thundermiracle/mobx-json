@@ -5,11 +5,11 @@ export const takeoverSymbol = Symbol('takeover');
  * Accepts a generator function, which yields Promises, and converts it to an async function
  * that cancels any previous calls.
  */
-export default function makeSingle(
-  generator: (...args: any[]) => Generator<any>,
-): (...args: any[]) => Promise<any> {
+export default function makeSingle<T, TReturn>(
+  generator: (...args: any[]) => Generator<Promise<T>, TReturn>,
+): (...args: any[]) => Promise<TReturn | symbol> {
   let globalNonce;
-  return async function(...args: any[]): Promise<any> {
+  return async function(...args: any[]): Promise<TReturn | symbol> {
     globalNonce = {};
     const localNonce = globalNonce;
 
