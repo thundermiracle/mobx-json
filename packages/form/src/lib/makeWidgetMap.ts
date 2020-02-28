@@ -14,6 +14,7 @@ const makeWidgetMap = (
 
   const innerWidgetMap: any = {};
   Object.keys(allComponentsMap).forEach(name => {
+    console.log(name, ':', typeof name);
     if (typeof name !== 'string') return;
 
     const Component = allComponentsMap[name];
