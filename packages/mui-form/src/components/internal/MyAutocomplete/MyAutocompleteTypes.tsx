@@ -25,4 +25,6 @@ export type MyAutocompleteProps = {
   autoComplete?: boolean;
   autoSelect?: boolean;
   extraAutocompleteProps?: AnyObject;
+  InputPropsClassName?: string;
+  inputPropsClassName?: string;
 } & TextFieldProps;

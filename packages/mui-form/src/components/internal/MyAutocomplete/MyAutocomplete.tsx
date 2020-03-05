@@ -1,5 +1,7 @@
 import React from 'react';
 
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 
@@ -14,6 +16,14 @@ import {
 import { MyAutocompleteProps } from './MyAutocompleteTypes';
 import useLoadRealtime from './useLoadRealtime';
 import useLoadOnce from './useLoadOnce';
+
+const useStyles = makeStyles({
+  clearIndicator: {
+    padding: '4px !important',
+    marginRight: -2,
+    visibility: 'hidden',
+  },
+});
 
 const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   name,
@@ -32,8 +42,11 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   asyncLoadItems,
   TextFieldComponent,
   extraAutocompleteProps = {},
+  InputPropsClassName,
+  inputPropsClassName,
   ...restProps
 }) => {
+  const classes = useStyles();
   const [suggestions, setSuggestions] = React.useState(initSuggestions);
 
   const sortedSuggestions = React.useMemo(() => sortSuggestions(suggestions), [
@@ -74,24 +87,36 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
       options={suggestionsLoading ? [{ value: loaderText }] : sortedSuggestions}
       getOptionLabel={getSuggestionLabel}
       inputValue={value}
-      renderInput={params => (
-        <TextFieldComponent
-          {...params}
-          name={name}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {suggestionsLoading ? (
-                  <CircularProgress color="secondary" size={loaderSize} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </>
-            ),
-          }}
-          {...restProps}
-        />
-      )}
+      classes={classes}
+      renderInput={params => {
+        const { InputProps } = params;
+        const inputProps = (params.inputProps || {}) as any;
+
+        return (
+          <TextFieldComponent
+            {...params}
+            name={name}
+            InputProps={{
+              ...InputProps,
+              className: clsx(InputProps.className, InputPropsClassName),
+              endAdornment: (
+                <>
+                  {suggestionsLoading ? (
+                    <CircularProgress color="secondary" size={loaderSize} />
+                  ) : null}
+                  {InputProps.endAdornment}
+                </>
+              ),
+            }}
+            // eslint-disable-next-line react/jsx-no-duplicate-props
+            inputProps={{
+              ...inputProps,
+              className: clsx(inputProps.className, inputPropsClassName),
+            }}
+            {...restProps}
+          />
+        );
+      }}
       renderOption={highlightSuggestion}
       {...realtimeProps}
       {...groupByProp}
