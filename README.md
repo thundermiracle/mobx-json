@@ -44,6 +44,8 @@ You can check some examples here: [https://mobx-json.thundermiracle.com](https:/
     * [Switch](#Switch)
     * [TextField](#TextField)
     * [TextFieldOutlined](#TextFieldOutlined)
+    * [Autocomplete](#Autocomplete)
+    * [AutocompleteOutlined](#AutocompleteOutlined)
 * [How to use in React](#How-to-use-in-React)
   * [Initialize (optional)](#Initialize-(optional))
   * [Generate form](#Generate-form)
@@ -479,6 +481,37 @@ formatters:
 
 #### TextFieldOutlined
 
+#### Autocomplete
+
+ [See examples](https://mobx-json.thundermiracle.com/modifyform).
+
+```json
+{
+  "settings": {
+    "widget": "Autocomplete",
+    "rule": "required",
+    "service": "filmService" // service passed by serviceContainer
+  },
+  "attrs": {
+    "name": "film",
+    "label": "FavoriteFilm",
+    "freeSolo": true, // false: clear input's value when not selected from suggestions list
+    "icon": "MenuBook", // get IconComponent from iconsMap
+    "reloadOnInput": true, // true: reload suggestions onChange; false: load suggestions once after mounted;
+    "reloadExcludeRegex": "[0-9]", // regex that not trigger reload onChange
+    "reloadDelay": 300, // throttle of reloadOnInput
+    "loaderText": "Loading...", // text when loading suggestions
+    "extraAutocompleteProps": {}, // props applied to Autocomplete(material-ui's)
+    "autoHighlight": false,
+    "autoComplete": false,
+    "autoSelect": false,
+    ...               // restProps are the same with TextField
+  }
+}
+```
+
+#### AutocompleteOutlined
+
 ## How to use in React
 
 Package is using hook to make the form and return submit functions. React > 16.8 is needed.
@@ -495,6 +528,7 @@ Need if ```icon, itemsSource``` is used, use customized components or display se
 | messages | | object | {} | key-value object for extended error messages|
 | itemsSource | △ | object | {} | key-value object for items definition. <br /> ※ required if ```itemsSource``` is used in blueprint |
 | iconsMap | △ | object | {} | key-value object for IconComponent definition. <br /> ※ required if ```icon``` is used in blueprint |
+| serviceContainer | △ | object | {} | key-value object for services' definition. pass `asyncLoadItems` to component which returns `items` asynchronously <br /> ※ required if ```service``` is used in blueprint |
 | extraWidgetMap | | object | {} | key-value object for extra Widget(component) |
 
 * initialize example:
