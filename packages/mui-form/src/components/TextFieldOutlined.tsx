@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField as MUITextField } from '@material-ui/core';
 
+import { rmNilProps } from 'lib/utils';
 import useIconAdornment from './hooks/useIconAdornment';
 
 import { TextFieldProps, AdornmentPosition } from './TextField';
@@ -27,6 +28,7 @@ const TextFieldOutlined: React.FC<TextFieldProps> = ({
   adornmentPosition = AdornmentPosition.end,
   variant,
   hidden,
+  InputProps: originInputProps = {},
   ...restProps
 }) => {
   const classes = useStyles();
@@ -48,7 +50,7 @@ const TextFieldOutlined: React.FC<TextFieldProps> = ({
       type={type}
       variant="outlined"
       InputLabelProps={newInputLabelProps}
-      InputProps={InputProps}
+      InputProps={{ ...InputProps, ...rmNilProps(originInputProps) }}
       {...restProps}
     />
   );

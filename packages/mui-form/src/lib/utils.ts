@@ -9,6 +9,8 @@ import {
   repeat,
   propEq,
   find,
+  pickBy,
+  complement,
 } from 'ramda';
 
 /**
@@ -85,6 +87,12 @@ const nl2Arr = (str?: string | number | boolean): string[] => {
 
   return result;
 };
+
+/**
+ * { a: undefined, b: null, c: 1, d: '2'} -> { c: 1, d: '2'}
+ */
+const rmNilProps = pickBy(complement(isNil));
+
 export {
   propAll,
   valsToString,
@@ -94,4 +102,5 @@ export {
   findByPropVal,
   nl2br,
   nl2Arr,
+  rmNilProps,
 };
