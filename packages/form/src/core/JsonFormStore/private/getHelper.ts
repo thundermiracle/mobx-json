@@ -1,7 +1,8 @@
 import { toJS, observable, isObservableObject } from 'mobx';
-import { trim, pick } from 'ramda';
+import { trim, pick, curry } from 'ramda';
 
 import makeSingle from 'lib/makeSingle';
+import { isNotNil } from 'lib/utils';
 import {
   Fields,
   JsonField,
@@ -13,7 +14,6 @@ import {
   SingleComputeRule,
   ValueType,
   AsyncLoadItemsFunc,
-  Item,
 } from '../../JsonFormTypes';
 
 /**
@@ -26,7 +26,7 @@ class GetHelper {
 
   private _CreateIfNotExistKeys = ['attrs.error'];
 
-  private _PropagatableAttrs = ['disabled', 'hidden', 'required'];
+  private _PropagableAttrs = ['disabled', 'hidden', 'required'];
 
   private _defaultValueType = ValueType.string;
 
@@ -126,9 +126,11 @@ class GetHelper {
       if (settingsFlatten.service) {
         attrsFlatten.items = [];
         attrsFlatten.asyncLoadItems = this._makeAsyncLoadItems(
+          attrsFlatten.name,
           serviceContainer,
           settingsFlatten.service,
           settingsFlatten.serviceRouter,
+          settingsFlatten.serviceParamFields,
         );
       }
 
@@ -136,7 +138,7 @@ class GetHelper {
       let fieldsFlatten;
       if (childFields) {
         // propagate disabled, hidden... to children
-        const propagateAttrs = this._getPropagatableAttrs(attrsFlatten);
+        const propagateAttrs = this._getPropagableAttrs(attrsFlatten);
 
         fieldsFlatten = this.initObservableFields(
           childFields,
@@ -160,6 +162,11 @@ class GetHelper {
 
       resultFields[fieldKey] = contents;
     });
+
+    // initialize _getTargetFieldsValPartial
+    this._getTargetFieldsValPartial = curry(this.getTargetFieldsVal)(
+      resultFields,
+    );
 
     return resultFields;
   };
@@ -222,7 +229,7 @@ class GetHelper {
       }
 
       if (fields[key].fields != null) {
-        // subfields
+        // sub fields
         const subDataObj = this.flattenProps(
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           fields[key].fields!,
@@ -466,7 +473,7 @@ class GetHelper {
   };
 
   /**
-   * get value by Nestedkey
+   * get value by nested key
    * exp: attrs.name => field.attrs.name
    */
   private _getValueByNestedKey = (obj: object, nestedKey: string): any => {
@@ -498,8 +505,8 @@ class GetHelper {
     );
   };
 
-  private _getPropagatableAttrs = (attrsFlatten: Attrs): AnyObject => {
-    const result = pick(this._PropagatableAttrs, attrsFlatten);
+  private _getPropagableAttrs = (attrsFlatten: Attrs): AnyObject => {
+    const result = pick(this._PropagableAttrs, attrsFlatten);
 
     return result;
   };
@@ -512,9 +519,11 @@ class GetHelper {
    * @param serviceRouter
    */
   private _makeAsyncLoadItems = (
+    name: string,
     serviceContainer: AnyObject,
     service: string,
     serviceRouter = 'get',
+    serviceParamFieldNames: string[] = [],
   ): AsyncLoadItemsFunc => {
     const cacheKey = `${service}${serviceRouter}`;
     const cacheFunc = this._asyncLoadItemsFuncCache[cacheKey];
@@ -537,9 +546,14 @@ class GetHelper {
     }
 
     const serviceFunc = serviceInstance[serviceRouter];
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
 
     function* _asyncLoadItemsGenerator(inputValue?: string): Generator<any> {
-      const result = yield serviceFunc(inputValue);
+      // _getTargetFieldsValPartial has been initialized in initObservableFields & CANNOT be undefined
+      const params = self._getTargetFieldsValPartial!(serviceParamFieldNames);
+
+      const result = yield serviceFunc({ name, inputValue, params });
 
       return result;
     }
@@ -551,6 +565,14 @@ class GetHelper {
 
     return asyncLoadItems;
   };
+
+  /**
+   * !!initialized in this.initObservableFields!!
+   * !MUST be called after this.initObservableFields being initialized!
+   */
+  private _getTargetFieldsValPartial:
+    | ((serviceParamFields: string[]) => AnyObject)
+    | undefined;
 }
 
 const getHelper = new GetHelper();

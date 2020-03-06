@@ -254,7 +254,8 @@
           "settings": {
             "widget": "Autocomplete",
             "rule": "required",
-            "service": "filmService"
+            "service": "filmService",
+            "serviceParamFields": ["firstName", "lastName"]
           },
           "attrs": {
             "name": "film",

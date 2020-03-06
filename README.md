@@ -490,7 +490,9 @@ formatters:
   "settings": {
     "widget": "Autocomplete",
     "rule": "required",
-    "service": "filmService" // service passed by serviceContainer
+    "service": "filmService", // service passed by serviceContainer,
+    "serviceRouter": "get", // default: get
+    "serviceParamFields": [], // list of fieldName, get value of these fields and pass to service as { params: {fieldName1: value1, fieldName2: value2} }
   },
   "attrs": {
     "name": "film",

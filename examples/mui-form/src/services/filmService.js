@@ -2,7 +2,9 @@ import sleep from './sleep';
 import DB from './DB';
 
 class FilmService {
-  get = async word => {
+  get = async props => {
+    const { inputValue: word, params, name } = props;
+
     if (!word) {
       console.info(`[film]getting all from DB...`);
 

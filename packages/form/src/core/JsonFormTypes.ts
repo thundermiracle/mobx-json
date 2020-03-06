@@ -28,6 +28,7 @@ interface Settings {
   computeRule?: string;
   service?: string;
   serviceRouter?: string;
+  serviceParamFields?: string[]; // fieldName list; get fields' value as parameters
 }
 
 type AsyncLoadItemsFunc = (inputValue?: string) => Promise<Item[] | []>;
