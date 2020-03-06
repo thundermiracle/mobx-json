@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 
+import { isNilOrEmpty } from 'lib/utils';
 import {
   needGroupBy,
   sortSuggestions,
@@ -54,7 +55,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   ]);
 
   const useLoadProps = reloadOnInput ? useLoadRealtime : useLoadOnce;
-  const { suggestionsLoading, ...realtimeProps } = useLoadProps({
+  const { suggestionsLoading, ...loadProps } = useLoadProps({
     name,
     inputValue: value,
     reloadDelay,
@@ -77,6 +78,15 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
     setSuggestions(initSuggestions);
   }, [initSuggestions]);
 
+  // options(suggestions)
+  let options = suggestionsLoading
+    ? [{ value: loaderText }]
+    : sortedSuggestions;
+  if (reloadOnInput && isNilOrEmpty(value)) {
+    // DON'T show options if load suggestions async & value is empty
+    options = [];
+  }
+
   return (
     <MuiAutocomplete
       freeSolo={freeSolo}
@@ -84,7 +94,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
       autoComplete={autoComplete}
       autoSelect={autoSelect}
       loading={suggestionsLoading}
-      options={suggestionsLoading ? [{ value: loaderText }] : sortedSuggestions}
+      options={options}
       getOptionLabel={getSuggestionLabel}
       inputValue={value}
       classes={classes}
@@ -118,7 +128,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
         );
       }}
       renderOption={highlightSuggestion}
-      {...realtimeProps}
+      {...loadProps}
       {...groupByProp}
       {...extraAutocompleteProps}
     />
