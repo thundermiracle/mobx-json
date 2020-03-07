@@ -7,6 +7,7 @@ import FormHelperText from './internal/MyFormHelperText';
 import MyRadio from './internal/MyRadio';
 import IconWrapper from './internal/IconWrapper';
 
+import useAsyncLoadItems from './hooks/useAsyncLoadItems';
 import { FieldProps, Item } from './ComponentTypes';
 
 const useStyles = makeStyles(theme => ({
@@ -33,15 +34,25 @@ const Radio: React.FC<RadioProps> = ({
   helperText = '',
   fullWidth = false,
   row = true,
-  items = [],
+  items: initItems = [],
   value,
   onChange,
   domFocusRipple = true,
   IconComponent,
   hidden = false,
+  loaderSize = 24,
+  asyncLoadItems,
   ...restProps
 }) => {
   const classes = useStyles();
+  const [items, setItems] = React.useState(initItems);
+  const { loader } = useAsyncLoadItems({
+    items,
+    setItems,
+    loaderSize,
+    loaderStyle: { left: 10, top: 25 },
+    asyncLoadItems,
+  });
 
   const helperTextPart = helperText ? (
     <FormHelperText className={classes.helperText}>{helperText}</FormHelperText>
@@ -90,6 +101,7 @@ const Radio: React.FC<RadioProps> = ({
             ),
           )}
         </RadioGroup>
+        {loader}
         {helperTextPart}
       </FormControl>
     </IconWrapper>
