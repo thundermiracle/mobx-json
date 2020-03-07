@@ -61,7 +61,7 @@ const Select: React.FC<SelectProps> = ({
         {labelPart}
         <MUISelect
           name={name}
-          readOnly={itemsLoading}
+          disabled={itemsLoading}
           SelectDisplayProps={{ id: `muiform_${name}` }}
           {...restProps}
         >

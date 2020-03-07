@@ -28,7 +28,7 @@ export enum AdornmentPosition {
 
 export type TextFieldProps = {
   InputLabelProps?: any;
-  adornment?: string;
+  adornment?: any;
   adornmentPosition?: AdornmentPosition;
 } & FieldProps &
   MUITextFieldProps;

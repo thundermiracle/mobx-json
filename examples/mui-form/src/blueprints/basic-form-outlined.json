@@ -88,7 +88,8 @@
           "settings": {
             "widget": "SelectOutlined",
             "valueType": "string",
-            "rule": "required"
+            "rule": "required",
+            "service": "locationService"
           },
           "attrs": {
             "name": "location",

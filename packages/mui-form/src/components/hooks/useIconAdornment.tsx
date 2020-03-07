@@ -9,7 +9,7 @@ interface TextFieldInputProps {
 }
 
 interface UseIconAdornment {
-  adornment?: string;
+  adornment?: any;
   adornmentPosition?: AdornmentPosition;
   IconComponent?: any;
 }
