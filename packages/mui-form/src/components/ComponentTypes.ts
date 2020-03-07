@@ -37,6 +37,8 @@ interface FieldProps {
   onChange?: OnChange;
   IconComponent?: any;
   hidden?: boolean;
+  loaderSize?: number;
+  asyncLoadItems?: () => Promise<Item[]>;
   [key: string]: any;
 }
 

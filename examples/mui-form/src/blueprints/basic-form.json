@@ -88,7 +88,8 @@
           "settings": {
             "widget": "Select",
             "valueType": "string",
-            "rule": "required"
+            "rule": "required",
+            "service": "locationService"
           },
           "attrs": {
             "name": "location",
@@ -96,7 +97,6 @@
             "icon": "LocationCity",
             "defaultValue": "",
             "emptyItem": true,
-            "itemsSource": "City",
             "grid": {
               "xs": 12,
               "md": 5

@@ -3,7 +3,7 @@ import React from 'react';
 import { filterData, SearchType } from 'filter-data';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
-interface UserLoadOnceInputProps {
+interface UseLoadOnceInputProps {
   name: string;
   inputValue?: string;
   sortedSuggestions: AutocompleteItem[];
@@ -12,7 +12,7 @@ interface UserLoadOnceInputProps {
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
 }
 
-interface UserLoadOnceProps {
+interface UseLoadOnceProps {
   suggestionsLoading: boolean;
   filterOptions?: (
     options: AutocompleteItem[],
@@ -32,7 +32,7 @@ const useLoadOnce = ({
   sortedSuggestions,
   asyncLoadItems,
   setSuggestions,
-}: UserLoadOnceInputProps): UserLoadOnceProps => {
+}: UseLoadOnceInputProps): UseLoadOnceProps => {
   const suggestionsLoading = sortedSuggestions.length === 0;
 
   React.useEffect(() => {
@@ -56,7 +56,7 @@ const useLoadOnce = ({
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sortedSuggestions]);
 
   const handleInputChange = React.useCallback(
     (_, newVal) => {

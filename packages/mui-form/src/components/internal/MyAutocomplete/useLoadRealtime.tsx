@@ -4,7 +4,7 @@ import { identity } from 'ramda';
 import { throttle } from 'throttle-debounce';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
-interface UserLoadRealtimeInputProps {
+interface UseLoadRealtimeInputProps {
   name: string;
   reloadDelay?: number;
   reloadExcludeRegex?: string;
@@ -13,7 +13,7 @@ interface UserLoadRealtimeInputProps {
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
 }
 
-interface UserLoadRealtimeProps {
+interface UseLoadRealtimeProps {
   suggestionsLoading: boolean;
   filterOptions: (
     options: AutocompleteItem[],
@@ -33,7 +33,7 @@ const useLoadRealtime = ({
   onChange,
   asyncLoadItems,
   setSuggestions,
-}: UserLoadRealtimeInputProps): UserLoadRealtimeProps => {
+}: UseLoadRealtimeInputProps): UseLoadRealtimeProps => {
   const [fetching, setFetching] = React.useState<boolean>(false);
 
   const suggestionsLoading = fetching;

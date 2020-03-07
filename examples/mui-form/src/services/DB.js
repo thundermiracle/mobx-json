@@ -127,6 +127,13 @@ class DB {
     { value: '3 Idiots', group: 2009 },
     { value: 'Monty Python and the Holy Grail', group: 1975 },
   ];
+
+  static locations = [
+    { value: 'tokyo', label: '東京都' },
+    { value: 'kanagawa', label: '神奈川県' },
+    { value: 'chiba', label: '千葉県' },
+    { value: 'saitama', label: '埼玉県' },
+  ];
 }
 
 export default DB;
