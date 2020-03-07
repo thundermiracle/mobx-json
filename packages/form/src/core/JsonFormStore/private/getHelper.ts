@@ -525,7 +525,7 @@ class GetHelper {
     serviceRouter = 'get',
     serviceParamFieldNames: string[] = [],
   ): AsyncLoadItemsFunc => {
-    const cacheKey = `${service}${serviceRouter}`;
+    const cacheKey = `${name}${service}${serviceRouter}`;
     const cacheFunc = this._asyncLoadItemsFuncCache[cacheKey];
     if (cacheFunc) {
       return cacheFunc;

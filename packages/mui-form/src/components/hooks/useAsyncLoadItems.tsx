@@ -47,7 +47,8 @@ const useAsyncLoadItems = ({
       const remoteItems = await asyncLoadItems();
 
       if (active) {
-        setItems(remoteItems);
+        // return empty array if loading failed
+        setItems(Array.isArray(remoteItems) ? remoteItems : []);
       }
     })();
 
