@@ -14,6 +14,7 @@ import IconWrapper from './internal/IconWrapper';
 
 import useCheckboxes from './hooks/useCheckboxes';
 import useKeepLabelSpace from './hooks/useKeepLabelSpace';
+import useAsyncLoadItems from './hooks/useAsyncLoadItems';
 
 import { FieldProps } from './ComponentTypes';
 
@@ -43,7 +44,7 @@ type CheckboxesProps = {
 const Checkboxes: React.FC<CheckboxesProps> = ({
   disabled = false,
   name,
-  items,
+  items: initItems = [],
   label,
   selectAll = false,
   selectAllLabel = 'ALL',
@@ -58,14 +59,25 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
   fullWidth = false,
   domFocusRipple = true,
   IconComponent,
+  loaderSize = 24,
+  asyncLoadItems,
   ...restProps
 }) => {
-  if (items == null) {
+  if (initItems == null) {
     return null;
   }
 
   const classes = useStyles();
   const labelSpaceClass = useKeepLabelSpace({ keepLabelSpace });
+  const [items, setItems] = React.useState(initItems);
+  const { itemsLoading, loader } = useAsyncLoadItems({
+    items,
+    setItems,
+    loaderSize,
+    loaderStyle: { left: 10, top: 25 },
+    asyncLoadItems,
+  });
+
   const {
     itemsCheckedStatus,
     handleSelectAll,
@@ -112,7 +124,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
         className={clsx({ [classes.hidden]: hidden }, labelSpaceClass)}
       >
         {labelPart}
-        {selectAllPart}
+        {itemsLoading ? null : selectAllPart}
         <FormGroup row={row} className={classes.groupRoot}>
           {items.map(
             ({
@@ -143,6 +155,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
             },
           )}
         </FormGroup>
+        {loader}
         {helperTextPart}
       </FormControl>
     </IconWrapper>
