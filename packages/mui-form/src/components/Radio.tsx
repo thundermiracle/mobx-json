@@ -41,16 +41,16 @@ const Radio: React.FC<RadioProps> = ({
   IconComponent,
   hidden = false,
   loaderSize = 24,
+  forceLoadOnce,
   asyncLoadItems,
   ...restProps
 }) => {
   const classes = useStyles();
-  const [items, setItems] = React.useState(initItems);
-  const { loader } = useAsyncLoadItems({
-    items,
-    setItems,
+  const { items, loader } = useAsyncLoadItems({
+    initItems,
     loaderSize,
     loaderStyle: { left: 10, top: 25 },
+    forceLoadOnce,
     asyncLoadItems,
   });
 

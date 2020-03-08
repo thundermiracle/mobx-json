@@ -17,15 +17,15 @@ const SelectOutlined: React.FC<SelectProps> = ({
   items: initItems = [],
   emptyItem = false,
   loaderSize = 24,
+  forceLoadOnce,
   asyncLoadItems,
   ...restProps
 }) => {
-  const [items, setItems] = React.useState(initItems);
-  const { itemsLoading, loader } = useAsyncLoadItems({
-    items,
-    setItems,
+  const { items, loading, loader } = useAsyncLoadItems({
+    initItems,
     loaderSize,
     loaderStyle: { right: 40, bottom: 15 },
+    forceLoadOnce,
     asyncLoadItems,
   });
   const menuItems = useSelectItems({ emptyItem, items });
@@ -35,7 +35,7 @@ const SelectOutlined: React.FC<SelectProps> = ({
       {...restProps}
       select
       adornment={loader}
-      disabled={itemsLoading}
+      disabled={loading || items.length === 0}
     >
       {menuItems}
     </TextFieldOutlined>

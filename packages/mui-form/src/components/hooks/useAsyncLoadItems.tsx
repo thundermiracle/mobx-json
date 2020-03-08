@@ -13,33 +13,41 @@ const useStyles = makeStyles({
 });
 
 interface UseAsyncLoadItemsInputProps {
-  items: Item[];
-  setItems: (items: Item[]) => void;
+  initItems: Item[];
   loaderSize: number;
   loaderStyle?: AnyObject;
+  forceLoadOnce?: object;
   asyncLoadItems?: () => Promise<Item[]>;
 }
 
 interface UseAsyncLoadItemsProps {
-  itemsLoading: boolean;
+  items: Item[];
+  loading: boolean;
   loader: JSX.Element | null;
 }
 
 const useAsyncLoadItems = ({
-  items,
-  setItems,
+  initItems,
   loaderSize,
   loaderStyle,
+  forceLoadOnce,
   asyncLoadItems,
 }: UseAsyncLoadItemsInputProps): UseAsyncLoadItemsProps => {
   const classes = useStyles();
-  const itemsLoading = items.length === 0;
+  const [items, setItems] = React.useState(initItems);
+  const [loading, setLoading] = React.useState(items.length === 0);
+
+  React.useEffect(() => {
+    // reload once if forceLoadOnce changed
+    setLoading(true);
+  }, [forceLoadOnce]);
 
   React.useEffect(() => {
     let active = true;
 
     // auto load only if it's in loading mode
-    if (!itemsLoading || !asyncLoadItems) {
+    if (!loading || !asyncLoadItems) {
+      setLoading(false);
       return undefined;
     }
 
@@ -49,17 +57,16 @@ const useAsyncLoadItems = ({
       if (active) {
         // return empty array if loading failed
         setItems(Array.isArray(remoteItems) ? remoteItems : []);
+        setLoading(false);
       }
     })();
 
     return (): any => {
       active = false;
     };
+  }, [asyncLoadItems, loading, setItems]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
-
-  const loader = itemsLoading ? (
+  const loader = loading ? (
     <CircularProgress
       className={classes.loader}
       color="secondary"
@@ -69,7 +76,8 @@ const useAsyncLoadItems = ({
   ) : null;
 
   return {
-    itemsLoading,
+    items,
+    loading,
     loader,
   };
 };

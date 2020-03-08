@@ -31,15 +31,15 @@ const Select: React.FC<SelectProps> = ({
   hidden = false,
   name,
   loaderSize = 24,
+  forceLoadOnce,
   asyncLoadItems,
   ...restProps
 }) => {
-  const [items, setItems] = React.useState(initItems);
-  const { itemsLoading, loader } = useAsyncLoadItems({
-    items,
-    setItems,
+  const { items, loading, loader } = useAsyncLoadItems({
+    initItems,
     loaderSize,
     loaderStyle: { right: 30 },
+    forceLoadOnce,
     asyncLoadItems,
   });
   const menuItems = useSelectItems({ emptyItem, items });
@@ -61,7 +61,7 @@ const Select: React.FC<SelectProps> = ({
         {labelPart}
         <MUISelect
           name={name}
-          disabled={itemsLoading}
+          disabled={loading || items.length === 0}
           SelectDisplayProps={{ id: `muiform_${name}` }}
           {...restProps}
         >

@@ -38,6 +38,7 @@ interface FieldProps {
   IconComponent?: any;
   hidden?: boolean;
   loaderSize?: number;
+  forceLoadOnce?: object; // pass {} to trigger asyncLoadItems once
   asyncLoadItems?: () => Promise<Item[]>;
   [key: string]: any;
 }

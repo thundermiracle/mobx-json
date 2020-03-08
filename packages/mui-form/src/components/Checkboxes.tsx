@@ -60,6 +60,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
   domFocusRipple = true,
   IconComponent,
   loaderSize = 24,
+  forceLoadOnce,
   asyncLoadItems,
   ...restProps
 }) => {
@@ -69,12 +70,11 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
 
   const classes = useStyles();
   const labelSpaceClass = useKeepLabelSpace({ keepLabelSpace });
-  const [items, setItems] = React.useState(initItems);
-  const { itemsLoading, loader } = useAsyncLoadItems({
-    items,
-    setItems,
+  const { items, loading, loader } = useAsyncLoadItems({
+    initItems,
     loaderSize,
     loaderStyle: { left: 10, top: 25 },
+    forceLoadOnce,
     asyncLoadItems,
   });
 
@@ -124,7 +124,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
         className={clsx({ [classes.hidden]: hidden }, labelSpaceClass)}
       >
         {labelPart}
-        {itemsLoading ? null : selectAllPart}
+        {loading ? null : selectAllPart}
         <FormGroup row={row} className={classes.groupRoot}>
           {items.map(
             ({
