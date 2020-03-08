@@ -89,17 +89,17 @@
             "widget": "Select",
             "valueType": "string",
             "rule": "required",
-            "service": "locationService"
+            "service": "prefectureService"
           },
           "attrs": {
-            "name": "location",
-            "label": "Location",
-            "icon": "LocationCity",
+            "name": "prefecture",
+            "label": "Prefecture",
+            "icon": "PrefectureCity",
             "defaultValue": "",
             "emptyItem": true,
             "grid": {
               "xs": 12,
-              "md": 5
+              "md": 2
             }
           }
         },

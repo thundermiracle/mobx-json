@@ -1,7 +1,7 @@
 import filmService from 'services/filmService';
-import locationService from 'services/locationService';
+import prefectureService from 'services/prefectureService';
 
 export default {
   filmService,
-  locationService,
+  prefectureService,
 };

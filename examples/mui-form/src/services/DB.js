@@ -7,7 +7,7 @@ class DB {
       lastName: 'Eash',
       birthday: '2012-03-24',
       email: 'gegou@rock.you',
-      location: 'tokyo',
+      prefecture: 'tokyo',
       phone: '00811234567890',
       sex: 0,
       bio: "A great insensitive artist.\nHe'll rock your world!",
@@ -128,7 +128,7 @@ class DB {
     { value: 'Monty Python and the Holy Grail', group: 1975 },
   ];
 
-  static locations = [
+  static prefectures = [
     { value: 'tokyo', label: '東京都' },
     { value: 'kanagawa', label: '神奈川県' },
     { value: 'chiba', label: '千葉県' },

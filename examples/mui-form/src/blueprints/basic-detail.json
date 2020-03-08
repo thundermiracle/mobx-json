@@ -95,9 +95,9 @@
             "valueType": "string"
           },
           "attrs": {
-            "name": "location",
-            "label": "Location",
-            "icon": "LocationCity",
+            "name": "prefecture",
+            "label": "Prefecture",
+            "icon": "PrefectureCity",
             "itemsSource": "City",
             "grid": {
               "xs": 12,
