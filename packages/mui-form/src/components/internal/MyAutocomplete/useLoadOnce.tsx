@@ -9,6 +9,7 @@ interface UseLoadOnceInputProps {
   sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
   onChange?: (name: string, value: string, inputValue?: string) => void;
+  forceLoadOnce?: object;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
 }
 
@@ -30,16 +31,24 @@ const useLoadOnce = ({
   inputValue = '',
   onChange,
   sortedSuggestions,
+  forceLoadOnce,
   asyncLoadItems,
   setSuggestions,
 }: UseLoadOnceInputProps): UseLoadOnceProps => {
-  const suggestionsLoading = sortedSuggestions.length === 0;
+  const [suggestionsLoading, setSuggestionsLoading] = React.useState(
+    sortedSuggestions.length === 0,
+  );
+
+  React.useEffect(() => {
+    setSuggestionsLoading(true);
+  }, [forceLoadOnce]);
 
   React.useEffect(() => {
     let active = true;
 
     // auto load only if it's in loading mode
     if (!suggestionsLoading || !asyncLoadItems) {
+      setSuggestionsLoading(false);
       return undefined;
     }
 
@@ -48,6 +57,7 @@ const useLoadOnce = ({
 
       if (active) {
         setSuggestions(remoteItems);
+        setSuggestionsLoading(false);
       }
     })();
 

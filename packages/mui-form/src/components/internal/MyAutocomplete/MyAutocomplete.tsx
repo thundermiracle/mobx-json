@@ -15,7 +15,7 @@ import {
 } from './internalFunctions';
 
 import { MyAutocompleteProps } from './MyAutocompleteTypes';
-import useLoadRealtime from './useLoadRealtime';
+import useLoadOnInput from './useLoadOnInput';
 import useLoadOnce from './useLoadOnce';
 
 const useStyles = makeStyles({
@@ -40,6 +40,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   items: initSuggestions,
   value,
   onChange,
+  forceLoadOnce,
   asyncLoadItems,
   TextFieldComponent,
   extraAutocompleteProps = {},
@@ -49,12 +50,16 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
 }) => {
   const classes = useStyles();
   const [suggestions, setSuggestions] = React.useState(initSuggestions);
+  // reset the items by external params
+  React.useEffect(() => {
+    setSuggestions(initSuggestions);
+  }, [initSuggestions]);
 
   const sortedSuggestions = React.useMemo(() => sortSuggestions(suggestions), [
     suggestions,
   ]);
 
-  const useLoadProps = reloadOnInput ? useLoadRealtime : useLoadOnce;
+  const useLoadProps = reloadOnInput ? useLoadOnInput : useLoadOnce;
   const { suggestionsLoading, ...loadProps } = useLoadProps({
     name,
     inputValue: value,
@@ -62,6 +67,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
     reloadExcludeRegex,
     sortedSuggestions,
     onChange,
+    forceLoadOnce,
     asyncLoadItems,
     setSuggestions,
   });
@@ -72,11 +78,6 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
       groupBy,
     };
   }
-
-  // reset the items by external params
-  React.useEffect(() => {
-    setSuggestions(initSuggestions);
-  }, [initSuggestions]);
 
   // options(suggestions)
   let options = suggestionsLoading
