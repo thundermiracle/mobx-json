@@ -134,6 +134,16 @@ class DB {
     { value: 'chiba', label: '千葉県' },
     { value: 'saitama', label: '埼玉県' },
   ];
+
+  static cities = {
+    tokyo: [
+      { value: 'chiyoda', label: '千代田区' },
+      { value: 'shinjuku', label: '新宿区' },
+    ],
+    kanagawa: [{ value: 'yokohama', label: '横浜市' }],
+    chiba: [{ value: 'narita', label: '成田市' }],
+    saitama: [{ value: 'soka', label: '草加市' }],
+  };
 }
 
 export default DB;

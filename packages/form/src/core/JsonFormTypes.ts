@@ -26,6 +26,7 @@ interface Settings {
   rule?: string;
   propRule?: string;
   computeRule?: string;
+  reloadRule?: string; // trigger asyncLoadItems
   service?: string;
   serviceRouter?: string;
   serviceParamFields?: string[]; // fieldName list; get fields' value as parameters
@@ -45,6 +46,8 @@ interface Attrs {
   grid?: AnyObject;
   extraProps?: AnyObject;
   error?: string;
+  reloadOnInput?: boolean; // for Autocomplete ONLY; call asyncLoadItems onInputChange
+  forceLoadOnce?: object; // pass new object to trigger asyncLoadItems
   asyncLoadItems?: AsyncLoadItemsFunc;
   [key: string]: any;
 }

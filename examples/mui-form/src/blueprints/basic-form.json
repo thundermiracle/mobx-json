@@ -105,6 +105,27 @@
         },
         {
           "settings": {
+            "widget": "Select",
+            "valueType": "string",
+            "rule": "required",
+            "service": "cityService",
+            "reloadRule": "prefecture",
+            "serviceParamFields": ["prefecture"]
+          },
+          "attrs": {
+            "name": "city",
+            "label": "City",
+            "icon": "PrefectureCity",
+            "defaultValue": "",
+            "emptyItem": true,
+            "grid": {
+              "xs": 12,
+              "md": 3
+            }
+          }
+        },
+        {
+          "settings": {
             "widget": "TextField",
             "valueType": "string"
           },

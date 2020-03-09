@@ -116,12 +116,14 @@ class JsonFormStore implements JsonFormStoreClass {
       attrs.error = errorMsg || '';
     }
 
-    // re-compute the field.attrs.value if no error
     if (!attrs.error) {
+      // re-compute the field.attrs.value if no error
       setHelper.applyAllFieldsComputeRuleForChangedField(
         this.fields,
         fieldName,
       );
+      // trigger asyncLoadItems if no error
+      setHelper.applyAllFieldsReloadRuleForChangedField(this.fields, fieldName);
     }
   };
 

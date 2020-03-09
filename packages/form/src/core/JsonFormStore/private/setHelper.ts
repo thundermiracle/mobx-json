@@ -130,6 +130,25 @@ class SetHelper {
   };
 
   /**
+   * analyze settings.reloadRule,
+   * trigger asyncLoadItems if the target field meets reloadRule
+   *
+   * reloadRule MUST be 'fieldName,compare method,value | ...'
+   *
+   */
+  @action
+  applyAllFieldsReloadRuleForChangedField = (
+    fields: Fields,
+    changedFieldName: string,
+  ): void => {
+    this._invokeFuncToAllFields(
+      this._applyReloadRuleForChangedField,
+      fields,
+      changedFieldName,
+    );
+  };
+
+  /**
    * Operation for all nested fields
    * @param {*} func
    * @param {*} fields
@@ -277,6 +296,30 @@ class SetHelper {
       field.settings.rule = uniq(rulesArr)
         .filter(x => x !== '')
         .join('|');
+    }
+  };
+
+  @action
+  private _applyReloadRuleForChangedField = (
+    field: Field,
+    changedFieldName: string,
+  ): void => {
+    const { reloadRule } = field.settings;
+    const { asyncLoadItems, reloadOnInput } = field.attrs;
+    if (
+      reloadRule == null ||
+      asyncLoadItems == null ||
+      reloadOnInput === true
+    ) {
+      return;
+    }
+
+    const fieldsNameMeetRule = getHelper.flattenReloadRule(reloadRule);
+    if (fieldsNameMeetRule.includes(changedFieldName)) {
+      // clear value
+      field.attrs.value = '';
+      // trigger asyncLoadItems
+      field.attrs.forceLoadOnce = {};
     }
   };
 }

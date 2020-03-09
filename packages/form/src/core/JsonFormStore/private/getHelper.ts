@@ -134,6 +134,11 @@ class GetHelper {
         );
       }
 
+      // if reloadRule exists, init forceLoadOnce
+      if (settingsFlatten.reloadRule) {
+        attrsFlatten.forceLoadOnce = {};
+      }
+
       // nested fields
       let fieldsFlatten;
       if (childFields) {
@@ -381,6 +386,18 @@ class GetHelper {
         targetFields,
         extra,
       } as SingleComputeRule;
+    });
+
+    return result;
+  };
+
+  flattenReloadRule = (reloadRule: string): string[] => {
+    const result: string[] = reloadRule.split('|').map(ruleStr => {
+      const [targetFieldName, compareMethod, targetFieldValue] = ruleStr.split(
+        ',',
+      );
+
+      return targetFieldName;
     });
 
     return result;
