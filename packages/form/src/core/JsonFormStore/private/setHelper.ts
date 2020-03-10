@@ -314,7 +314,7 @@ class SetHelper {
       return;
     }
 
-    const fieldsNameMeetRule = getHelper.flattenReloadRule(reloadRule);
+    const fieldsNameMeetRule = getHelper.getFieldNamesByReloadRule(reloadRule);
     if (fieldsNameMeetRule.includes(changedFieldName)) {
       // clear value
       field.attrs.value = '';

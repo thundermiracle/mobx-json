@@ -1,8 +1,7 @@
 import { toJS, observable, isObservableObject } from 'mobx';
-import { trim, pick, curry } from 'ramda';
+import { trim, pick, curry, identity } from 'ramda';
 
 import makeSingle from 'lib/makeSingle';
-import { isNotNil } from 'lib/utils';
 import {
   Fields,
   JsonField,
@@ -122,6 +121,18 @@ class GetHelper {
         Reflect.deleteProperty(attrsFlatten, 'icon');
       }
 
+      if (settingsFlatten.reloadRule) {
+        // if reloadRule exists, init forceLoadOnce
+        attrsFlatten.forceLoadOnce = {};
+
+        // add reloadRules columns to serviceParamFields
+        settingsFlatten.serviceParamFields = (
+          settingsFlatten.serviceParamFields || []
+        ).concat(
+          this.getFieldNamesByReloadRule(settingsFlatten.reloadRule, true),
+        );
+      }
+
       // set items=[] if service is defined to make component controlled
       if (settingsFlatten.service) {
         attrsFlatten.items = [];
@@ -132,11 +143,6 @@ class GetHelper {
           settingsFlatten.serviceRouter,
           settingsFlatten.serviceParamFields,
         );
-      }
-
-      // if reloadRule exists, init forceLoadOnce
-      if (settingsFlatten.reloadRule) {
-        attrsFlatten.forceLoadOnce = {};
       }
 
       // nested fields
@@ -391,16 +397,26 @@ class GetHelper {
     return result;
   };
 
-  flattenReloadRule = (reloadRule: string): string[] => {
-    const result: string[] = reloadRule.split('|').map(ruleStr => {
-      const [targetFieldName, compareMethod, targetFieldValue] = ruleStr.split(
-        ',',
-      );
+  getFieldNamesByReloadRule = (
+    reloadRule: string,
+    forceGetAll = false,
+  ): string[] => {
+    return reloadRule
+      .split('|')
+      .map(ruleStr => {
+        const [
+          targetFieldName,
+          compareMethod,
+          targetFieldValue,
+        ] = ruleStr.split(',');
 
-      return targetFieldName;
-    });
+        if (forceGetAll) {
+          return targetFieldName;
+        }
 
-    return result;
+        return targetFieldName;
+      })
+      .filter(identity);
   };
 
   getTargetFieldsVal = (fields: Fields, targetFields: string[]): AnyObject => {

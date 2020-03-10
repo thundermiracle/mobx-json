@@ -109,8 +109,7 @@
             "valueType": "string",
             "rule": "required",
             "service": "cityService",
-            "reloadRule": "prefecture",
-            "serviceParamFields": ["prefecture"]
+            "reloadRule": "prefecture"
           },
           "attrs": {
             "name": "city",
