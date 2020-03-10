@@ -2,6 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, FormControlLabel, RadioGroup } from '@material-ui/core';
+import parseValByItems from 'lib/parseValByItems';
 import FormLabel from './internal/MyFormLabel';
 import FormHelperText from './internal/MyFormHelperText';
 import MyRadio from './internal/MyRadio';
@@ -75,7 +76,7 @@ const Radio: React.FC<RadioProps> = ({
         <RadioGroup
           aria-label="gender"
           row={row}
-          value={value}
+          value={parseValByItems(value, items)}
           onChange={onChange}
           className={classes.groupRoot}
         >

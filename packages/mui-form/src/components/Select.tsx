@@ -8,6 +8,7 @@ import {
   SelectProps as MUISelectProps,
 } from '@material-ui/core';
 
+import parseValByItems from 'lib/parseValByItems';
 import useSelectItems from './hooks/useSelectItems';
 import IconWrapper from './internal/IconWrapper';
 import { FieldProps } from './ComponentTypes';
@@ -33,6 +34,7 @@ const Select: React.FC<SelectProps> = ({
   loaderSize = 24,
   forceLoadOnce,
   asyncLoadItems,
+  value,
   ...restProps
 }) => {
   const { items, loading, loader } = useAsyncLoadItems({
@@ -63,6 +65,7 @@ const Select: React.FC<SelectProps> = ({
           name={name}
           disabled={loading || items.length === 0}
           SelectDisplayProps={{ id: `muiform_${name}` }}
+          value={parseValByItems(value, items)}
           {...restProps}
         >
           {menuItems}

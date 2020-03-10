@@ -44,6 +44,8 @@ class JsonFormStore implements JsonFormStoreClass {
     setHelper.initAllFieldsAttrsByPropRule(this.fields);
     // analyze computeRule & compute value if the init data meet the condition
     setHelper.initAllFieldsAttrsByComputeRule(this.fields);
+    // analyze reloadRule & call asyncLoadItems if the init data meet the condition
+    setHelper.initAllFieldsAttrsByReloadRule(this.fields);
   };
 
   /**
@@ -62,6 +64,8 @@ class JsonFormStore implements JsonFormStoreClass {
     setHelper.initAllFieldsAttrsByPropRule(this.fields);
     // analyze computeRule & compute value if the init data meet the condition
     setHelper.initAllFieldsAttrsByComputeRule(this.fields);
+    // analyze reloadRule & call asyncLoadItems if the init data meet the condition
+    setHelper.initAllFieldsAttrsByReloadRule(this.fields);
   };
 
   /**

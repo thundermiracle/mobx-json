@@ -2,6 +2,7 @@ import { toJS, observable, isObservableObject } from 'mobx';
 import { trim, pick, curry, identity } from 'ramda';
 
 import makeSingle from 'lib/makeSingle';
+import compare from 'lib/compare';
 import {
   Fields,
   JsonField,
@@ -414,7 +415,15 @@ class GetHelper {
           return targetFieldName;
         }
 
-        return targetFieldName;
+        const targetFieldValueNow = this._getTargetFieldsValPartial!([
+          targetFieldName,
+        ])[targetFieldName];
+
+        if (compare(targetFieldValueNow, targetFieldValue, compareMethod)) {
+          return targetFieldName;
+        }
+
+        return '';
       })
       .filter(identity);
   };

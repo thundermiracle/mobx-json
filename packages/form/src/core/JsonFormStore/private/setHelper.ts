@@ -130,6 +130,14 @@ class SetHelper {
   };
 
   /**
+   * analyze every field's reloadRule and apply props to attrs
+   */
+  @action
+  initAllFieldsAttrsByReloadRule = (fields: Fields): void => {
+    this._invokeFuncToAllFields(this._initFieldAttrsByReloadRule, fields);
+  };
+
+  /**
    * analyze settings.reloadRule,
    * trigger asyncLoadItems if the target field meets reloadRule
    *
@@ -300,9 +308,15 @@ class SetHelper {
   };
 
   @action
+  private _initFieldAttrsByReloadRule = (field: Field): void => {
+    this._applyReloadRuleForChangedField(field, '', true);
+  };
+
+  @action
   private _applyReloadRuleForChangedField = (
     field: Field,
     changedFieldName: string,
+    forceReload = false,
   ): void => {
     const { reloadRule } = field.settings;
     const { asyncLoadItems, reloadOnInput } = field.attrs;
@@ -315,9 +329,10 @@ class SetHelper {
     }
 
     const fieldsNameMeetRule = getHelper.getFieldNamesByReloadRule(reloadRule);
-    if (fieldsNameMeetRule.includes(changedFieldName)) {
-      // clear value
-      field.attrs.value = '';
+
+    if (forceReload || fieldsNameMeetRule.includes(changedFieldName)) {
+      // // clear value
+      // field.attrs.value = '';
       // trigger asyncLoadItems
       field.attrs.forceLoadOnce = {};
     }
