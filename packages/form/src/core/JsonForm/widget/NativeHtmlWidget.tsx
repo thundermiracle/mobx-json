@@ -23,7 +23,7 @@ const NativeHtmlWidget: React.FC<JsonFormComponent> = ({
     [onChange],
   );
 
-  const MyComponent = (settings.widget || 'div') as any;
+  const MyComponent: any = settings.widget || 'div';
 
   return <MyComponent {...attrs} {...restProps} onChange={innerOnChange} />;
 };

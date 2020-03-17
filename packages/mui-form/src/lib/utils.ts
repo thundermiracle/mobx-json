@@ -59,7 +59,7 @@ const isDateStr = (dtStr: string): boolean => {
 const findByPropVal = (
   propKey: string,
   propVal: string | number,
-  objArr: object[],
+  objArr: any[],
 ): object | undefined => {
   return find(propEq(propKey, propVal), objArr);
 };

@@ -121,7 +121,7 @@ interface SingleComputeRule {
 
 interface ValidatorRule {
   name: string;
-  callback: Function;
+  callback: any;
   message: string;
 }
 

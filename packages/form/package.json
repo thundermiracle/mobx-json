@@ -42,7 +42,7 @@
     "validatorjs": ">3.0.0"
   },
   "dependencies": {
-    "ramda": "0.26.1"
+    "ramda": "0.27.0"
   },
   "devDependencies": {
     "mobx": "4.13.0",
