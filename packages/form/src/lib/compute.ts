@@ -1,4 +1,4 @@
-import { sum } from 'ramda';
+import sum from 'ramda/src/sum';
 import { AnyObject } from '../core/JsonFormTypes';
 
 const compute = (

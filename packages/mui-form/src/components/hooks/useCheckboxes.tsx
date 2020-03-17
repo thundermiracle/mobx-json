@@ -1,5 +1,6 @@
 import React from 'react';
-import { pickBy, keys } from 'ramda';
+import pickBy from 'ramda/src/pickBy';
+import keys from 'ramda/src/keys';
 import { propAll, valsToString, zipObjArrWithVal } from 'lib/utils';
 
 import { Item, OnChange } from '../ComponentTypes';

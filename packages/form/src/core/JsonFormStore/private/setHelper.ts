@@ -1,5 +1,7 @@
 import { action } from 'mobx';
-import { without, append, uniq } from 'ramda';
+import without from 'ramda/src/without';
+import append from 'ramda/src/append';
+import uniq from 'ramda/src/uniq';
 import compute from 'lib/compute';
 
 import getHelper from './getHelper';

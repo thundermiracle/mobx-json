@@ -1,5 +1,8 @@
 import { toJS, observable, isObservableObject } from 'mobx';
-import { trim, pick, curry, identity } from 'ramda';
+import trim from 'ramda/src/trim';
+import pick from 'ramda/src/pick';
+import curry from 'ramda/src/curry';
+import identity from 'ramda/src/identity';
 
 import makeSingle from 'lib/makeSingle';
 import compare from 'lib/compare';
