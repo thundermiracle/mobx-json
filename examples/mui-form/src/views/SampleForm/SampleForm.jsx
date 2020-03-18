@@ -15,6 +15,7 @@ import profileService from 'services/profileService';
 import ExpandJsonEditor from './parts/ExpandJsonEditor';
 import SubmitFab from './parts/SubmitFab';
 import ReloadFab from './parts/ReloadFab';
+import ClearFab from './parts/ClearFab';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,6 +24,11 @@ const useStyles = makeStyles(theme => ({
       '0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(0, 0, 0,.4)',
   },
   fabJson: {
+    position: 'fixed',
+    bottom: theme.spacing(16),
+    right: theme.spacing(4),
+  },
+  fabClear: {
     position: 'fixed',
     bottom: theme.spacing(16),
     right: theme.spacing(4),
@@ -45,7 +51,13 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
     loading: false,
     saving: false,
   });
-  const { form, submitWithCheck, setData, setBlueprint } = useMuiJsonForm({
+  const {
+    form,
+    submitWithCheck,
+    setData,
+    setBlueprint,
+    clearAll,
+  } = useMuiJsonForm({
     blueprint,
     formUniqName,
     data,
@@ -87,6 +99,15 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
     />
   );
 
+  // clear part
+  const clearFabPart = (
+    <ClearFab
+      showSubmit={showSubmit}
+      className={classes.fabClear}
+      handleClear={clearAll}
+    />
+  );
+
   return (
     <LoadingOverlay loading={status.loading || status.saving}>
       <SubmitForm onSubmit={handleSubmit}>
@@ -96,6 +117,7 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
         </Card>
         {submitFabPart}
         {reloadFabPart}
+        {clearFabPart}
       </SubmitForm>
     </LoadingOverlay>
   );

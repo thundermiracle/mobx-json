@@ -33,6 +33,9 @@ export interface MuiJsonFormProps {
   submitWithCheck: () => false | JsonFormTypes.AnyObject;
   setData: (data: AnyObject) => void;
   setBlueprint: (blueprint: NullableBlueprint) => void;
+  clearError: () => void;
+  clearData: () => void;
+  clearAll: () => void;
 }
 
 function useMuiJsonForm({
@@ -53,7 +56,7 @@ function useMuiJsonForm({
   //   throw new Error('formUniqName must be defined.');
   // }
 
-  // initilize mobx store
+  // initialize mobx store
   const store = React.useMemo(() => {
     return new JsonFormStore(innerBlueprint || blueprint);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -104,11 +107,27 @@ function useMuiJsonForm({
     return false;
   }, [formUniqName, store]);
 
+  const clearError = React.useCallback(() => {
+    store.clearAllErrors();
+  }, [store]);
+
+  const clearData = React.useCallback(() => {
+    store.clearAllData();
+  }, [store]);
+
+  const clearAll = React.useCallback(() => {
+    store.clearAllErrors();
+    store.clearAllData();
+  }, [store]);
+
   return {
     form,
     submitWithCheck,
     setData,
     setBlueprint,
+    clearError,
+    clearData,
+    clearAll,
   };
 }
 

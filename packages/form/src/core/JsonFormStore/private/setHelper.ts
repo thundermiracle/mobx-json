@@ -41,6 +41,11 @@ class SetHelper {
     this._invokeFuncToAllFields(this._setFieldError, fields);
   };
 
+  @action
+  clearAllData = (fields: Fields): void => {
+    this._invokeFuncToAllFields(this._clearFieldData, fields);
+  };
+
   /**
    * set errors to all fields
    * @param {*} fields
@@ -194,6 +199,13 @@ class SetHelper {
   private _setFieldError = (field: Field, errors: AnyObject = {}): void => {
     const [errorMsg] = errors[field.attrs.name] || [];
     field.attrs.error = errorMsg || '';
+  };
+
+  @action
+  private _clearFieldData = (field: Field): void => {
+    field.attrs.value =
+      field.attrs.defaultValue ||
+      getHelper.getDefaultValueByType(field.settings.valueType, true);
   };
 
   @action

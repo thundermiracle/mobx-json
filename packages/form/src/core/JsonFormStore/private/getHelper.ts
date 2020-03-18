@@ -98,7 +98,7 @@ class GetHelper {
       ) {
         attrsFlatten.value = this._isKeyInObj('defaultValue', attrsFlatten)
           ? this._purgeDefaultValue(attrsFlatten.defaultValue)
-          : this._getDefaultValueByType(valueType);
+          : this.getDefaultValueByType(valueType);
       }
       // add error if not defined
       if (
@@ -449,6 +449,27 @@ class GetHelper {
     return value;
   };
 
+  getDefaultValueByType = (
+    valueType: string,
+    emptyInsteadOfNull = false,
+  ): number | object | boolean | string | null => {
+    switch (valueType) {
+      case 'number':
+        return 0;
+      case 'object':
+        return {};
+      case 'array':
+        return [];
+      case 'boolean':
+        return false;
+      case 'string':
+        return '';
+      case 'undefined':
+      default:
+        return emptyInsteadOfNull ? '' : null;
+    }
+  };
+
   private _isKeyInObj = (key: string, obj: object): boolean => {
     return Object.keys(obj).includes(key);
   };
@@ -470,26 +491,6 @@ class GetHelper {
     const allRules = rule.split('|');
 
     return allRules.includes('required');
-  };
-
-  private _getDefaultValueByType = (
-    valueType: string,
-  ): number | object | boolean | string | null => {
-    switch (valueType) {
-      case 'number':
-        return 0;
-      case 'object':
-        return {};
-      case 'array':
-        return [];
-      case 'boolean':
-        return false;
-      case 'string':
-        return '';
-      case 'undefined':
-      default:
-        return null;
-    }
   };
 
   /**

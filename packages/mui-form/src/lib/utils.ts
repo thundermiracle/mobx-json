@@ -65,7 +65,14 @@ const findByPropVal = (
 /**
  * line1\nline2\r\nline3 -> line1<br />line2<br />line3
  */
-const nl2br = (str: string | number | boolean = '', br = '<br />'): string => {
+const nl2br = (
+  str: string | number | boolean | undefined,
+  br = '<br />',
+): string => {
+  if (str == null) {
+    return '';
+  }
+
   if (typeof str !== 'string') {
     str = str.toString();
   }

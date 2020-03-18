@@ -40,12 +40,7 @@ class JsonFormStore implements JsonFormStoreClass {
       plugins.serviceContainer,
     );
 
-    // analyze propRule & set props if the init data meet the condition
-    setHelper.initAllFieldsAttrsByPropRule(this.fields);
-    // analyze computeRule & compute value if the init data meet the condition
-    setHelper.initAllFieldsAttrsByComputeRule(this.fields);
-    // analyze reloadRule & call asyncLoadItems if the init data meet the condition
-    setHelper.initAllFieldsAttrsByReloadRule(this.fields);
+    this._applyAllRules();
   };
 
   /**
@@ -60,12 +55,7 @@ class JsonFormStore implements JsonFormStoreClass {
 
     setHelper.setDataToAllFields(this.fields, dataObj);
 
-    // analyze propRule & set props if the init data meet the condition
-    setHelper.initAllFieldsAttrsByPropRule(this.fields);
-    // analyze computeRule & compute value if the init data meet the condition
-    setHelper.initAllFieldsAttrsByComputeRule(this.fields);
-    // analyze reloadRule & call asyncLoadItems if the init data meet the condition
-    setHelper.initAllFieldsAttrsByReloadRule(this.fields);
+    this._applyAllRules();
   };
 
   /**
@@ -151,6 +141,20 @@ class JsonFormStore implements JsonFormStoreClass {
 
   clearAllErrors = (): void => {
     setHelper.clearAllErrors(this.fields);
+  };
+
+  clearAllData = (): void => {
+    setHelper.clearAllData(this.fields);
+    this._applyAllRules();
+  };
+
+  private _applyAllRules = (): void => {
+    // analyze propRule & set props if the init data meet the condition
+    setHelper.initAllFieldsAttrsByPropRule(this.fields);
+    // analyze computeRule & compute value if the init data meet the condition
+    setHelper.initAllFieldsAttrsByComputeRule(this.fields);
+    // analyze reloadRule & call asyncLoadItems if the init data meet the condition
+    setHelper.initAllFieldsAttrsByReloadRule(this.fields);
   };
 }
 
