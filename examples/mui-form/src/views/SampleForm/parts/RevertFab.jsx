@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
-import DeleteIcon from '@material-ui/icons/Delete';
+import HistoryIcon from '@material-ui/icons/History';
 
 const useStyles = makeStyles(theme => ({
   textIcon: {
@@ -10,27 +10,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ClearFab = ({ showSubmit, className, handleClear }) => {
+const RevertFab = ({ showSubmit, className, handleRevert }) => {
   const classes = useStyles();
 
-  let ClearFabPart = <span />;
+  let RevertFabPart = <span />;
   if (showSubmit) {
-    ClearFabPart = (
+    RevertFabPart = (
       <Fab
         variant="extended"
         size="small"
         color="secondary"
         aria-label="clear"
         className={className}
-        onClick={handleClear}
+        onClick={handleRevert}
       >
-        <DeleteIcon className={classes.textIcon} />
-        Clear All
+        <HistoryIcon className={classes.textIcon} />
+        Revert All
       </Fab>
     );
   }
 
-  return ClearFabPart;
+  return RevertFabPart;
 };
 
-export default React.memo(ClearFab);
+export default React.memo(RevertFab);

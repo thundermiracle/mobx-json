@@ -148,6 +148,11 @@ class JsonFormStore implements JsonFormStoreClass {
     this._applyAllRules();
   };
 
+  revertToInit = (): void => {
+    setHelper.revertAllFieldsValue(this.fields);
+    this._applyAllRules();
+  };
+
   private _applyAllRules = (): void => {
     // analyze propRule & set props if the init data meet the condition
     setHelper.initAllFieldsAttrsByPropRule(this.fields);

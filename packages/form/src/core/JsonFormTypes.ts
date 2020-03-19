@@ -101,6 +101,7 @@ interface JsonFormStore {
   checkAllOnSubmit: () => boolean;
   resetAllFields: () => void;
   clearAllErrors: () => void;
+  revertToInit: () => void;
 }
 
 interface InitAttrs {

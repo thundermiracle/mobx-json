@@ -35,6 +35,13 @@ class SetHelper {
   };
 
   @action
+  revertAllFieldsValue = (fields: Fields): void => {
+    this.clearAllErrors(fields);
+
+    this._invokeFuncToAllFields(this._revertValue, fields);
+  };
+
+  @action
   clearAllErrors = (fields: Fields): void => {
     this._invokeFuncToAllFields(this._setFieldError, fields);
   };
@@ -209,6 +216,11 @@ class SetHelper {
   @action
   private _resetDefaultValue = (field: Field): void => {
     field.attrs.value = field.attrs.defaultValue || field.attrs.value;
+  };
+
+  @action
+  private _revertValue = (field: Field): void => {
+    field.attrs.value = field.init.value;
   };
 
   @action

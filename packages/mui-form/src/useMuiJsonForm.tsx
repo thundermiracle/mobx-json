@@ -36,6 +36,7 @@ export interface MuiJsonFormProps {
   clearError: () => void;
   clearData: () => void;
   clearAll: () => void;
+  revertToInit: () => void;
 }
 
 function useMuiJsonForm({
@@ -120,6 +121,10 @@ function useMuiJsonForm({
     store.clearAllData();
   }, [store]);
 
+  const revertToInit = React.useCallback(() => {
+    store.revertToInit();
+  }, [store]);
+
   return {
     form,
     submitWithCheck,
@@ -128,6 +133,7 @@ function useMuiJsonForm({
     clearError,
     clearData,
     clearAll,
+    revertToInit,
   };
 }
 

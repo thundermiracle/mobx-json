@@ -16,6 +16,7 @@ import ExpandJsonEditor from './parts/ExpandJsonEditor';
 import SubmitFab from './parts/SubmitFab';
 import ReloadFab from './parts/ReloadFab';
 import ClearFab from './parts/ClearFab';
+import RevertFab from './parts/RevertFab';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,12 +29,17 @@ const useStyles = makeStyles(theme => ({
     bottom: theme.spacing(16),
     right: theme.spacing(4),
   },
-  fabClear: {
+  fabSave: {
+    position: 'fixed',
+    bottom: theme.spacing(22),
+    right: theme.spacing(4),
+  },
+  fabRevert: {
     position: 'fixed',
     bottom: theme.spacing(16),
     right: theme.spacing(4),
   },
-  fabSave: {
+  fabClear: {
     position: 'fixed',
     bottom: theme.spacing(10),
     right: theme.spacing(4),
@@ -57,6 +63,7 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
     setData,
     setBlueprint,
     clearAll,
+    revertToInit,
   } = useMuiJsonForm({
     blueprint,
     formUniqName,
@@ -108,6 +115,15 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
     />
   );
 
+  // revert part
+  const clearRevertPart = (
+    <RevertFab
+      showSubmit={showSubmit}
+      className={classes.fabRevert}
+      handleRevert={revertToInit}
+    />
+  );
+
   return (
     <LoadingOverlay loading={status.loading || status.saving}>
       <SubmitForm onSubmit={handleSubmit}>
@@ -116,8 +132,9 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
           <CardContent>{form}</CardContent>
         </Card>
         {submitFabPart}
-        {reloadFabPart}
+        {clearRevertPart}
         {clearFabPart}
+        {reloadFabPart}
       </SubmitForm>
     </LoadingOverlay>
   );
