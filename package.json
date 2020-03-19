@@ -24,7 +24,7 @@
     "test:q": "yarn eslint && yarn type-check && yarn jest",
     "jest:ci": "jest -i --passWithNoTests && codecov",
     "test": "yarn eslint && yarn type-check && yarn jest:ci",
-    "publish": "lerna publish"
+    "publish": "yarn build && lerna publish"
   },
   "peerDependencies": {
     "react": ">= 16.8.0",
