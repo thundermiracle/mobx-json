@@ -1,9 +1,4 @@
-import transduce from 'ramda/src/transduce';
-import filter from 'ramda/src/filter';
-import complement from 'ramda/src/complement';
-import isNil from 'ramda/src/isNil';
-import isEmpty from 'ramda/src/isEmpty';
-import anyPass from 'ramda/src/anyPass';
+import { transduce, filter, complement, isNil, isEmpty, anyPass } from 'ramda';
 
 function isNativeWidget(widgetName: string): boolean {
   return /^[a-z]/.test(widgetName);

@@ -2,8 +2,7 @@
 import React from 'react';
 
 import clsx from 'clsx';
-import pickBy from 'ramda/src/pickBy';
-import keys from 'ramda/src/keys';
+import { pickBy, keys } from 'ramda';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, FormControlLabel, FormGroup } from '@material-ui/core';

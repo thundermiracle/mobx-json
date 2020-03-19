@@ -1,15 +1,17 @@
-import map from 'ramda/src/map';
-import isNil from 'ramda/src/isNil';
-import anyPass from 'ramda/src/anyPass';
-import isEmpty from 'ramda/src/isEmpty';
-import pluck from 'ramda/src/pluck';
-import curry from 'ramda/src/curry';
-import zipObj from 'ramda/src/zipObj';
-import repeat from 'ramda/src/repeat';
-import propEq from 'ramda/src/propEq';
-import find from 'ramda/src/find';
-import pickBy from 'ramda/src/pickBy';
-import complement from 'ramda/src/complement';
+import {
+  map,
+  isNil,
+  anyPass,
+  isEmpty,
+  pluck,
+  curry,
+  zipObj,
+  repeat,
+  propEq,
+  find,
+  pickBy,
+  complement,
+} from 'ramda';
 
 /**
  * ('a', [{ a: 1, b: 2}, { a: 3, b: 4} ])  => [ 1, 3 ]

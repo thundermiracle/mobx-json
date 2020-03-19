@@ -1,6 +1,6 @@
 import React from 'react';
 
-import identity from 'ramda/src/identity';
+import { identity } from 'ramda';
 import { throttle } from 'throttle-debounce';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 

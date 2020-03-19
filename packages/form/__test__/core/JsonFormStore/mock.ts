@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import clone from 'ramda/src/clone';
+import { clone } from 'ramda';
 import { Fields, ValueType } from 'core/JsonFormTypes';
 
 const fieldsData = {

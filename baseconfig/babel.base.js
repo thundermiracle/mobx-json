@@ -56,6 +56,15 @@ const babelBaseConfig = {
       },
       'tree-shaking-date-fns',
     ],
+    [
+      'transform-imports',
+      {
+        ramda: {
+          transform: 'ramda/src/${member}',
+          preventFullImport: true,
+        },
+      },
+    ],
   ],
   env: {
     production: {

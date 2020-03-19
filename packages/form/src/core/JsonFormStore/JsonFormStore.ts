@@ -1,6 +1,6 @@
 import { action, observable } from 'mobx';
 
-import pickBy from 'ramda/src/pickBy';
+import { pickBy } from 'ramda';
 import { isNotNilOrEmpty } from 'lib/utils';
 import {
   Fields,
