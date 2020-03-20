@@ -9,7 +9,8 @@
     "dev": "next ./src",
     "build": "next build ./src",
     "start": "next start ./src",
-    "export": "next build ./src && next export ./src -o dist/"
+    "export": "next build ./src && next export ./src -o dist/",
+    "analyze": "cross-env ANALYZE=true yarn build"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.5",
@@ -19,9 +20,12 @@
     "next": "^9.1.5",
     "nprogress": "^0.2.0",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "validatorjs": "3.18.1"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "9.2.1",
+    "cross-env": "7.0.0",
     "prop-types": "^15.7.2"
   }
 }

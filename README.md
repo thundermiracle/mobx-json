@@ -54,11 +54,11 @@ You can check some examples here: [https://mobx-json.thundermiracle.com](https:/
 ## Installation
 
 ```shell
-npm i -S @mobx-json/mui-form
+npm i -S @mobx-json/mui-form react react-dom validatorjs
 
 or
 
-yarn @mobx-json/mui-form
+yarn @mobx-json/mui-form react react-dom validatorjs
 ```
 
 ## How to use
@@ -509,6 +509,7 @@ formatters:
     "autoSelect": false,
     ...               // restProps are the same with TextField
   }
+  +
 }
 ```
 
@@ -655,6 +656,10 @@ useMuiJsonForm returns an object contains following parameters:
 | submitWithCheck | Function | validate all inputs, if ok, returns inputed data; if not, returns false and automatically focus the first error field.  |
 | setData | Function | apply ```data object``` to form |
 | setBlueprint | Function | apply a new blueprint. <br /> ※ re-render all fields! |
+| clearError | Function | clear all error messages |
+| clearData | Function | clear all data, set it to defaultValue if exists |
+| clearAll | Function | clearError & clearData |
+| revertToInit | Function | clearError & revert inputs to initialized data |
 
 ## License
 
