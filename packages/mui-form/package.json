@@ -1,6 +1,6 @@
 {
   "name": "@mobx-json/mui-form",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "create material-ui forms by json & mobx",
   "main": "./dist/index.js",
   "files": [
