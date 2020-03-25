@@ -16,20 +16,20 @@ const SubmitFab = ({
   showSubmit,
   status,
   setStatus,
-  submitWithCheck,
+  getDataWithCheck,
   className,
   handleSubmit,
 }) => {
   const classes = useStyles();
 
   // const handleSubmit = React.useCallback(async () => {
-  //   const submitData = submitWithCheck();
+  //   const submitData = getDataWithCheck();
   //   if (submitData) {
   //     setStatus({ ...status, saving: true });
   //     await profileService.update(submitData.id, submitData);
   //     setStatus({ ...status, saving: false });
   //   }
-  // }, [setStatus, status, submitWithCheck]);
+  // }, [setStatus, status, getDataWithCheck]);
 
   let submitFabPart = <span />;
   if (showSubmit) {

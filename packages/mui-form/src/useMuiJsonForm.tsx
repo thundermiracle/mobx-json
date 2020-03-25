@@ -30,8 +30,8 @@ type NullableBlueprint = null | JsonFormTypes.Blueprint;
 
 export interface MuiJsonFormProps {
   form: JSX.Element;
-  submitWithCheck: () => false | JsonFormTypes.AnyObject;
-  setData: (data: AnyObject) => void;
+  getDataWithCheck: () => false | object;
+  setData: (data: object) => void;
   setBlueprint: (blueprint: NullableBlueprint) => void;
   clearError: () => void;
   clearData: () => void;
@@ -88,13 +88,13 @@ function useMuiJsonForm({
   );
 
   const setData = React.useCallback(
-    (dt: AnyObject) => {
+    (dt: object) => {
       store.setData(dt);
     },
     [store],
   );
 
-  const submitWithCheck = React.useCallback(() => {
+  const getDataWithCheck = React.useCallback(() => {
     if (store.checkAllOnSubmit()) {
       return store.getData();
     }
@@ -127,8 +127,8 @@ function useMuiJsonForm({
 
   return {
     form,
-    submitWithCheck,
     setData,
+    getDataWithCheck,
     setBlueprint,
     clearError,
     clearData,

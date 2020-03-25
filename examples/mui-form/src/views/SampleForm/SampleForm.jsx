@@ -59,7 +59,7 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
   });
   const {
     form,
-    submitWithCheck,
+    getDataWithCheck,
     setData,
     setBlueprint,
     clearAll,
@@ -75,13 +75,13 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
   );
 
   const handleSubmit = React.useCallback(async () => {
-    const submitData = submitWithCheck();
+    const submitData = getDataWithCheck();
     if (submitData) {
       setStatus({ ...status, saving: true });
       await profileService.update(submitData.id, submitData);
       setStatus({ ...status, saving: false });
     }
-  }, [setStatus, status, submitWithCheck]);
+  }, [setStatus, status, getDataWithCheck]);
 
   // submit part
   const submitFabPart = (
@@ -89,7 +89,7 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
       showSubmit={showSubmit}
       status={status}
       setStatus={setStatus}
-      submitWithCheck={submitWithCheck}
+      getDataWithCheck={getDataWithCheck}
       className={classes.fabSave}
       handleSubmit={handleSubmit}
     />
@@ -101,7 +101,7 @@ const SampleForm = ({ blueprint, formUniqName, data, showSubmit }) => {
       status={status}
       setStatus={setStatus}
       setData={setData}
-      submitWithCheck={submitWithCheck}
+      getDataWithCheck={getDataWithCheck}
       className={classes.fabReload}
     />
   );
