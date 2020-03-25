@@ -32,6 +32,7 @@ export interface MuiJsonFormProps {
   form: JSX.Element;
   getDataWithCheck: () => false | object;
   setData: (data: object) => void;
+  getData: () => object;
   setBlueprint: (blueprint: NullableBlueprint) => void;
   clearError: () => void;
   clearData: () => void;
@@ -94,6 +95,10 @@ function useMuiJsonForm({
     [store],
   );
 
+  const getData = React.useCallback(() => {
+    return store.getData();
+  }, [store]);
+
   const getDataWithCheck = React.useCallback(() => {
     if (store.checkAllOnSubmit()) {
       return store.getData();
@@ -128,6 +133,7 @@ function useMuiJsonForm({
   return {
     form,
     setData,
+    getData,
     getDataWithCheck,
     setBlueprint,
     clearError,

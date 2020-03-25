@@ -40,6 +40,8 @@ You can check some examples here: [https://mobx-json.thundermiracle.com](https:/
     * [Switch](#Switch)
     * [TextField](#TextField)
     * [TextFieldOutlined](#TextFieldOutlined)
+    * [Autocomplete](#Autocomplete)
+    * [AutocompleteOutlined](#AutocompleteOutlined)
 * [How to use in React](#How-to-use-in-React)
   * [Initialize (optional)](#Initialize-(optional))
   * [Generate form](#Generate-form)
@@ -48,11 +50,11 @@ You can check some examples here: [https://mobx-json.thundermiracle.com](https:/
 ## Installation
 
 ```shell
-npm i -S @mobx-json/mui-form
+npm i -S @mobx-json/mui-form react react-dom validatorjs
 
 or
 
-yarn @mobx-json/mui-form
+yarn @mobx-json/mui-form react react-dom validatorjs
 ```
 
 ## How to use
@@ -225,11 +227,11 @@ generate: ```TextField``` component and display error if input is empty.
 
 #### widget
 
-Folloing basic components are included in this package for quicker start: [Checkbox](#Checkbox), [Checkboxes](#Checkboxes), [Display](#Display), [Password](#Password), [PasswordOutlined](#PasswordOutlined), [Radio](#Radio), [Select](#Select), [SelectOutlined](#SelectOutlined), [Switch](#Switch), [TextField](#TextField), [TextFieldOutlined](#TextFieldOutlined).
+Following basic components are included in this package for quicker start: [Checkbox](#Checkbox), [Checkboxes](#Checkboxes), [Display](#Display), [Password](#Password), [PasswordOutlined](#PasswordOutlined), [Radio](#Radio), [Select](#Select), [SelectOutlined](#SelectOutlined), [Switch](#Switch), [TextField](#TextField), [TextFieldOutlined](#TextFieldOutlined).
 
 #### valueType (optional)
 
-  As every value from e.target.value is convertted into string, we have to define a correct valueType to format.
+  As every value from e.target.value is converted into string, we have to define a correct valueType to format.
 
   ※ container: a special valueType which means sub fields are contained
 
@@ -475,6 +477,40 @@ formatters:
 
 #### TextFieldOutlined
 
+#### Autocomplete
+
+ [See examples](https://mobx-json.thundermiracle.com/modifyform).
+
+```json
+{
+  "settings": {
+    "widget": "Autocomplete",
+    "rule": "required",
+    "service": "filmService", // service passed by serviceContainer,
+    "serviceRouter": "get", // default: get
+    "serviceParamFields": [], // list of fieldName, get value of these fields and pass to service as { params: {fieldName1: value1, fieldName2: value2} }
+  },
+  "attrs": {
+    "name": "film",
+    "label": "FavoriteFilm",
+    "freeSolo": true, // false: clear input's value when not selected from suggestions list
+    "icon": "MenuBook", // get IconComponent from iconsMap
+    "reloadOnInput": true, // true: reload suggestions onChange; false: load suggestions once after mounted;
+    "reloadExcludeRegex": "[0-9]", // regex that not trigger reload onChange
+    "reloadDelay": 300, // throttle of reloadOnInput
+    "loaderText": "Loading...", // text when loading suggestions
+    "extraAutocompleteProps": {}, // props applied to Autocomplete(material-ui's)
+    "autoHighlight": false,
+    "autoComplete": false,
+    "autoSelect": false,
+    ...               // restProps are the same with TextField
+  }
+  +
+}
+```
+
+#### AutocompleteOutlined
+
 ## How to use in React
 
 Package is using hook to make the form and return submit functions. React > 16.8 is needed.
@@ -491,6 +527,7 @@ Need if ```icon, itemsSource``` is used, use customized components or display se
 | messages | | object | {} | key-value object for extended error messages|
 | itemsSource | △ | object | {} | key-value object for items definition. <br /> ※ required if ```itemsSource``` is used in blueprint |
 | iconsMap | △ | object | {} | key-value object for IconComponent definition. <br /> ※ required if ```icon``` is used in blueprint |
+| serviceContainer | △ | object | {} | key-value object for services' definition. pass `asyncLoadItems` to component which returns `items` asynchronously <br /> ※ required if ```service``` is used in blueprint |
 | extraWidgetMap | | object | {} | key-value object for extra Widget(component) |
 
 * initialize example:
@@ -603,7 +640,7 @@ const handleSubmit = React.useCallback(async () => {
 | blueprint | 〇 | object | | blueprint for rendering form. [See details](#How-to-define-blueprint). |
 | formUniqName | △ | string | '' | necessary if define multiple forms in one page, or auto focus when errors occur will fail.  |
 | data | | object | {} | data for form in initialization |
-| options | | object | ```{ smoothScroll: true, gridContainerProps: {} }``` | 1.  smoothScroll: if true, append style ```scroll-behavior:smooth;``` to the lastest ```overflow: auto;``` component. <br /> 2. gridContainerProps: props appled to root grid container |
+| options | | object | ```{ smoothScroll: true, gridContainerProps: {} }``` | 1.  smoothScroll: if true, append style ```scroll-behavior:smooth;``` to the latest ```overflow: auto;``` component. <br /> 2. gridContainerProps: props applied to root grid container |
 
 #### useMuiJsonForm's output
 
@@ -612,9 +649,14 @@ useMuiJsonForm returns an object contains following parameters:
 | key | Type | Description |
 |:---------:|:--------:|:------------|
 | form | React.Element | React form generated by blueprint |
-| getDataWithCheck | Function | validate all inputs, if ok, returns inputed data; if not, returns false and automatically focus the first error field.  |
 | setData | Function | apply ```data object``` to form |
+| getData | Function | returns input data without running validation  |
+| getDataWithCheck | Function | validate all inputs, if ok, returns input data; if not, returns false and automatically focus the first error field.  |
 | setBlueprint | Function | apply a new blueprint. <br /> ※ re-render all fields! |
+| clearError | Function | clear all error messages |
+| clearData | Function | clear all data, set it to defaultValue if exists |
+| clearAll | Function | clearError & clearData |
+| revertToInit | Function | clearError & revert inputs to initialized data |
 
 ## License
 
