@@ -7,7 +7,7 @@ import FormLabel, { FormLabelProps } from '@material-ui/core/FormLabel';
 const useStyles = makeStyles({
   headerFont: {
     // default is 1rem
-    fontSize: `${13 / 16}rem`,
+    fontSize: `${12 / 16}rem`,
   },
 });
 
