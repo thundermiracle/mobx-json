@@ -30,6 +30,7 @@ type NullableBlueprint = null | JsonFormTypes.Blueprint;
 
 export interface MuiJsonFormProps {
   form: JSX.Element;
+  store: JsonFormStore;
   getDataWithCheck: () => false | object;
   setData: (data: object) => void;
   getData: () => object;
@@ -132,6 +133,7 @@ function useMuiJsonForm({
 
   return {
     form,
+    store,
     setData,
     getData,
     getDataWithCheck,
