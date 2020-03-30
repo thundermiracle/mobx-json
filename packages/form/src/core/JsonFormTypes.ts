@@ -12,6 +12,13 @@ interface Item {
   group?: string; // for Autocomplete
 }
 
+interface Format {
+  type: string;
+  template?: string;
+  items?: Item[];
+  itemsSource?: string;
+}
+
 enum ValueType {
   number = 'number',
   string = 'string',
@@ -30,6 +37,7 @@ interface Settings {
   service?: string;
   serviceRouter?: string;
   serviceParamFields?: string[]; // fieldName list; get fields' value as parameters
+  format?: Format;
 }
 
 type AsyncLoadItemsFunc = (inputValue?: string) => Promise<Item[] | []>;
@@ -138,6 +146,7 @@ interface ValidatorJSManager {
 export {
   AnyObject,
   ValueType,
+  Format,
   Settings,
   Attrs,
   Field,

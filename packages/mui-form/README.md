@@ -289,6 +289,14 @@ Now supports 2 computeMethods:
   
   When profit1 is _100_, profit2 is _200_, component's value will automatically changed to _300_.
 
+* format
+
+  get and format targetField's value.
+
+  exp: ```"computeRule": "format:sex", "format": { "type": "items", "itemsSource": "Sex"}```
+  
+  Transform field [sex]'s value by itemsSource. itemsSource: ```[{ value: 0, label: 'Male'}]``` will get _'Male'_ if value is 0.
+
   ※ [sample page](https://mobx-json.thundermiracle.com/computerule)
 
 ### attrs

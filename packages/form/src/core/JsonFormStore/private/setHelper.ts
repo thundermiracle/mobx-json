@@ -257,7 +257,7 @@ class SetHelper {
     fields: Fields,
     forceApply = false,
   ): void => {
-    const { computeRule } = field.settings;
+    const { computeRule, format } = field.settings;
     if (computeRule == null) {
       return;
     }
@@ -272,7 +272,7 @@ class SetHelper {
             targetFields,
           );
 
-          field.attrs.value = compute(method, targetFieldsVal, extra);
+          field.attrs.value = compute(method, targetFieldsVal, extra, format);
         }
       },
     );

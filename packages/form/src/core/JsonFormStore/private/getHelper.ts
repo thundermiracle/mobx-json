@@ -114,6 +114,15 @@ class GetHelper {
         }
         Reflect.deleteProperty(attrsFlatten, 'itemsSource');
       }
+      if (
+        settingsFlatten.format != null &&
+        settingsFlatten.format.type === 'items'
+      ) {
+        if (settingsFlatten.format.itemsSource) {
+          settingsFlatten.format.items =
+            itemsSource[settingsFlatten.format.itemsSource] || [];
+        }
+      }
 
       // icon -> IconComponent, remove unnecessary icon
       if (attrsFlatten.icon) {

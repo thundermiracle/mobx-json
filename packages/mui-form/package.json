@@ -46,7 +46,6 @@
     "@mobx-json/form": "^0.1.4",
     "autosuggest-highlight": "3.1.1",
     "clsx": "1.1.0",
-    "date-fns": "2.11.0",
     "filter-data": "0.1.2",
     "mobx": "4.13.0",
     "mobx-react": "6.1.5",

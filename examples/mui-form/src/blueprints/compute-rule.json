@@ -177,6 +177,96 @@
               }
             }
           ]
+        },
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container"
+          },
+          "attrs": {
+            "name": "formatGrid1",
+            "spacing": 4,
+            "primary": "age(by format)",
+            "secondary": "format:col1"
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "TextField",
+                "valueType": "string"
+              },
+              "attrs": {
+                "name": "birthday2",
+                "label": "Birthday2",
+                "type": "date",
+                "grid": {
+                  "xs": 6
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "Display",
+                "computeRule": "format:birthday2",
+                "format": {
+                  "type": "age",
+                  "template": "{repl} years old"
+                }
+              },
+              "attrs": {
+                "name": "age",
+                "label": "Age",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "settings": {
+            "widget": "GridItemContainer",
+            "valueType": "container"
+          },
+          "attrs": {
+            "name": "formatGrid2",
+            "spacing": 4,
+            "primary": "sex(by format items)",
+            "secondary": "format:col1"
+          },
+          "fields": [
+            {
+              "settings": {
+                "widget": "Select",
+                "valueType": "number"
+              },
+              "attrs": {
+                "name": "sex2",
+                "label": "Sex2",
+                "itemsSource": "Sex",
+                "grid": {
+                  "xs": 6
+                }
+              }
+            },
+            {
+              "settings": {
+                "widget": "Display",
+                "computeRule": "format:sex2",
+                "format": {
+                  "type": "items",
+                  "itemsSource": "Sex"
+                }
+              },
+              "attrs": {
+                "name": "age",
+                "label": "Age",
+                "grid": {
+                  "xs": 4
+                }
+              }
+            }
+          ]
         }
       ]
     }
