@@ -264,12 +264,18 @@ class SetHelper {
 
     const allComputeRules = getHelper.flattenComputeRule(computeRule);
     allComputeRules.forEach(
-      ({ method, targetFields, extra }: SingleComputeRule) => {
+      ({
+        method,
+        attrsName = 'value',
+        targetFields,
+        extra,
+      }: SingleComputeRule) => {
         if (forceApply || targetFields.includes(changedFieldName)) {
           // target field is changed, re-compute
           const targetFieldsVal = getHelper.getTargetFieldsVal(
             fields,
             targetFields,
+            `attrs.${attrsName}`,
           );
 
           field.attrs.value = compute(method, targetFieldsVal, extra, format);

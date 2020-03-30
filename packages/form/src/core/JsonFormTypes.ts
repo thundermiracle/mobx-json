@@ -124,6 +124,7 @@ interface SinglePropRule {
 
 interface SingleComputeRule {
   method: string;
+  attrsName?: string;
   targetFields: string[];
   extra?: string;
 }

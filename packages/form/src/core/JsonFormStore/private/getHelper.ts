@@ -394,11 +394,13 @@ class GetHelper {
 
   flattenComputeRule = (computeRule: string): SingleComputeRule[] => {
     const result: SingleComputeRule[] = computeRule.split('|').map(ruleStr => {
-      const [method, targetFieldStr, extra] = ruleStr.split(':');
+      const [methodWithAttrName, targetFieldStr, extra] = ruleStr.split(':');
       const targetFields = targetFieldStr.split(',').map(trim);
+      const [method, attrsName] = methodWithAttrName.split(',').map(trim);
 
       return {
         method,
+        attrsName,
         targetFields,
         extra,
       } as SingleComputeRule;
@@ -437,8 +439,12 @@ class GetHelper {
       .filter(identity);
   };
 
-  getTargetFieldsVal = (fields: Fields, targetFields: string[]): AnyObject => {
-    const allFieldsVal = this.flattenProps(fields);
+  getTargetFieldsVal = (
+    fields: Fields,
+    targetFields: string[],
+    valueKey = 'attrs.value',
+  ): AnyObject => {
+    const allFieldsVal = this.flattenProps(fields, valueKey);
 
     return pick(targetFields, allFieldsVal);
   };
