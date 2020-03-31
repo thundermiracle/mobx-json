@@ -7,8 +7,6 @@ import {
   curry,
   zipObj,
   repeat,
-  propEq,
-  find,
   pickBy,
   complement,
 } from 'ramda';
@@ -53,18 +51,6 @@ const isDateStr = (dtStr: string): boolean => {
 };
 
 /**
- * ('a', 2, [{a: 1}, {a: 2}, {a: 3}]) -> {a: 2}
- * ('a', 4, [{a: 1}, {a: 2}, {a: 3}]) -> undefined
- */
-const findByPropVal = (
-  propKey: string,
-  propVal: string | number,
-  objArr: any[],
-): object | undefined => {
-  return find(propEq(propKey, propVal), objArr);
-};
-
-/**
  * line1\nline2\r\nline3 -> line1<br />line2<br />line3
  */
 const nl2br = (
@@ -106,7 +92,6 @@ export {
   zipObjArrWithVal,
   isNilOrEmpty,
   isDateStr,
-  findByPropVal,
   nl2br,
   nl2Arr,
   rmNilProps,

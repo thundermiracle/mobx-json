@@ -41,12 +41,17 @@ const useValueLabelOnChange = ({
     [items, name, onChange],
   );
 
-  // call onChange to apply valueLabel when items changed
+  /**
+   * call onChange to apply valueLabel when items or value changed
+   * [items change]: asyncLoadItems
+   * [value change]: asyncLoadItems only applies items in component not in JsonFormStore,
+   * asyncLoadItems -> setData will get null if value change is not applied
+   */
   React.useEffect(() => {
     if (onChange && !isNilOrEmpty(selectedItem.value))
       onChange(name, selectedItem.value, selectedItem.label);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
+  }, [items, value]);
 
   return {
     selectedItem,

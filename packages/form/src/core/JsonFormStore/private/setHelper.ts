@@ -1,6 +1,7 @@
 import { action } from 'mobx';
 import { without, append, uniq } from 'ramda';
 import compute from 'lib/compute';
+import getItemByValue from 'lib/getItemByValue';
 
 import getHelper from './getHelper';
 import {
@@ -197,6 +198,16 @@ class SetHelper {
       field.attrs.value = dataObj[field.attrs.name];
       // refresh saved init status
       field.init.value = dataObj[field.attrs.name];
+
+      // apply valueLabel if items is defined
+      if (field.attrs.items != null && field.attrs.items.length > 0) {
+        const targetItem = getItemByValue(field.attrs.value, field.attrs.items);
+
+        if (targetItem != null) {
+          field.attrs.valueLabel = targetItem.label;
+          field.init.valueLabel = targetItem.label;
+        }
+      }
     }
   };
 

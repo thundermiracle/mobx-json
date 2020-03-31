@@ -1,15 +1,15 @@
 export default {
   City: [
     {
-      label: 'Tokyo',
+      label: '東京都',
       value: 'tokyo',
     },
     {
-      label: 'Kanagawa',
+      label: '神奈川県',
       value: 'kanagawa',
     },
     {
-      label: 'Chiba',
+      label: '千葉県',
       value: 'chiba',
     },
   ],

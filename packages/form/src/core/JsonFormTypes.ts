@@ -8,7 +8,7 @@ interface OnChange {
 
 interface Item {
   label?: string;
-  value: string | boolean | number;
+  value: string | number;
   group?: string; // for Autocomplete
 }
 

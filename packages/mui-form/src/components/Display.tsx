@@ -4,7 +4,8 @@ import clsx from 'clsx';
 import { FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import formatter from 'lib/formatter';
-import { findByPropVal, nl2Arr, isNilOrEmpty } from 'lib/utils';
+import { nl2Arr, isNilOrEmpty } from 'lib/utils';
+import getItemByValue from 'lib/getItemByValue';
 
 import MyFormLabel from './internal/MyFormLabel';
 
@@ -59,7 +60,7 @@ const Display: React.FC<FieldProps> = ({
   let displayValue = value;
   if (items) {
     // get display label from items
-    const targetItem: any = findByPropVal('value', value, items) || {};
+    const targetItem: any = getItemByValue(value, items) || {};
     displayValue = targetItem.label || targetItem.value;
   } else if (format) {
     // format value for display
