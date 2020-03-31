@@ -8,6 +8,7 @@ export interface AutocompleteItem {
 }
 
 export type MyAutocompleteProps = {
+  checkbox?: boolean;
   freeSolo?: boolean;
   name: string;
   loading?: boolean;

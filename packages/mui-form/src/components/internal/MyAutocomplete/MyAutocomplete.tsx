@@ -12,6 +12,7 @@ import {
   groupBy,
   getSuggestionLabel,
   highlightSuggestion,
+  highlightSuggestionCheckbox,
 } from './internalFunctions';
 
 import { MyAutocompleteProps } from './MyAutocompleteTypes';
@@ -33,6 +34,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   reloadOnInput = false,
   reloadExcludeRegex,
   reloadDelay,
+  checkbox = false,
   freeSolo = true,
   autoHighlight = false,
   autoComplete = false,
@@ -128,7 +130,9 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
           />
         );
       }}
-      renderOption={highlightSuggestion}
+      renderOption={
+        checkbox ? highlightSuggestionCheckbox : highlightSuggestion
+      }
       {...loadProps}
       {...groupByProp}
       {...extraAutocompleteProps}

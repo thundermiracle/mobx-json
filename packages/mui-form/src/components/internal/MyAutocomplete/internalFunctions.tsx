@@ -3,6 +3,12 @@ import React from 'react';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 
+import { Checkbox } from '@material-ui/core';
+import {
+  CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
+  CheckBox as CheckBoxIcon,
+} from '@material-ui/icons';
+
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 const needGroupBy = (suggestions?: AutocompleteItem[]): boolean => {
@@ -46,9 +52,9 @@ const sortSuggestions = (
   );
 };
 
-const highlightSuggestion = (
+const makeHighlightSuggestion = (checkbox: boolean) => (
   suggestion: AutocompleteItem,
-  { inputValue }: any,
+  { inputValue, selected }: any,
 ): JSX.Element => {
   // search value if label is not defined
   const targetStr = suggestion.label || suggestion.value;
@@ -56,8 +62,21 @@ const highlightSuggestion = (
   const matches = match(targetStr, inputValue);
   const parts = parse(targetStr, matches);
 
+  let checkboxPart;
+  if (checkbox) {
+    checkboxPart = (
+      <Checkbox
+        icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+        checkedIcon={<CheckBoxIcon fontSize="small" />}
+        style={{ marginRight: 8 }}
+        checked={selected}
+      />
+    );
+  }
+
   return (
     <div>
+      {checkboxPart}
       {parts.map((part, index) => (
         <span
           // eslint-disable-next-line react/no-array-index-key
@@ -71,6 +90,9 @@ const highlightSuggestion = (
   );
 };
 
+const highlightSuggestion = makeHighlightSuggestion(false);
+const highlightSuggestionCheckbox = makeHighlightSuggestion(true);
+
 const getSuggestionLabel = (suggestion: AutocompleteItem): string => {
   return suggestion.label || suggestion.value;
 };
@@ -82,6 +104,7 @@ export {
   needGroupBy,
   sortSuggestions,
   highlightSuggestion,
+  highlightSuggestionCheckbox,
   getSuggestionLabel,
   groupBy,
 };
