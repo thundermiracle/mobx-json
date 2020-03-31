@@ -3,7 +3,7 @@ interface AnyObject {
 }
 
 interface OnChange {
-  (eventOrName: any, value?: any): void;
+  (eventOrName: any, value?: any, valueLabel?: string): void;
 }
 
 interface Item {
@@ -46,6 +46,7 @@ interface Attrs {
   name: string;
   hidden?: boolean;
   value?: any;
+  valueLabel?: string;
   defaultValue?: any;
   disabled?: boolean;
   itemsSource?: string;
@@ -105,7 +106,7 @@ interface JsonFormStore {
   getData: () => AnyObject;
   getErrors: () => AnyObject;
   getFirstErrFieldName: () => string | undefined;
-  onFieldChange: (fieldName: string, value: any) => void;
+  onFieldChange: (fieldName: string, value: any, valueLabel: string) => void; // valueLabel: item.label
   checkAllOnSubmit: () => boolean;
   resetAllFields: () => void;
   clearAllErrors: () => void;

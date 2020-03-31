@@ -125,6 +125,21 @@
         },
         {
           "settings": {
+            "widget": "Display",
+            "computeRule": "concat,valueLabel:prefecture"
+          },
+          "attrs": {
+            "name": "prefectureName",
+            "label": "prefectureName",
+            "icon": "PrefectureCity",
+            "grid": {
+              "xs": 12,
+              "md": 3
+            }
+          }
+        },
+        {
+          "settings": {
             "widget": "TextField",
             "valueType": "string"
           },

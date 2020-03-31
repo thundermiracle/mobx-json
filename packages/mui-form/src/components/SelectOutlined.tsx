@@ -7,6 +7,7 @@ import useSelectItems from './hooks/useSelectItems';
 
 import { FieldProps } from './ComponentTypes';
 import useAsyncLoadItems from './hooks/useAsyncLoadItems';
+import useValueLabelOnChange from './hooks/useValueLabelOnChange';
 
 type SelectProps = {
   emptyItem?: boolean;
@@ -14,11 +15,15 @@ type SelectProps = {
   MUITextFieldProps;
 
 const SelectOutlined: React.FC<SelectProps> = ({
+  name,
   items: initItems = [],
   emptyItem = false,
   loaderSize = 24,
   forceLoadOnce,
   asyncLoadItems,
+  value,
+  onChange,
+  valueLabel,
   ...restProps
 }) => {
   const { items, loading, loader } = useAsyncLoadItems({
@@ -29,10 +34,19 @@ const SelectOutlined: React.FC<SelectProps> = ({
     asyncLoadItems,
   });
   const menuItems = useSelectItems({ emptyItem, items });
+  const { selectedItem, handleOnChange } = useValueLabelOnChange({
+    name: name!,
+    value,
+    items,
+    onChange,
+  });
 
   return (
     <TextFieldOutlined
       {...restProps}
+      name={name}
+      value={selectedItem.value}
+      onChange={handleOnChange}
       select
       adornment={loader}
       disabled={loading || items.length === 0}

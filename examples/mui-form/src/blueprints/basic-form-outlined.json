@@ -106,6 +106,21 @@
         },
         {
           "settings": {
+            "widget": "Display",
+            "computeRule": "concat,valueLabel:prefecture"
+          },
+          "attrs": {
+            "name": "prefectureName",
+            "label": "prefectureName",
+            "icon": "PrefectureCity",
+            "grid": {
+              "xs": 12,
+              "md": 5
+            }
+          }
+        },
+        {
+          "settings": {
             "widget": "TextFieldOutlined",
             "valueType": "string"
           },
@@ -121,7 +136,7 @@
         },
         {
           "settings": {
-            "widget": "Radio",
+            "widget": "Select",
             "valueType": "number",
             "rule": "required"
           },
@@ -129,7 +144,25 @@
             "name": "sex",
             "label": "Sex",
             "defaultValue": null,
-            "itemsSource": "Sex"
+            "itemsSource": "Sex",
+            "grid": {
+              "xs": 12,
+              "md": 9
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "Display",
+            "computeRule": "concat,valueLabel:sex"
+          },
+          "attrs": {
+            "name": "sexName",
+            "label": "SexName",
+            "grid": {
+              "xs": 12,
+              "md": 3
+            }
           }
         },
         {

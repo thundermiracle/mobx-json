@@ -80,13 +80,20 @@ class JsonFormStore implements JsonFormStoreClass {
    * ONLY affect the field which is modified now.
    */
   @action
-  onFieldChange = (fieldName: string, value: any): void => {
+  onFieldChange = (
+    fieldName: string,
+    value: any,
+    valueLabel?: string,
+  ): void => {
     const field = getHelper.getFieldByName(this.fields, fieldName);
     if (!field) return;
 
     // apply value
     const { attrs, settings } = field;
     attrs.value = getHelper.getTypedValue(value, settings.valueType);
+    if (valueLabel != null) {
+      attrs.valueLabel = valueLabel;
+    }
 
     /*
       applyAllFieldsPropRule will get value from field
@@ -118,6 +125,12 @@ class JsonFormStore implements JsonFormStoreClass {
       );
       // trigger asyncLoadItems if no error
       setHelper.applyAllFieldsReloadRuleForChangedField(this.fields, fieldName);
+    } else if (valueLabel != null) {
+      // re-compute the field.attrs.value if no error
+      setHelper.applyAllFieldsComputeRuleForChangedField(
+        this.fields,
+        fieldName,
+      );
     }
   };
 

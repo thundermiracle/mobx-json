@@ -142,7 +142,7 @@
             "name": "ageGrid",
             "spacing": 4,
             "primary": "age",
-            "secondary": "concat:col1"
+            "secondary": "concat:birthday"
           },
           "fields": [
             {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, FormControlLabel, RadioGroup } from '@material-ui/core';
-import parseValByItems from 'lib/parseValByItems';
+import getItemByValue from 'lib/getItemByValue';
 import FormLabel from './internal/MyFormLabel';
 import FormHelperText from './internal/MyFormHelperText';
 import MyRadio from './internal/MyRadio';
@@ -10,6 +10,7 @@ import IconWrapper from './internal/IconWrapper';
 
 import useAsyncLoadItems from './hooks/useAsyncLoadItems';
 import { FieldProps, Item } from './ComponentTypes';
+import useValueLabelOnChange from './hooks/useValueLabelOnChange';
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -29,6 +30,7 @@ type RadioProps = {
 } & FieldProps;
 
 const Radio: React.FC<RadioProps> = ({
+  name,
   label = '',
   required = false,
   error = false,
@@ -44,6 +46,7 @@ const Radio: React.FC<RadioProps> = ({
   loaderSize = 24,
   forceLoadOnce,
   asyncLoadItems,
+  valueLabel,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -53,6 +56,12 @@ const Radio: React.FC<RadioProps> = ({
     loaderStyle: { left: 10, top: 25 },
     forceLoadOnce,
     asyncLoadItems,
+  });
+  const { selectedItem, handleOnChange } = useValueLabelOnChange({
+    name,
+    value,
+    items,
+    onChange,
   });
 
   const helperTextPart = helperText ? (
@@ -76,8 +85,9 @@ const Radio: React.FC<RadioProps> = ({
         <RadioGroup
           aria-label="gender"
           row={row}
-          value={parseValByItems(value, items)}
-          onChange={onChange}
+          name={name}
+          value={selectedItem.value}
+          onChange={handleOnChange}
           className={classes.groupRoot}
         >
           {items.map(

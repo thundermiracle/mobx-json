@@ -8,11 +8,11 @@ import {
   SelectProps as MUISelectProps,
 } from '@material-ui/core';
 
-import parseValByItems from 'lib/parseValByItems';
 import useSelectItems from './hooks/useSelectItems';
 import IconWrapper from './internal/IconWrapper';
 import { FieldProps } from './ComponentTypes';
 import useAsyncLoadItems from './hooks/useAsyncLoadItems';
+import useValueLabelOnChange from './hooks/useValueLabelOnChange';
 
 type SelectProps = {
   emptyItem?: boolean;
@@ -35,6 +35,8 @@ const Select: React.FC<SelectProps> = ({
   forceLoadOnce,
   asyncLoadItems,
   value,
+  onChange,
+  valueLabel,
   ...restProps
 }) => {
   const { items, loading, loader } = useAsyncLoadItems({
@@ -45,6 +47,12 @@ const Select: React.FC<SelectProps> = ({
     asyncLoadItems,
   });
   const menuItems = useSelectItems({ emptyItem, items });
+  const { selectedItem, handleOnChange } = useValueLabelOnChange({
+    name: name!,
+    value,
+    items,
+    onChange,
+  });
 
   const helperTextPart = helperText ? (
     <FormHelperText>{helperText}</FormHelperText>
@@ -65,7 +73,8 @@ const Select: React.FC<SelectProps> = ({
           name={name}
           disabled={loading || items.length === 0}
           SelectDisplayProps={{ id: `muiform_${name}` }}
-          value={parseValByItems(value, items)}
+          value={selectedItem.value}
+          onChange={handleOnChange}
           {...restProps}
         >
           {menuItems}

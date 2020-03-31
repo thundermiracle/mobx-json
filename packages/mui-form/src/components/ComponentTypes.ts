@@ -18,7 +18,7 @@ interface NativeOnChange {
 }
 
 interface SystemOnChange {
-  (name: string, value?: any): void;
+  (name: string, value?: any, valueLabel?: string): void;
 }
 
 type OnChange = NativeOnChange & SystemOnChange;

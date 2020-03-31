@@ -19,7 +19,7 @@ export default (
     ...restProps
   }) => {
     const innerOnChange = React.useCallback(
-      (eventOrName, value) => {
+      (eventOrName, value, valueLabel) => {
         if (onChange) {
           if (typeof eventOrName === 'object') {
             // eventOrName is event
@@ -27,11 +27,12 @@ export default (
               eventOrName.target.type === 'checkbox'
                 ? eventOrName.target.checked
                 : eventOrName.target.value;
+            const newValLabel = eventOrName.target.dataset.valueLabel;
 
-            onChange(eventOrName.target.name, newVal);
+            onChange(eventOrName.target.name, newVal, newValLabel);
           } else {
             // eventOrName is name
-            onChange(eventOrName, value);
+            onChange(eventOrName, value, valueLabel);
           }
         }
       },
