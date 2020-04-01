@@ -155,6 +155,11 @@ class GetHelper {
         );
       }
 
+      // append empty valueLabel to attrs if items is not null
+      if (!attrsFlatten.valueLabel && attrsFlatten.items != null) {
+        attrsFlatten.valueLabel = '';
+      }
+
       // nested fields
       let fieldsFlatten;
       if (childFields) {

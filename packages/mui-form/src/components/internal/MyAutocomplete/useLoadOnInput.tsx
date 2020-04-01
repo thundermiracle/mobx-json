@@ -2,12 +2,16 @@ import React from 'react';
 
 import { identity } from 'ramda';
 import { throttle } from 'throttle-debounce';
+import getItemByKeyValue from 'lib/getItemByKeyValue';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 interface UseLoadOnInputInputProps {
   name: string;
+  freeSolo: boolean;
+  isSuggestionContainsLabel: boolean;
   reloadDelay?: number;
   reloadExcludeRegex?: string;
+  sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
   onChange?: (name: string, value: string, inputValue?: string) => void;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
@@ -28,7 +32,10 @@ interface UseLoadOnInputProps {
 
 const useLoadOnInput = ({
   name,
+  freeSolo,
+  isSuggestionContainsLabel,
   reloadDelay = 300,
+  sortedSuggestions,
   reloadExcludeRegex,
   onChange,
   asyncLoadItems,
@@ -85,16 +92,37 @@ const useLoadOnInput = ({
   );
 
   const handleInputChange = React.useCallback(
-    (_, newVal) => {
-      if (newVal !== '' && needReload(newVal)) {
-        reloadItemsThrottle(newVal);
+    (_, newValLabel) => {
+      if (newValLabel !== '' && needReload(newValLabel)) {
+        reloadItemsThrottle(newValLabel);
       }
 
-      if (onChange) {
-        onChange(name, newVal);
+      if (!onChange) {
+        return;
+      }
+
+      if (freeSolo) {
+        // value & valueLabel should be same in freeSolo mode, ignore suggestion.value
+        onChange(name, newValLabel, newValLabel);
+      } else {
+        // in Combo box mode, suggestions MUST be selected by click on suggestion
+        const newValItem = getItemByKeyValue(
+          sortedSuggestions,
+          newValLabel,
+          isSuggestionContainsLabel ? 'label' : 'value',
+        );
+        onChange(name, newValItem.value.toString(), newValLabel);
       }
     },
-    [needReload, onChange, reloadItemsThrottle, name],
+    [
+      needReload,
+      onChange,
+      freeSolo,
+      reloadItemsThrottle,
+      name,
+      sortedSuggestions,
+      isSuggestionContainsLabel,
+    ],
   );
 
   return {

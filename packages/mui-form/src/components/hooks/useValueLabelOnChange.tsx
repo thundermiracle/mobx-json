@@ -1,5 +1,5 @@
 import React from 'react';
-import getItemByValue from 'lib/getItemByValue';
+import getItemByKeyValue from 'lib/getItemByKeyValue';
 import { isNilOrEmpty } from 'lib/utils';
 
 import { Item } from '../ComponentTypes';
@@ -25,7 +25,7 @@ const useValueLabelOnChange = ({
   items,
   onChange,
 }: UseSelectInput): UseSelect => {
-  const selectedItem = getItemByValue(value, items);
+  const selectedItem = getItemByKeyValue(items, value);
 
   const handleOnChange = React.useCallback(
     e => {
@@ -34,7 +34,7 @@ const useValueLabelOnChange = ({
           onChange(e.target.name, '', '');
           return;
         }
-        const targetItem = getItemByValue(e.target.value, items);
+        const targetItem = getItemByKeyValue(items, e.target.value);
         onChange(name, targetItem.value, targetItem.label);
       }
     },

@@ -24,6 +24,16 @@ const needGroupBy = (suggestions?: AutocompleteItem[]): boolean => {
   return firstSuggestion.group != null;
 };
 
+const suggestionContainsLabel = (suggestions?: AutocompleteItem[]): boolean => {
+  if (suggestions == null || suggestions.length === 0) {
+    return false;
+  }
+
+  const [firstSuggestion] = suggestions;
+
+  return firstSuggestion.label != null;
+};
+
 const sortSuggestions = (
   suggestions?: AutocompleteItem[],
 ): AutocompleteItem[] | [] => {
@@ -102,6 +112,7 @@ const groupBy = (suggestion: AutocompleteItem): string =>
 
 export {
   needGroupBy,
+  suggestionContainsLabel,
   sortSuggestions,
   highlightSuggestion,
   highlightSuggestionCheckbox,

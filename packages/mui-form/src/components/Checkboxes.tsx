@@ -62,6 +62,7 @@ const Checkboxes: React.FC<CheckboxesProps> = ({
   loaderSize = 24,
   forceLoadOnce,
   asyncLoadItems,
+  valueLabel,
   ...restProps
 }) => {
   if (initItems == null) {

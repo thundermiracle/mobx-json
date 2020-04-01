@@ -2,7 +2,6 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, FormControlLabel, RadioGroup } from '@material-ui/core';
-import getItemByValue from 'lib/getItemByValue';
 import FormLabel from './internal/MyFormLabel';
 import FormHelperText from './internal/MyFormHelperText';
 import MyRadio from './internal/MyRadio';

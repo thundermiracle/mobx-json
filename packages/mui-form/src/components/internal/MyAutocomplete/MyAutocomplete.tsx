@@ -8,6 +8,7 @@ import MuiAutocomplete from '@material-ui/lab/Autocomplete';
 import { isNilOrEmpty } from 'lib/utils';
 import {
   needGroupBy,
+  suggestionContainsLabel,
   sortSuggestions,
   groupBy,
   getSuggestionLabel,
@@ -36,11 +37,12 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   reloadDelay,
   checkbox = false,
   freeSolo = true,
-  autoHighlight = false,
-  autoComplete = false,
   autoSelect = false,
+  autoComplete = false,
+  openOnFocus = true,
   items: initSuggestions,
   value,
+  valueLabel: inputValue,
   onChange,
   forceLoadOnce,
   asyncLoadItems,
@@ -64,7 +66,9 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   const useLoadProps = reloadOnInput ? useLoadOnInput : useLoadOnce;
   const { suggestionsLoading, ...loadProps } = useLoadProps({
     name,
-    inputValue: value,
+    freeSolo,
+    isSuggestionContainsLabel: suggestionContainsLabel(sortedSuggestions),
+    inputValue,
     reloadDelay,
     reloadExcludeRegex,
     sortedSuggestions,
@@ -85,7 +89,8 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   let options = suggestionsLoading
     ? [{ value: loaderText }]
     : sortedSuggestions;
-  if (reloadOnInput && isNilOrEmpty(value)) {
+
+  if (reloadOnInput && isNilOrEmpty(inputValue)) {
     // DON'T show options if load suggestions async & value is empty
     options = [];
   }
@@ -93,13 +98,14 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   return (
     <MuiAutocomplete
       freeSolo={freeSolo}
-      autoHighlight={autoHighlight}
+      autoHighlight={!freeSolo}
       autoComplete={autoComplete}
       autoSelect={autoSelect}
+      openOnFocus={openOnFocus}
       loading={suggestionsLoading}
       options={options}
       getOptionLabel={getSuggestionLabel}
-      inputValue={value}
+      inputValue={inputValue}
       classes={classes}
       renderInput={params => {
         const { InputProps } = params;

@@ -5,6 +5,6 @@ export { default as JsonFormStore } from './core/JsonFormStore';
 export { default as plugins } from './core/plugins';
 export { default as makeWidgetMap } from './lib/makeWidgetMap';
 export { default as formatter } from './lib/formatter';
-export { default as getItemByValue } from './lib/getItemByValue';
+export { default as getItemByKeyValue } from './lib/getItemByKeyValue';
 
 export { JsonFormTypes };

@@ -1,10 +1,13 @@
 import React from 'react';
 
 import { filterData, SearchType } from 'filter-data';
+import getItemByKeyValue from 'lib/getItemByKeyValue';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 interface UseLoadOnceInputProps {
   name: string;
+  freeSolo: boolean;
+  isSuggestionContainsLabel: boolean;
   inputValue?: string;
   sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
@@ -28,6 +31,8 @@ interface UseLoadOnceProps {
 
 const useLoadOnce = ({
   name,
+  freeSolo,
+  isSuggestionContainsLabel,
   inputValue = '',
   onChange,
   sortedSuggestions,
@@ -69,19 +74,37 @@ const useLoadOnce = ({
   }, [sortedSuggestions]);
 
   const handleInputChange = React.useCallback(
-    (_, newVal) => {
+    (_, newValLabel) => {
       if (!suggestionsLoading && onChange) {
-        onChange(name, newVal);
+        if (freeSolo) {
+          // value & valueLabel should be same in freeSolo mode, ignore suggestion.value
+          onChange(name, newValLabel, newValLabel);
+        } else {
+          // in Combo box mode, suggestions MUST be selected by click on suggestion
+          const newValItem = getItemByKeyValue(
+            sortedSuggestions,
+            newValLabel,
+            isSuggestionContainsLabel ? 'label' : 'value',
+          );
+          onChange(name, newValItem.value.toString(), newValLabel);
+        }
       }
     },
-    [suggestionsLoading, name, onChange],
+    [
+      suggestionsLoading,
+      onChange,
+      freeSolo,
+      name,
+      sortedSuggestions,
+      isSuggestionContainsLabel,
+    ],
   );
 
   const filterOptions = React.useCallback(
     (options: AutocompleteItem[]) => {
-      const result = filterData(options as any, [
+      const result = filterData(options, [
         {
-          key: 'value',
+          key: ['value', 'label'],
           value: inputValue,
           type: SearchType.LK,
         },
@@ -90,7 +113,7 @@ const useLoadOnce = ({
       return result;
     },
     [inputValue],
-  ) as any;
+  );
 
   return {
     suggestionsLoading,

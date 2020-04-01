@@ -290,8 +290,37 @@
           },
           "attrs": {
             "name": "film",
+            "freeSolo": false,
             "label": "FavoriteFilm",
             "icon": "MenuBook"
+          }
+        },
+        {
+          "settings": {
+            "widget": "Display",
+            "computeRule": "concat:film"
+          },
+          "attrs": {
+            "name": "filmValue",
+            "label": "FavoriteFilm.value",
+            "grid": {
+              "xs": 12,
+              "md": 6
+            }
+          }
+        },
+        {
+          "settings": {
+            "widget": "Display",
+            "computeRule": "concat,valueLabel:film"
+          },
+          "attrs": {
+            "name": "filmValueLabel",
+            "label": "FavoriteFilm.valueLabel",
+            "grid": {
+              "xs": 12,
+              "md": 6
+            }
           }
         },
         {

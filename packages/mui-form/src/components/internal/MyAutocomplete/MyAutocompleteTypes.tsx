@@ -1,3 +1,4 @@
+import { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import { TextFieldProps } from '../../TextField';
 import { AnyObject } from '../../ComponentTypes';
 
@@ -9,23 +10,21 @@ export interface AutocompleteItem {
 
 export type MyAutocompleteProps = {
   checkbox?: boolean;
-  freeSolo?: boolean;
-  name: string;
   loading?: boolean;
+  reloadOnInput?: boolean;
+  forceLoadOnce?: object; // set to {} which is a new object to force reloading
+  name: string;
   loaderSize?: number;
   loaderText?: string;
   reloadDelay?: number;
-  reloadOnInput?: boolean;
   reloadExcludeRegex?: string;
   items: AutocompleteItem[];
   value?: string;
+  valueLabel?: string;
   onChange?: (name: string, value: string, inputValue?: string) => void;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
   TextFieldComponent: any;
-  autoHighlight?: boolean;
-  autoComplete?: boolean;
-  autoSelect?: boolean;
   extraAutocompleteProps?: AnyObject;
   InputPropsClassName?: string;
   inputPropsClassName?: string;
-} & TextFieldProps;
+} & AutocompleteProps<TextFieldProps>;

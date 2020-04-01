@@ -1,7 +1,7 @@
 import { action } from 'mobx';
 import { without, append, uniq } from 'ramda';
 import compute from 'lib/compute';
-import getItemByValue from 'lib/getItemByValue';
+import getItemByKeyValue from 'lib/getItemByKeyValue';
 
 import getHelper from './getHelper';
 import {
@@ -201,7 +201,10 @@ class SetHelper {
 
       // apply valueLabel if items is defined
       if (field.attrs.items != null && field.attrs.items.length > 0) {
-        const targetItem = getItemByValue(field.attrs.value, field.attrs.items);
+        const targetItem = getItemByKeyValue(
+          field.attrs.items,
+          field.attrs.value,
+        );
 
         if (targetItem != null) {
           field.attrs.valueLabel = targetItem.label;

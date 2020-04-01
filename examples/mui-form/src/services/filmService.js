@@ -16,7 +16,13 @@ class FilmService {
     await sleep(Math.random() * 1000);
 
     const result = DB.films
-      .filter(dt => dt.value.toLowerCase().includes(word.toLowerCase()))
+      .filter(dt =>
+        [dt.value, dt.label]
+          .filter(x => x)
+          .join('')
+          .toLowerCase()
+          .includes(word.toLowerCase()),
+      )
       .slice(0, 5);
 
     return result;
