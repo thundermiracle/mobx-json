@@ -17,7 +17,7 @@
     "@material-ui/icons": "^4.9.1",
     "@mobx-json/mui-form": "^0.1.6",
     "clsx": "1.1.0",
-    "next": "^9.1.5",
+    "next": "^9.3.3",
     "nprogress": "^0.2.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
