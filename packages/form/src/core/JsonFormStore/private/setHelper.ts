@@ -225,6 +225,7 @@ class SetHelper {
     field.attrs.value =
       field.attrs.defaultValue ||
       getHelper.getDefaultValueByType(field.settings.valueType, true);
+    field.attrs.valueLabel = '';
   };
 
   @action
