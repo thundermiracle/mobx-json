@@ -11,7 +11,7 @@ interface UseLoadOnceInputProps {
   inputValue?: string;
   sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
-  onChange?: (name: string, value: string, inputValue?: string) => void;
+  onChange?: (name: string, inputValue: string, selectedValue?: string) => void;
   forceLoadOnce?: object;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
 }
@@ -86,7 +86,7 @@ const useLoadOnce = ({
             newValLabel,
             isSuggestionContainsLabel ? 'label' : 'value',
           );
-          onChange(name, newValItem.value.toString(), newValLabel);
+          onChange(name, newValLabel, newValItem.value.toString());
         }
       }
     },

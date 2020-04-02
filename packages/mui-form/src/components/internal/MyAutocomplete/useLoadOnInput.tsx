@@ -13,7 +13,7 @@ interface UseLoadOnInputInputProps {
   reloadExcludeRegex?: string;
   sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
-  onChange?: (name: string, value: string, inputValue?: string) => void;
+  onChange?: (name: string, inputValue: string, selectedValue?: string) => void;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
 }
 
@@ -111,7 +111,7 @@ const useLoadOnInput = ({
           newValLabel,
           isSuggestionContainsLabel ? 'label' : 'value',
         );
-        onChange(name, newValItem.value.toString(), newValLabel);
+        onChange(name, newValLabel, newValItem.value.toString());
       }
     },
     [
