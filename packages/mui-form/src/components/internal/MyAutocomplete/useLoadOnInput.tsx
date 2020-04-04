@@ -2,20 +2,15 @@ import React from 'react';
 
 import { identity } from 'ramda';
 import { throttle } from 'throttle-debounce';
-import getItemByKeyValue from 'lib/getItemByKeyValue';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 interface UseLoadOnInputInputProps {
-  name: string;
-  freeSolo: boolean;
   inputValue?: string;
-  isSuggestionContainsLabel: boolean;
   reloadDelay?: number;
   reloadExcludeRegex?: string;
-  sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
-  onChange?: (name: string, inputValue: string, selectedValue?: string) => void;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
+  applyChangedValueAndValueLabel: () => void;
 }
 
 interface UseLoadOnInputProps {
@@ -24,24 +19,15 @@ interface UseLoadOnInputProps {
     options: AutocompleteItem[],
     state: { inputValue: string },
   ) => AutocompleteItem[];
-  onInputChange: (
-    event: React.ChangeEvent<{}>,
-    value: string,
-    reason: 'input' | 'reset' | 'clear',
-  ) => void;
 }
 
 const useLoadOnInput = ({
-  name,
-  freeSolo,
-  isSuggestionContainsLabel,
   inputValue = '',
   reloadDelay = 300,
-  sortedSuggestions,
   reloadExcludeRegex,
-  onChange,
   asyncLoadItems,
   setSuggestions,
+  applyChangedValueAndValueLabel,
 }: UseLoadOnInputInputProps): UseLoadOnInputProps => {
   const [fetching, setFetching] = React.useState<boolean>(false);
 
@@ -89,17 +75,6 @@ const useLoadOnInput = ({
     [reloadExcludeRegex],
   );
 
-  const handleInputChange = React.useCallback(
-    (_, newInputValue) => {
-      if (!onChange) {
-        return;
-      }
-
-      onChange(name, newInputValue);
-    },
-    [onChange, name],
-  );
-
   // auto reload asynchronously if value changed
   React.useEffect(() => {
     if (inputValue) {
@@ -107,22 +82,11 @@ const useLoadOnInput = ({
         reloadItemsThrottle(inputValue);
       }
 
-      if (!onChange) {
-        return;
-      }
-
-      if (freeSolo) {
-        // value & valueLabel should be same in freeSolo mode, ignore suggestion.value
-        onChange(name, inputValue, inputValue);
-      } else {
-        // in Combo box mode, suggestions MUST be selected by click on suggestion
-        const newValItem = getItemByKeyValue(
-          sortedSuggestions,
-          inputValue,
-          isSuggestionContainsLabel ? 'label' : 'value',
-        );
-        onChange(name, inputValue, newValItem.value.toString());
-      }
+      /**
+       * apply changed value & valueLabel by onChange
+       * apply selectedValue to Autocomplete by setState
+       */
+      applyChangedValueAndValueLabel();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
@@ -130,7 +94,6 @@ const useLoadOnInput = ({
   return {
     suggestionsLoading,
     filterOptions: identity,
-    onInputChange: handleInputChange,
   };
 };
 

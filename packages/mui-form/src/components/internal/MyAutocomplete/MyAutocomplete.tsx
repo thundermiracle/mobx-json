@@ -19,6 +19,7 @@ import {
 import { MyAutocompleteProps } from './MyAutocompleteTypes';
 import useLoadOnInput from './useLoadOnInput';
 import useLoadOnce from './useLoadOnce';
+import useCommonFuncs from './useCommonFuncs';
 
 const useStyles = makeStyles({
   clearIndicator: {
@@ -62,20 +63,32 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   const sortedSuggestions = React.useMemo(() => sortSuggestions(suggestions), [
     suggestions,
   ]);
+  const isSuggestionContainsLabel = suggestionContainsLabel(sortedSuggestions);
+
+  const {
+    selectedSuggestion,
+    applyChangedValueAndValueLabel,
+    handleOnChange,
+    handleOnInputChange,
+  } = useCommonFuncs({
+    name,
+    inputValue,
+    freeSolo,
+    isSuggestionContainsLabel,
+    sortedSuggestions,
+    onChange,
+  });
 
   const useLoadProps = reloadOnInput ? useLoadOnInput : useLoadOnce;
   const { suggestionsLoading, ...loadProps } = useLoadProps({
-    name,
-    freeSolo,
-    isSuggestionContainsLabel: suggestionContainsLabel(sortedSuggestions),
     inputValue,
     reloadDelay,
     reloadExcludeRegex,
     sortedSuggestions,
-    onChange,
+    setSuggestions,
     forceLoadOnce,
     asyncLoadItems,
-    setSuggestions,
+    applyChangedValueAndValueLabel,
   });
 
   let groupByProp;
@@ -97,6 +110,7 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
 
   return (
     <MuiAutocomplete
+      classes={classes}
       freeSolo={freeSolo}
       autoHighlight={!freeSolo}
       autoComplete={autoComplete}
@@ -106,7 +120,9 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
       options={options}
       getOptionLabel={getSuggestionLabel}
       inputValue={inputValue}
-      classes={classes}
+      onInputChange={handleOnInputChange}
+      value={selectedSuggestion}
+      onChange={handleOnChange}
       renderInput={params => {
         const { InputProps } = params;
         const inputProps = (params.inputProps || {}) as any;

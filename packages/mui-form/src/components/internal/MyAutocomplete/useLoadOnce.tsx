@@ -1,19 +1,15 @@
 import React from 'react';
 
 import { filterData, SearchType } from 'filter-data';
-import getItemByKeyValue from 'lib/getItemByKeyValue';
 import { AutocompleteItem } from './MyAutocompleteTypes';
 
 interface UseLoadOnceInputProps {
-  name: string;
-  freeSolo: boolean;
-  isSuggestionContainsLabel: boolean;
   inputValue?: string;
   sortedSuggestions: AutocompleteItem[];
   setSuggestions: (suggestions: AutocompleteItem[]) => void;
-  onChange?: (name: string, inputValue: string, selectedValue?: string) => void;
   forceLoadOnce?: object;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
+  applyChangedValueAndValueLabel: () => void;
 }
 
 interface UseLoadOnceProps {
@@ -22,23 +18,15 @@ interface UseLoadOnceProps {
     options: AutocompleteItem[],
     state: { inputValue: string },
   ) => AutocompleteItem[];
-  onInputChange: (
-    event: React.ChangeEvent<{}>,
-    value: string,
-    reason: 'input' | 'reset' | 'clear',
-  ) => void;
 }
 
 const useLoadOnce = ({
-  name,
-  freeSolo,
-  isSuggestionContainsLabel,
   inputValue = '',
-  onChange,
   sortedSuggestions,
   forceLoadOnce,
   asyncLoadItems,
   setSuggestions,
+  applyChangedValueAndValueLabel,
 }: UseLoadOnceInputProps): UseLoadOnceProps => {
   const [suggestionsLoading, setSuggestionsLoading] = React.useState(
     sortedSuggestions.length === 0,
@@ -50,23 +38,12 @@ const useLoadOnce = ({
 
   // refresh value&valueLabel when inputValue or suggestions changed
   React.useEffect(() => {
-    if (!onChange) {
-      return;
-    }
+    /**
+     * apply changed value & valueLabel by onChange
+     * apply selectedValue to Autocomplete by setState
+     */
+    applyChangedValueAndValueLabel();
 
-    if (freeSolo) {
-      // value & valueLabel should be same in freeSolo mode, ignore suggestion.value
-      onChange(name, inputValue, inputValue);
-    } else {
-      // in Combo box mode, suggestions MUST be selected by click on suggestion
-      const newValItem = getItemByKeyValue(
-        sortedSuggestions,
-        inputValue,
-        isSuggestionContainsLabel ? 'label' : 'value',
-      );
-
-      onChange(name, inputValue, newValItem.value.toString());
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue, sortedSuggestions]);
 
@@ -96,17 +73,6 @@ const useLoadOnce = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suggestionsLoading]);
 
-  const handleInputChange = React.useCallback(
-    (_, newInputValue) => {
-      if (!onChange) {
-        return;
-      }
-
-      onChange(name, newInputValue);
-    },
-    [name, onChange],
-  );
-
   const filterOptions = React.useCallback(
     (options: AutocompleteItem[]) => {
       const result = filterData(options, [
@@ -125,7 +91,6 @@ const useLoadOnce = ({
   return {
     suggestionsLoading,
     filterOptions,
-    onInputChange: handleInputChange,
   };
 };
 
