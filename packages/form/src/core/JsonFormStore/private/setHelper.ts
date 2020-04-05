@@ -215,9 +215,23 @@ class SetHelper {
   };
 
   @action
-  private _setFieldError = (field: Field, errors: AnyObject = {}): void => {
-    const [errorMsg] = errors[field.attrs.name] || [];
-    field.attrs.error = errorMsg || '';
+  private _setFieldError = (
+    field: Field,
+    errors: AnyObject = {},
+    labelFirst = true,
+  ): void => {
+    let [errorMsg = ''] = errors[field.attrs.name] || [];
+
+    if (labelFirst) {
+      // display label instead of name in error message
+      // replace first 'name' to 'label'
+      errorMsg = errorMsg.replace(
+        field.attrs.name,
+        field.attrs.label || field.attrs.name,
+      );
+    }
+
+    field.attrs.error = errorMsg;
   };
 
   @action

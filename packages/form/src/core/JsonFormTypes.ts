@@ -44,6 +44,7 @@ type AsyncLoadItemsFunc = (inputValue?: string) => Promise<Item[] | []>;
 
 interface Attrs {
   name: string;
+  label?: string;
   hidden?: boolean;
   value?: any;
   valueLabel?: string;
