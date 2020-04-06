@@ -30,8 +30,6 @@ const useStyles = makeStyles({
 });
 
 const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
-  name,
-  loaderSize = 24,
   loaderText = 'Loading...',
   reloadOnInput = false,
   reloadExcludeRegex,
@@ -49,8 +47,17 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   asyncLoadItems,
   TextFieldComponent,
   extraAutocompleteProps = {},
+  // following props are for TextField
+  name,
+  loaderSize = 24,
+  fullWidth = false,
+  disabled = false,
+  error,
   InputPropsClassName,
   inputPropsClassName,
+  label,
+  IconComponent,
+  helperText,
   ...restProps
 }) => {
   const classes = useStyles();
@@ -111,11 +118,13 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
   return (
     <MuiAutocomplete
       classes={classes}
+      {...restProps}
       freeSolo={freeSolo}
       autoHighlight={!freeSolo}
       autoComplete={autoComplete}
       autoSelect={autoSelect}
       openOnFocus={openOnFocus}
+      disabled={disabled}
       loading={suggestionsLoading}
       options={options}
       getOptionLabel={getSuggestionLabel}
@@ -131,6 +140,12 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
           <TextFieldComponent
             {...params}
             name={name}
+            disabled={disabled}
+            fullWidth={fullWidth}
+            label={label}
+            IconComponent={IconComponent}
+            error={error}
+            helperText={helperText}
             InputProps={{
               ...InputProps,
               className: clsx(InputProps.className, InputPropsClassName),
@@ -148,7 +163,6 @@ const MyAutocomplete: React.FC<MyAutocompleteProps> = ({
               ...inputProps,
               className: clsx(inputProps.className, inputPropsClassName),
             }}
-            {...restProps}
           />
         );
       }}
