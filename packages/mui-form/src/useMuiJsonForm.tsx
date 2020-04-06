@@ -6,7 +6,6 @@ import { JsonForm, JsonFormStore, JsonFormTypes } from '@mobx-json/form';
 import domFocusByName from 'lib/domFocusByName';
 import SmoothScroll from './common/SmoothScroll';
 import MsgErrorBoundary from './common/MsgErrorBoundary';
-import { AnyObject } from './components/ComponentTypes';
 
 const useStyles = makeStyles({
   form: {
@@ -16,13 +15,14 @@ const useStyles = makeStyles({
 
 interface MuiJsonFormInputOptions {
   smoothScroll?: boolean;
-  gridContainerProps?: AnyObject;
+  gridContainerProps?: object;
 }
 
 export interface MuiJsonFormInputProps {
   blueprint: JsonFormTypes.Blueprint;
+  blueprintExtra: JsonFormTypes.BlueprintExtra;
   formUniqName?: string;
-  data?: AnyObject;
+  data?: object;
   options?: MuiJsonFormInputOptions;
 }
 
@@ -48,6 +48,7 @@ export interface MuiJsonFormProps {
 
 function useMuiJsonForm({
   blueprint,
+  blueprintExtra,
   formUniqName,
   data,
   options = {},
@@ -66,7 +67,7 @@ function useMuiJsonForm({
 
   // initialize mobx store
   const store = React.useMemo(() => {
-    return new JsonFormStore(innerBlueprint || blueprint);
+    return new JsonFormStore(innerBlueprint || blueprint, blueprintExtra);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [innerBlueprint, formUniqName || blueprint]);
 

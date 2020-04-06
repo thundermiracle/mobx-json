@@ -14,6 +14,7 @@ import {
   SingleComputeRule,
   ValueType,
   AsyncLoadItemsFunc,
+  BlueprintExtra,
 } from '../../JsonFormTypes';
 
 /**
@@ -51,6 +52,7 @@ class GetHelper {
    */
   initObservableFields = (
     fieldsJson: JsonField[],
+    fieldsExtraProps: BlueprintExtra,
     itemsSource: AnyObject,
     iconsMap: AnyObject,
     serviceContainer: AnyObject,
@@ -64,6 +66,8 @@ class GetHelper {
 
     fieldsJson.forEach(field => {
       const { attrs, settings, fields: childFields, ...restProperties } = field;
+      const { attrs: extraAttrs, settings: extraSettings } =
+        fieldsExtraProps[attrs.name] || {};
 
       // MUST have attrs and settings
       const errMsg = this._checkParams(field, this._MustHaveKeys);
@@ -77,9 +81,13 @@ class GetHelper {
 
       // field's contents
       // copy from json
-      const settingsFlatten = { ...settings };
+      const settingsFlatten = { ...settings, ...extraSettings };
 
-      let attrsFlatten = { ...this._defaultCommonAttrs, ...attrs };
+      let attrsFlatten = {
+        ...this._defaultCommonAttrs,
+        ...attrs,
+        ...extraAttrs,
+      };
 
       // init attrs by propRule, make these props observable
       let initAttrs;
@@ -175,6 +183,7 @@ class GetHelper {
 
         fieldsFlatten = this.initObservableFields(
           childFields,
+          fieldsExtraProps,
           itemsSource,
           iconsMap,
           serviceContainer,

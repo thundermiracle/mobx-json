@@ -6,6 +6,7 @@ import {
   Fields,
   AnyObject,
   Blueprint,
+  BlueprintExtra,
   JsonFormStore as JsonFormStoreClass,
 } from '../JsonFormTypes';
 import plugins from '../plugins';
@@ -20,9 +21,9 @@ class JsonFormStore implements JsonFormStoreClass {
    *
    * @param fieldsProps
    */
-  constructor(fieldsProps?: Blueprint) {
+  constructor(fieldsProps?: Blueprint, fieldsExtraProps?: BlueprintExtra) {
     if (fieldsProps != null) {
-      this.initFieldsByJsonBlueprint(fieldsProps);
+      this.initFieldsByJsonBlueprint(fieldsProps, fieldsExtraProps);
     }
   }
 
@@ -32,9 +33,13 @@ class JsonFormStore implements JsonFormStoreClass {
    *  @param {any} fieldsProp
    */
   @action
-  initFieldsByJsonBlueprint = (fieldsProp: Blueprint): void => {
+  initFieldsByJsonBlueprint = (
+    fieldsProp: Blueprint,
+    fieldsExtraProps: BlueprintExtra = {},
+  ): void => {
     this.fields = getHelper.initObservableFields(
       fieldsProp.fields,
+      fieldsExtraProps,
       plugins.itemsSource,
       plugins.iconsMap,
       plugins.serviceContainer,

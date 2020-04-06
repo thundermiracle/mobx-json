@@ -74,6 +74,11 @@ type Field = {
   fields?: Fields;
 } & BaseField;
 
+interface FieldExtraProp {
+  settings: Settings;
+  attrs: Attrs;
+}
+
 interface Fields {
   [key: string]: Field;
 }
@@ -84,6 +89,10 @@ type JsonField = {
 
 interface Blueprint {
   fields: JsonField[];
+}
+
+interface BlueprintExtra {
+  [fieldName: string]: FieldExtraProp;
 }
 
 interface JsonForm {
@@ -103,7 +112,10 @@ interface JsonFormComponent {
 
 interface JsonFormStore {
   fields: Fields;
-  initFieldsByJsonBlueprint: (fieldsProp: Blueprint) => void;
+  initFieldsByJsonBlueprint: (
+    fieldsProp: Blueprint,
+    fieldsExtraProps?: BlueprintExtra,
+  ) => void;
   setData: (dataObj: null | undefined | any) => void;
   getData: () => AnyObject;
   getErrors: () => AnyObject;
@@ -162,6 +174,7 @@ export {
   Fields,
   JsonField,
   Blueprint,
+  BlueprintExtra,
   JsonForm,
   JsonFormComponent,
   JsonFormStore,

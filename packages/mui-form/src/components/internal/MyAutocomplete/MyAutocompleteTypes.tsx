@@ -1,5 +1,3 @@
-import { AnyObject } from '../../ComponentTypes';
-
 export interface AutocompleteItem {
   value: string;
   label?: string;
@@ -20,7 +18,7 @@ export type MyAutocompleteProps = {
   onChange?: (name: string, value: string, inputValue?: string) => void;
   asyncLoadItems?: (inputValue?: string) => Promise<AutocompleteItem[]>;
   TextFieldComponent: any;
-  extraAutocompleteProps?: AnyObject;
+  extraAutocompleteProps?: object;
   freeSolo?: boolean;
   autoSelect?: boolean;
   autoComplete?: boolean;

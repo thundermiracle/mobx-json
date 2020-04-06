@@ -645,6 +645,7 @@ const handleSubmit = React.useCallback(async () => {
 | Parameter | Required | Type | Default | Description |
 |:---------:|:--------:|:----:|:--------|:------------|
 | blueprint | 〇 | object | | blueprint for rendering form. [See details](#How-to-define-blueprint). |
+| blueprintExtra | {} | object | | key-value object: `fieldName: { attrs: {}, settings: {}}` for override definitions in blueprint. [See details](#How-to-define-blueprint). |
 | formUniqName | △ | string | '' | necessary if define multiple forms in one page, or auto focus when errors occur will fail.  |
 | data | | object | {} | data for form in initialization |
 | options | | object | ```{ smoothScroll: true, gridContainerProps: {} }``` | 1.  smoothScroll: if true, append style ```scroll-behavior:smooth;``` to the latest ```overflow: auto;``` component. <br /> 2. gridContainerProps: props applied to root grid container |
