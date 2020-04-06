@@ -170,6 +170,22 @@ class SetHelper {
   };
 
   /**
+   * change field.attrs.xxxx
+   */
+  @action
+  changeFieldAttrs = (
+    fields: Fields,
+    fieldName: string,
+    attrsName: string,
+    attrsValue: any,
+  ): void => {
+    const targetField = getHelper.getFieldByName(fields, fieldName);
+    if (targetField != null) {
+      targetField.attrs[attrsName] = attrsValue;
+    }
+  };
+
+  /**
    * Operation for all nested fields
    * @param {*} func
    * @param {*} fields

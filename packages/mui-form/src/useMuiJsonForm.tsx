@@ -39,6 +39,11 @@ export interface MuiJsonFormProps {
   clearData: () => void;
   clearAll: () => void;
   revertToInit: () => void;
+  changeFieldAttrs: (
+    fieldName: string,
+    attrName: string,
+    attrValue: any,
+  ) => void;
 }
 
 function useMuiJsonForm({
@@ -89,17 +94,6 @@ function useMuiJsonForm({
     [formUniqName, gridContainerProps, smoothScroll, blueprint, store],
   );
 
-  const setData = React.useCallback(
-    (dt: object) => {
-      store.setData(dt);
-    },
-    [store],
-  );
-
-  const getData = React.useCallback(() => {
-    return store.getData();
-  }, [store]);
-
   const getDataWithCheck = React.useCallback(() => {
     if (store.checkAllOnSubmit()) {
       return store.getData();
@@ -114,34 +108,23 @@ function useMuiJsonForm({
     return false;
   }, [formUniqName, store]);
 
-  const clearError = React.useCallback(() => {
-    store.clearAllErrors();
-  }, [store]);
-
-  const clearData = React.useCallback(() => {
-    store.clearAllData();
-  }, [store]);
-
   const clearAll = React.useCallback(() => {
     store.clearAllErrors();
     store.clearAllData();
   }, [store]);
 
-  const revertToInit = React.useCallback(() => {
-    store.revertToInit();
-  }, [store]);
-
   return {
     form,
     store,
-    setData,
-    getData,
-    getDataWithCheck,
     setBlueprint,
-    clearError,
-    clearData,
+    getDataWithCheck,
     clearAll,
-    revertToInit,
+    setData: store.setData,
+    getData: store.getData,
+    clearError: store.clearAllErrors,
+    clearData: store.clearAllData,
+    revertToInit: store.revertToInit,
+    changeFieldAttrs: store.changeFieldAttrs,
   };
 }
 

@@ -669,6 +669,7 @@ useMuiJsonForm returns an object contains following parameters:
 | clearData | Function | clear all data, set it to defaultValue if exists |
 | clearAll | Function | clearError & clearData |
 | revertToInit | Function | clearError & revert inputs to initialized data |
+| changeFieldAttrs | Function | change field's props to trigger re-rendering by mobx |
 
 ## License
 

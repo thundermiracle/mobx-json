@@ -34,6 +34,13 @@ class GetHelper {
 
   private _asyncLoadItemsFuncCache: { [key: string]: AsyncLoadItemsFunc } = {};
 
+  // common attrs are applied to every field
+  private _defaultCommonAttrs = {
+    disabled: false,
+    hidden: false,
+    required: false,
+  };
+
   /**
    * [Read JSON fields to JsonForm(append to rootFields)]
    * fields -> array; rootFields -> expand position
@@ -72,7 +79,7 @@ class GetHelper {
       // copy from json
       const settingsFlatten = { ...settings };
 
-      let attrsFlatten = { ...attrs };
+      let attrsFlatten = { ...this._defaultCommonAttrs, ...attrs };
 
       // init attrs by propRule, make these props observable
       let initAttrs;

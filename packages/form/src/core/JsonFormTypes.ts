@@ -53,6 +53,7 @@ interface Attrs {
   itemsSource?: string;
   items?: Item[];
   icon?: string;
+  IconComponent?: any;
   grid?: AnyObject;
   extraProps?: AnyObject;
   error?: string;
@@ -112,6 +113,11 @@ interface JsonFormStore {
   resetAllFields: () => void;
   clearAllErrors: () => void;
   revertToInit: () => void;
+  changeFieldAttrs: (
+    fieldName: string,
+    attrName: string,
+    attrValue: any,
+  ) => void;
 }
 
 interface InitAttrs {
