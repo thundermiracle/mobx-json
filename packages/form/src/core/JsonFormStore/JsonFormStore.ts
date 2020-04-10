@@ -118,8 +118,7 @@ class JsonFormStore implements JsonFormStoreClass {
 
       const errors = plugins.validator.validate(datas, rules) || {};
 
-      const [errorMsg] = errors[key] || [];
-      attrs.error = errorMsg || '';
+      setHelper.setAllFieldsErrors({ [fieldName]: field }, errors);
     }
 
     if (!attrs.error) {
@@ -128,10 +127,10 @@ class JsonFormStore implements JsonFormStoreClass {
         this.fields,
         fieldName,
       );
-      // trigger asyncLoadItems if no error
-      setHelper.applyAllFieldsReloadRuleForChangedField(this.fields, fieldName);
-    } else if (valueLabel != null) {
-      // re-compute the field.attrs.value if no error
+    }
+
+    if (!attrs.error || valueLabel != null) {
+      // re-compute the field.attrs.value if no error or valueLabel is not null
       setHelper.applyAllFieldsComputeRuleForChangedField(
         this.fields,
         fieldName,
