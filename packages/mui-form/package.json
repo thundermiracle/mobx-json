@@ -35,14 +35,14 @@
     "access": "public"
   },
   "peerDependencies": {
+    "@material-ui/core": ">4.0.0",
+    "@material-ui/icons": ">4.0.0",
+    "@material-ui/lab": ">4.0.0-alpha.47",
     "react": ">16.8.0",
     "react-dom": ">16.8.0",
     "validatorjs": ">3.0.0"
   },
   "dependencies": {
-    "@material-ui/core": "4.9.5",
-    "@material-ui/icons": "4.9.1",
-    "@material-ui/lab": "4.0.0-alpha.47",
     "@mobx-json/form": "^0.2.1",
     "autosuggest-highlight": "3.1.1",
     "clsx": "1.1.0",
