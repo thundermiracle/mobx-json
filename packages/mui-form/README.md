@@ -20,10 +20,14 @@ You can check some examples here: [https://mobx-json.thundermiracle.com](https:/
 * [How to define blueprint](#How-to-define-blueprint)
   * [settings](#settings)
     * [widget](#widget)
-    * [valueType (optional)](#valueType-(optional))
-    * [rule (optional)](#rule-(optional))
-    * [propRule (optional)](#propRule-(optional))
-    * [computeRule (optional)](#computeRule-(optional))
+    * [valueType (optional)](#valueType-optional)
+    * [rule (optional)](#rule-optional)
+    * [service (optional)](#service-optional)
+    * [serviceRouter (optional)](#serviceRouter-optional)
+    * [serviceParamFields (optional)](#serviceParamFields-optional)
+    * [propRule (optional)](#propRule-optional)
+    * [computeRule (optional)](#computeRule-optional)
+    * [reloadRule (optional)](#reloadRule-optional)
   * [attrs](#attrs)
   * [Components](#Components)
     * [GridItemContainer](#GridItemContainer)
@@ -42,7 +46,7 @@ You can check some examples here: [https://mobx-json.thundermiracle.com](https:/
     * [Autocomplete](#Autocomplete)
     * [AutocompleteOutlined](#AutocompleteOutlined)
 * [How to use in React](#How-to-use-in-React)
-  * [Initialize (optional)](#Initialize-(optional))
+  * [Initialize (optional)](#Initialize-optional)
   * [Generate form](#Generate-form)
     * [useMuiJsonForm's parameters](#useMuiJsonForm's-parameters)
 
@@ -244,6 +248,22 @@ exp: ```"rule": "required|max:30"``` will throws error if input is empty or over
 
 ※ [sample page](https://mobx-json.thundermiracle.com/modifyform)
 
+#### service (optional)
+
+※ See [Autocomplete's example](#Autocomplete)
+
+#### serviceRouter (optional)
+
+Use `get` as default router in service.
+
+※ See [Autocomplete's example](#Autocomplete)
+
+#### serviceParamFields (optional)
+
+Get paramFields' value and pass them as parameters.
+
+※ See [Autocomplete's example](#Autocomplete)
+
 #### propRule (optional)
 
 Apply defined prop to attrs if meets theYou can define multiple propRule and split them by __|__
@@ -270,7 +290,7 @@ Format:
 computeMethod:targetFieldName1,targetFieldName2,targetFieldName3...:extraInfo
 ```
 
-Now supports 2 computeMethods:
+Now supports 3 computeMethods:
 
 * concat
 
@@ -297,6 +317,22 @@ Now supports 2 computeMethods:
   Transform field [sex]'s value by itemsSource. itemsSource: ```[{ value: 0, label: 'Male'}]``` will get _'Male'_ if value is 0.
 
   ※ [sample page](https://mobx-json.thundermiracle.com/computerule)
+
+#### reloadRule (optional)
+
+Reload items by calling asyncLoadItems when meets reloadRule. You can define multiple computeRule and split them by __|__, but the last rule will win.
+
+Format:
+
+```text
+computeMethodtargetFieldName,compareMethod,targetFieldValue
+```
+
+List of compareMethod: `=, >, <, >=, <=, <> (DEFAULT)`
+
+exp: ```"reloadRule": "prefecture"``` means call asyncLoadItems if `prefecture`'s value is not empty & changed
+
+exp: ```"reloadRule": "age>18"``` means call asyncLoadItems if `age`'s value is greater than 18.
 
 ### attrs
 

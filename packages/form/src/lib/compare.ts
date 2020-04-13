@@ -5,8 +5,10 @@ const compare = (
 ): boolean => {
   switch (method) {
     case '=':
-      // eslint-disable-next-line eqeqeq
-      return compareFrom == compareTo;
+      return (
+        compareFrom === compareTo ||
+        compareFrom.toString() === compareTo.toString()
+      );
     case '>':
       return compareFrom > compareTo;
     case '<':
