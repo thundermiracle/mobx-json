@@ -16,7 +16,7 @@
     "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.48",
-    "@mobx-json/mui-form": "^0.2.1",
+    "@mobx-json/mui-form": "^0.2.2",
     "clsx": "1.1.0",
     "next": "^9.3.3",
     "nprogress": "^0.2.0",

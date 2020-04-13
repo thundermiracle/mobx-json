@@ -1,6 +1,6 @@
 {
   "name": "@mobx-json/form",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "create forms by json & mobx",
   "main": "./dist/index.js",
   "files": [
