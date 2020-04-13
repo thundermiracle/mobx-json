@@ -127,9 +127,10 @@ class JsonFormStore implements JsonFormStoreClass {
         this.fields,
         fieldName,
       );
-    }
 
-    if (!attrs.error || valueLabel != null) {
+      // trigger asyncLoadItems if no error
+      setHelper.applyAllFieldsReloadRuleForChangedField(this.fields, fieldName);
+    } else if (valueLabel != null) {
       // re-compute the field.attrs.value if no error or valueLabel is not null
       setHelper.applyAllFieldsComputeRuleForChangedField(
         this.fields,
